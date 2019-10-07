@@ -2,7 +2,7 @@
 
 Class DBConnection{
 	var $hostname = "localhost";
-	var $database = "hotelbooking";
+	var $database = "poscafe";
 	var $username = "root";
 	var $password = "";
 }
@@ -30,12 +30,12 @@ function show ($connection = null, $table = null, $condition = null, $order = nu
     
     $stmt = $connection->prepare("SELECT * FROM ".$table.$cond.$ord);
     $stmt->execute();
-    $result = $stmt->get_result();
+    $result = $stmt->fetch(PDO::FETCH_ASSOC);
     
     $count = 0;
     $results = array();	
     
-    while($row = mysqli_fetch_assoc($result)){
+    while($row = $result){
         
         $results[$count] = $row;
         $count++;
@@ -45,15 +45,15 @@ function show ($connection = null, $table = null, $condition = null, $order = nu
     
 }
 
-function insert ($connection = null, $name = null, $contact = null, $email = null, $type = null, $in = null, $out = null, $id = null) {
+function insertFoodCategory ($connection = null, $name = null) {
     if ($connection->connect_error)
             die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
 
-        $sql = "INSERT INTO booking (booking_name, booking_email, booking_contact, booking_roomType, booking_checkin, booking_checkout, booked_hotel) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $sql = "INSERT INTO food_category (category_name) VALUES (?)";
         if (!$stmt = $connection->prepare($sql))
             die('Query failed: (' . $connection->errno . ') ' . $connection->error);
 
-        if (!$stmt->bind_param('ssssssi',$name, $email, $contact, $type, $in, $out, $id))
+        if (!$stmt->bind_param('s',$name))
             die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
 
         if (!$stmt->execute())
@@ -64,6 +64,42 @@ function insert ($connection = null, $name = null, $contact = null, $email = nul
         $connection->close();
 }
 
+function insertMenu ($connection = null, $picture = null, $name = null, $price = null, $category = null) {
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
 
+        $sql = "INSERT INTO menu (food_picture, food_name, food_price, category) VALUES (?, ?, ?, ?)";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('ssdi',$picture, $name, $price, $category))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        echo "Record added";
+        $stmt->close();
+        $connection->close();
+}
+
+function insertTable ($connection = null, $number = null, $category = null) {
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "INSERT INTO menu (table_no, table_category) VALUES (?, ?)";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('ii',$number, $category))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        echo "Record added";
+        $stmt->close();
+        $connection->close();
+}
 
 ?>
