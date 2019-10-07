@@ -15,7 +15,7 @@
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-9 bg-info">
-                    Marc's place
+                    Aldalton's place
                 </div>
                 <div class="col-md-3 ml-auto">
                     <div class="row">
