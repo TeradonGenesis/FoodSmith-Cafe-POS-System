@@ -19,8 +19,8 @@
                 $tables = 15;
                 for($i=1; $i<=$tables; $i++){
                ?>
-                <div class="col-md-2 border p-3 m-3">
-                   <?php echo $i; ?>
+                <div class="col-md-2 border p-4 m-3" style="width:100px;height:100px">
+                    <div class="text-center"><?php echo $i; ?></div>
                 </div>
                 <?php } ?>
             </div>
