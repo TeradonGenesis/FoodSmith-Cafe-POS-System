@@ -7,20 +7,20 @@
         <meta name="viewport" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
         <!--Bootstrap CSS-->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-        
+        <link rel="stylesheet" href="css/custom.css"/>
         
         
     </head>
     <body>
         <div class="container-fluid">
-            <div class="row">
-               <?php 
+            <div class="row justify-content-center">
+                <?php 
                 $i=1;
                 $tables = 15;
                 for($i=1; $i<=$tables; $i++){
-               ?>
-                <div class="col-md-2 border p-4 m-3" style="width:100px;height:100px">
-                    <div class="text-center"><?php echo $i; ?></div>
+                ?>
+                <div class="col-md-2 border m-3 tableListing">
+                    <p class="text-center"><?php echo $i?></p>
                 </div>
                 <?php } ?>
             </div>
