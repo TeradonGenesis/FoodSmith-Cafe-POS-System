@@ -15,19 +15,18 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <?php 
-                $i=1;
-                $tables = 15;
-                for($i=1; $i<=$tables; $i++){
+                require_once('connection/connection.php');
+                $tables = show($connection, "table_listing", "table_id != ''", "table_no");
+                foreach($tables as $table) {
                 ?>
-                <div class="col-md-2 border m-3 tableListing">
-                    <p class="text-center"><?php echo $i?></p>
+                <div class="col-md-2 border m-3 tableListing">    
+                    <p class="text-center"><?php echo $table["table_no"]; ?></p>
                 </div>
                 <?php } ?>
             </div>
         </div>
         
-        
-        
+          
         
         <!--Bootstrap JS-->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
