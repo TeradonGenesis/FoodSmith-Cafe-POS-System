@@ -20,7 +20,7 @@
         ?>
         <div class="container">
             <section class="payment-section">
-                <h2>Payment page</h2>
+                <h2>Payment</h2>
                 <form name="paymentform" method="POST" action="balance.php">
             <div class="row">
                 <div class="col-md-6 payment-top">    

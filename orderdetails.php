@@ -12,18 +12,30 @@
         
     </head>
     <body>
-        <?php
+        <?php 
         session_start();
-        $balance = $_POST["amount"] - $_SESSION["price"];
+            $_SESSION["price"] = 110.10;
+            $round_one = ceil($_SESSION["price"]); //rounds up the price to nearest 1 
+            $round_ten = ceil($_SESSION["price"]/10) * 10; //rounds up the price to nearest 10
         ?>
         <div class="container">
-            <div class="show_balance">
-                <h1>RM <?php echo $balance; ?></h1>
-            </div>
-            <div class="bottom-buttons">
-                <p><a href="mailto:231555215@outlook.com"><button type="button" class="btn btn-success">Mail Transaction</button></a></p>
-                <p><a href="foodordercart.php"><button type="button" class="btn btn-success">Main Menu</button></a></p>
-            </div>
+            <section class="order-details-section">
+                <h2>Order details</h2>
+                <p class="orderid"><span>Order #8888</span></p>
+                
+                <div class="row">
+                    <div class="col-md-9">Subtotal</div>
+                    <div class="col-md-3">RM <?php echo $_SESSION["price"]; ?></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">Tax(6%)</div>
+                    <div class="col-md-3">RM <?php echo $_SESSION["price"]*0.06; ?></div>
+                </div>
+                <div class="row">
+                    <div class="col-md-9">Total</div>
+                    <div class="col-md-3">RM <?php echo $_SESSION["price"]*0.06+$_SESSION["price"]; ?></div>
+                </div>
+            </section>
         </div>
         
           

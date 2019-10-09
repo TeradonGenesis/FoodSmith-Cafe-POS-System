@@ -7,10 +7,33 @@
     justify-content: center;
 }
 
+/*payment interface*/
 .payment-section {
     padding:10px;
     background-color:rgba(214, 118, 177,0.4);
 }
 .payment-button {
-   width:50%;
+    width:50%;
+}
+
+/*balance page*/
+.show_balance {
+    width:100%;
+    text-align:center;
+}
+
+.bottom-buttons {
+    text-align:center;
+    margin: 0 auto;
+    padding:30px;
+}
+
+.bottom-buttons .btn {
+    width:30%;
+}
+
+/*order details*/
+.orderid {
+    text-align:center;
+margin:0 auto;
 }
