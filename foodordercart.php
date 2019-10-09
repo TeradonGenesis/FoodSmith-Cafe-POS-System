@@ -17,10 +17,11 @@
 
     <body>
         <div class="container-fluid">
+            <!--NavBar area-->
             <div class="row">
-                <div class="col-md-3 col-sm-3 lulw">
+                <div class="col-md-2 col-sm-2 lulw">
                     <div class="col-md-12">
-                        Navigation Bar
+                        <p class="text-center mb-0 mt-5">Navigation Bar</p>
                         
                         <nav class="navbar navbar-dark  bg-dark" id="foodNavBar">
                             <ul class="navbar-nav nav-fill w-100">
@@ -37,79 +38,83 @@
                         </nav>
                     </div>
                 </div>
-                <div class="col-md-6 col-sm-6 lulw2">
+                <!--Menu Area-->
+                <div class="col-md-7 col-sm-6 lulw2">
+                    <!--First row for the food items-->
                     <div class="row food1">
-                        <div class="col-md-3 col-sm-3">
-                            <div class="card" style="width: 10rem; height: 10rem;">
+                        <div class="col-md-3 col-sm-3 customCard">
+                            <div class="card">
                                 <img src="images/bacon.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <a href="#" class="btnfood1 btn-transparent">Order</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-3">
-                            <div class="card" style="width: 10rem; height: 10rem;">
+                        <div class="col-md-3 col-sm-3 customCard">
+                            <div class="card">
                                 <img src="images/bacon.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <a href="#" class="btnfood1 btn-transparent">Order</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-3">
-                            <div class="card" style="width: 10rem; height: 10rem;">
+                       <div class="col-md-3 col-sm-3 customCard">
+                            <div class="card">
                                 <img src="images/bacon.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <a href="#" class="btnfood1 btn-transparent">Order</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-3">
-                            <div class="card" style="width: 10rem; height: 10rem;">
+                        <div class="col-md-3 col-sm-3 customCard">
+                            <div class="card">
                                 <img src="images/bacon.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <a href="#" class="btnfood1 btn-transparent">Order</a>
                                 </div>
                             </div>
                         </div>
-
                     </div>
+                    <!--Second row for the food items-->
                      <div class="row food2">
-                        <div class="col-md-3 col-sm-3">
-                            <div class="card" style="width: 10rem; height: 10rem;">
+                        <div class="col-md-3 col-sm-3 customCard">
+                            <div class="card">
                                 <img src="images/bacon.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <a href="#" class="btnfood1 btn-transparent">Order</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-3">
-                            <div class="card" style="width: 10rem; height: 10rem;">
+                        <div class="col-md-3 col-sm-3 customCard">
+                            <div class="card">
                                 <img src="images/bacon.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <a href="#" class="btnfood1 btn-transparent">Order</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-3">
-                            <div class="card" style="width: 10rem; height: 10rem;">
+                       <div class="col-md-3 col-sm-3 customCard">
+                            <div class="card">
                                 <img src="images/bacon.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <a href="#" class="btnfood1 btn-transparent">Order</a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-3">
-                            <div class="card" style="width: 10rem; height: 10rem;">
+                        <div class="col-md-3 col-sm-3 customCard">
+                            <div class="card">
                                 <img src="images/bacon.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
                                     <a href="#" class="btnfood1 btn-transparent">Order</a>
                                 </div>
                             </div>
                         </div>
+                        
 
                     </div>
 
                 </div>
+                <!--Food Order Cart-->
                 <div class="col-md-3 ml-auto lulw3">
                     <div class="row">
                         <div class="col-md-12">
