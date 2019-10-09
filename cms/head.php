@@ -17,5 +17,5 @@
     <link rel="stylesheet" href="../fontawesome/css/solid.css">
     <link rel="stylesheet" href="../fontawesome/css/solid.min.css">
 
-
+<link rel="stylesheet" href="../connection/connection.php">
 </head>

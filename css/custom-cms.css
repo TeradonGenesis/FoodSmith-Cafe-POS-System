@@ -254,6 +254,11 @@ ul.CTAs a {
     #sidebarCollapse span {
         display: none;
     }
+    
+    .formbtn {
+        margin-top: 20px;
+    }
+    
 }
 
 .toggleButton {
@@ -264,5 +269,10 @@ ul.CTAs a {
 .toggleButton:hover {
     background: #813772;
     color: #fff;
+}
+
+.collapsebtn {
+    background: #813772 !important;
+    color: #fff !important;
 }
 

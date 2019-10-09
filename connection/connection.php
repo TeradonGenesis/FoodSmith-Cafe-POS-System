@@ -14,6 +14,7 @@ mysqli_select_db($connection, $DBConn->database);
 
 
 
+
 function show ($connection = null, $table = null, $condition = null, $order = null) {
     
     $cond = "";
@@ -27,18 +28,22 @@ function show ($connection = null, $table = null, $condition = null, $order = nu
 		$ord = " ORDER BY ".$order;
 	}
     
+    $query = "SELECT * FROM ".$table.$cond.$ord;
     
-    $stmt = $connection->prepare("SELECT * FROM ".$table.$cond.$ord);
-    $stmt->execute();
-    $result = $stmt->fetch(PDO::FETCH_ASSOC);
+    $result=mysqli_query($connection,$query) or die(mysqli_error($connection));
     
+
     $count = 0;
     $results = array();	
     
-    while($row = $result){
+    if(mysqli_num_rows($result)>0){
         
-        $results[$count] = $row;
-        $count++;
+        while($row = mysqli_fetch_assoc($result)){
+        
+            $results[$count] = $row;
+            $count++;
+        }
+
     }
 		
     return $results;
@@ -61,7 +66,6 @@ function insertFoodCategory ($connection = null, $name = null) {
 
         echo "Record added";
         $stmt->close();
-        $connection->close();
 }
 
 function insertMenu ($connection = null, $picture = null, $name = null, $price = null, $category = null) {
@@ -80,7 +84,6 @@ function insertMenu ($connection = null, $picture = null, $name = null, $price =
 
         echo "Record added";
         $stmt->close();
-        $connection->close();
 }
 
 function insertTable ($connection = null, $number = null, $category = null) {
@@ -99,7 +102,6 @@ function insertTable ($connection = null, $number = null, $category = null) {
 
         echo "Record added";
         $stmt->close();
-        $connection->close();
 }
 
 ?>
