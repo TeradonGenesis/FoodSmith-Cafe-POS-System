@@ -51,6 +51,7 @@
                  </div>
                 </form>
             </section>
+            <?php require_once('orderdetails.php'); ?>
         </div>
         
           

@@ -13,7 +13,9 @@
     </head>
     <body>
         <?php 
-        session_start();
+        if (session_id() == "") {
+            session_start();
+        }
             $_SESSION["price"] = 110.10;
             $round_one = ceil($_SESSION["price"]); //rounds up the price to nearest 1 
             $round_ten = ceil($_SESSION["price"]/10) * 10; //rounds up the price to nearest 10
@@ -23,6 +25,10 @@
                 <h2>Order details</h2>
                 <p class="orderid"><span>Order #8888</span></p>
                 
+                <div class="row">
+                    <div class="col-md-9 font-weight-bold">Item</div>
+                    <div class="col-md-3 font-weight-bold">Price(RM)</div>
+                </div>
                 <div class="row">
                     <div class="col-md-9">Subtotal</div>
                     <div class="col-md-3">RM <?php echo $_SESSION["price"]; ?></div>
