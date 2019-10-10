@@ -1,5 +1,14 @@
 <!DCOCTYPE html>
     <html lang="en">
+    <?php require_once('connection/connection.php'); ?>
+
+    <?php 
+
+        $foods = show($connection, "menu", "food_id != '' AND status = 1", "food_id");
+        $categories = show($connection, "food_category", "category_id !=''", "category_id");
+
+        $connection->close();
+    ?>
 
     <head>
         <title>Food Order Cart</title>
@@ -20,102 +29,38 @@
             <!--NavBar area-->
             <div class="row">
                 <div class="col-md-2 col-sm-2 lulw">
-                    <div class="col-md-12">
+                    <div class="col-md-12 innerNav">
                         <p class="text-center mb-0 mt-5">Navigation Bar</p>
-                        
-                        <nav class="navbar navbar-dark  bg-dark" id="foodNavBar">
-                            <ul class="navbar-nav nav-fill w-100">
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#" id="foodNav"><i class="fas fa-bacon"></i> Food</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#" id="drinksNav"><i class="fas fa-cocktail"></i> Drinks</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="#" id="desertNav"><i class="fas fa-ice-cream"></i> Desert</a>
-                                </li>
-                            </ul>
-                        </nav>
+                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+                            <a class="nav-link active foodNav" id="v-pills-home-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-bacon"></i> All Food</a>
+                            <?php foreach($categories as $category) { ?>
+                            <a class="nav-link drinksNav" id="v-pills-profile-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-cocktail"></i> <?php echo $category['category_name'] ?></a>
+                            <?php } ?>
+                          
+                        </div>
                     </div>
                 </div>
                 <!--Menu Area-->
-                <div class="col-md-7 col-sm-6 lulw2">
+                <div class="col-md-7 col-sm-7 lulw2">
                     <!--First row for the food items-->
                     <div class="row food1">
-                        <div class="col-md-3 col-sm-3 customCard">
+                        <?php foreach($foods as $food) { ?>
+                        <div class="col-md-3 col-sm-3 customCard mb-2">
                             <div class="card">
                                 <img src="images/bacon.jpg" class="card-img-top" alt="...">
                                 <div class="card-body">
-                                    <a href="#" class="btnfood1 btn-transparent">Order</a>
+                                    <a href="#" class="btnfood1 btn-transparent"><?php echo $food['food_name']?></a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-3 col-sm-3 customCard">
-                            <div class="card">
-                                <img src="images/bacon.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <a href="#" class="btnfood1 btn-transparent">Order</a>
-                                </div>
-                            </div>
-                        </div>
-                       <div class="col-md-3 col-sm-3 customCard">
-                            <div class="card">
-                                <img src="images/bacon.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <a href="#" class="btnfood1 btn-transparent">Order</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-3 customCard">
-                            <div class="card">
-                                <img src="images/bacon.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <a href="#" class="btnfood1 btn-transparent">Order</a>
-                                </div>
-                            </div>
-                        </div>
+                        <?php } ?>
                     </div>
                     <!--Second row for the food items-->
-                     <div class="row food2">
-                        <div class="col-md-3 col-sm-3 customCard">
-                            <div class="card">
-                                <img src="images/bacon.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <a href="#" class="btnfood1 btn-transparent">Order</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-3 customCard">
-                            <div class="card">
-                                <img src="images/bacon.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <a href="#" class="btnfood1 btn-transparent">Order</a>
-                                </div>
-                            </div>
-                        </div>
-                       <div class="col-md-3 col-sm-3 customCard">
-                            <div class="card">
-                                <img src="images/bacon.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <a href="#" class="btnfood1 btn-transparent">Order</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-3 col-sm-3 customCard">
-                            <div class="card">
-                                <img src="images/bacon.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
-                                    <a href="#" class="btnfood1 btn-transparent">Order</a>
-                                </div>
-                            </div>
-                        </div>
-                        
 
-                    </div>
 
                 </div>
                 <!--Food Order Cart-->
-                <div class="col-md-3 ml-auto lulw3">
+                <div class="col-md-3 lulw3">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -184,7 +129,9 @@
                         </div>
                     </div>
                 </div>
+
             </div>
+
         </div>
 
 

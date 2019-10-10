@@ -1,5 +1,5 @@
 body{
-    background-color: pink;
+    background-color: #eeeeee;
 }
 
 .btnfood1{
@@ -10,6 +10,8 @@ body{
 
 .lulw{
     border: 1px solid black;
+    padding: 0;
+    background-color: #eeeeee;
     
 }
 
@@ -28,4 +30,26 @@ body{
 
 .food1{
     padding-top: 23px;
+}
+
+.foodNav{
+    background-color: black;
+    height: 50px;
+    padding: 10px;
+}
+
+.drinksNav{
+    background-color: black;
+    padding: 10px;
+    height: 50px;
+}
+
+.desertNav{
+    background-color: black;
+    height: 50px;
+    padding: 10px
+}
+
+.innerNav{
+    padding: 0;
 }
