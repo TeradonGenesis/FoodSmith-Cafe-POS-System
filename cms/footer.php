@@ -5,6 +5,8 @@
 <!-- Bootstrap JS -->
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/jquery.tabledit.js"></script>
+<script src="../js/jquery.js"></script>
+<script src="../js/jquery-3.4.1.min.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function() {
@@ -32,5 +34,22 @@
             //on success
         });
     }
+    
+    function up() {
+            $("#anchorUp").animate({
+                backgroundColor: "rgb( 160, 160, 160)"
+            }, 200);
+            $("html, body").delay(300).animate({
+                scrollTop: 0
+            }, "fast");
+        }
 
+</script>
+
+<script>
+// Add the following code if you want the name of the file appear on select
+$(".file-input").on("change", function() {
+  var fileName = $(this).val().split("\\").pop();
+  $(".file-label").html(fileName);
+});
 </script>

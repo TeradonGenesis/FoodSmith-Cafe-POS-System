@@ -62,7 +62,7 @@
                     <table class="table table-borded table-striped" id="categoryTable">
                         <thead class="thead-dark">
                             <tr>
-                                   <th class="col-1">Category Name</th>
+                                   <th class="col-1">ID</th>
                                 <th class="col-4">Category Name</th>
                                 <th class="col-3 text-center">Action</th>
                             </tr>

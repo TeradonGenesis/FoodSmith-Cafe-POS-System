@@ -50,6 +50,30 @@ function show ($connection = null, $table = null, $condition = null, $order = nu
     
 }
 
+function showJoins ($connection = null, $sql) {
+    
+    $query = $sql;
+    
+    $result=mysqli_query($connection,$query) or die(mysqli_error($connection));
+    
+
+    $count = 0;
+    $results = array();	
+    
+    if(mysqli_num_rows($result)>0){
+        
+        while($row = mysqli_fetch_assoc($result)){
+        
+            $results[$count] = $row;
+            $count++;
+        }
+
+    }
+		
+    return $results;
+    
+}
+
 function insertFoodCategory ($connection = null, $name = null) {
     if ($connection->connect_error)
             die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
@@ -118,15 +142,15 @@ function insertTable ($connection = null, $number = null, $category = null) {
         $stmt->close();
 }
 
-function updateHideStatus ($connection = null, $table = null, $id = null) {
+function updateHideStatus ($connection = null, $table = null, $status = null, $id = null) {
     if ($connection->connect_error)
             die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
 
-        $sql = "UPDATE $table SET status = 2 WHERE food_id = ?";
+        $sql = "UPDATE $table SET status = ? WHERE food_id = ?";
         if (!$stmt = $connection->prepare($sql))
             die('Query failed: (' . $connection->errno . ') ' . $connection->error);
 
-        if (!$stmt->bind_param('i', $id))
+        if (!$stmt->bind_param('ii', $status, $id))
             die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
 
         if (!$stmt->execute())
