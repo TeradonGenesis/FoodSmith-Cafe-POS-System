@@ -13,24 +13,34 @@
     <div class="wrapper">
         <?php include 'sidepanel.php'?>
         <div id="content">
+            
 
             <?php include 'nav.php'?>
             <?php 
+                
+                $status = $_POST['status'];
+                $id = $_POST['id'];
+
+                if ($status == 1) {
+                    $update = updateHideStatus($connection, "menu", $id);
+                }
+    
+    
+    
+    
+                $success = '';
     
                 if(isset($_POST['submit']) && $_POST['submit'] == "submit") {
 
-                    if(isset($_POST['name']) && !empty($_POST['name'])) {
+                    if(isset($_POST['name']) && !empty($_POST['name']) && isset($_POST['price']) && !empty($_POST['price'])) {
 
                         $name = $_POST['name'];
-                        $addCategories = insertFoodCategory($connection, $name);
+                        $price = $_POST['price'];
+                        $addFood = insertMenuTesting($connection, $name, $price);
+                        $success = "Food Added";
 
-                    }
-                    
-                    if(isset($_POST['price']) && !empty($_POST['price'])) {
-
-                        $name = $_POST['name'];
-                        $addCategories = insertFoodCategory($connection, $name);
-
+                    } else {
+                        $success = "Failed";
                     }
                     
 
@@ -44,19 +54,23 @@
                     
                     if(isset($_POST['price']) && !empty($_POST['price'])) {
 
-                        $name = null;
+                        $price = null;
 
                     }
+                    $success = "Reset";
                 }
            
     
-    $showCategories = show($connection, "food_category", "category_id != ''", "category_id");
+    $showFood = show($connection, "menu", "status = 1", "food_id");
+    
+    $hideFood = show($connection, "menu", "status = 2", "food_id");
     
     $connection->close();
     
     ?>
 
             <button type="button" class="btn collapsebtn" data-toggle="collapse" data-target="#addFood"><i class="fas fa-plus"></i> Add food</button>
+            <p><?php echo $success ?></p>
 
             <form action="manage-menu.php" method="post">
                 <div id="addFood" class="row collapse mt-3">
@@ -149,17 +163,17 @@
                         </thead>
                         <tbody>
 
-
+                            <?php foreach($showFood as $food) {?>
                             <tr>
-                                <td class="col-1">#</td>
+                                <td class="col-1"><?php echo $food['food_id']?></td>
                                 <td class="col-2"><img src="" alt="Missing" /></td>
-                                <td class="col-3">Name</td>
-                                <td class="col-1 text-right">20.30</td>
+                                <td class="col-3"><?php echo $food['food_name']?></td>
+                                <td class="col-1 text-right"><?php echo $food['food_price']?></td>
                                 <td class="col-2">Category</td>
                                 <td class="col-3 text-center">
                                     <div class="row text-center">
                                         <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                            <button type="submit" value="display" class="btn btn-primary enbtn btn-md" name="submit"><i class="fas fa-eye-slash"></i></button>
+                                            <a onclick=" updateStatus(<?php echo $food['status']; ?>, <?php echo $food['food_id']; ?>)" href="manage-menu.php"><i class="fas fa-eye-slash"></i></a>
                                         </div>
                                         <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
                                             <button type="submit" value="edit" class="btn btn-warning enbtn btn-md" name="submit"><i class="fas fa-edit"></i></button>
@@ -170,27 +184,7 @@
                                     </div>
                                 </td>
                             </tr>
-
-                            <tr>
-                                <td class="col-1">#</td>
-                                <td class="col-2"><img src="" alt="Missing" /></td>
-                                <td class="col-3">Name</td>
-                                <td class="col-1 text-right">120.30</td>
-                                <td class="col-2">Category</td>
-                                <td class="col-3 text-center">
-                                    <div class="row text-center">
-                                        <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                            <button type="submit" value="display" class="btn btn-primary enbtn btn-md" name="submit"><i class="fas fa-eye-slash"></i></button>
-                                        </div>
-                                        <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                            <button type="submit" value="edit" class="btn btn-warning enbtn btn-md" name="submit"><i class="fas fa-edit"></i></button>
-                                        </div>
-                                        <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                            <button type="submit" value="delete" class="btn btn-danger enbtn btn-md" name="submit"><i class="fas fa-trash-alt"></i></button>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
+                            <?php } ?>
 
                         </tbody>
                     </table>
@@ -211,12 +205,12 @@
                         </thead>
                         <tbody>
 
-
+                            <?php foreach($hideFood as $hfood) {?>
                             <tr>
-                                <td class="col-1">#</td>
+                                <td class="col-1"><?php echo $hfood['food_id']?></td>
                                 <td class="col-2"><img src="" alt="Missing" /></td>
-                                <td class="col-3">Name</td>
-                                <td class="col-1 text-right">20.30</td>
+                                <td class="col-3"><?php echo $hfood['food_name']?></td>
+                                <td class="col-1 text-right"><?php echo $hfood['food_price']?></td>
                                 <td class="col-1">Category</td>
                                 <td class="col-3 text-center">
                                     <div class="row text-center">
@@ -232,6 +226,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            <?php }?>
 
                         </tbody>
                     </table>
@@ -246,6 +241,7 @@
 
     </div>
     <?php include 'footer.php'?>
+
 </body>
 
 </html>

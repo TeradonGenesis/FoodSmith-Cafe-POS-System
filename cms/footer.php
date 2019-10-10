@@ -12,39 +12,25 @@
             $('#sidebar').toggleClass('active');
         });
 
-        $('#example1').Tabledit({
-            url: 'logic-edit-delete.php',
-            columns: {
-                identifier: [0, 'id'],
-                editable: [
-                    [1, 'name'],
-                ]
-            },
-            onDraw: function() {
-                console.log('onDraw()');
-            },
-            onSuccess: function(data, textStatus, jqXHR) {
-                console.log('onSuccess(data, textStatus, jqXHR)');
-                console.log(data);
-                console.log(textStatus);
-                console.log(jqXHR);
-            },
-            onFail: function(jqXHR, textStatus, errorThrown) {
-                console.log('onFail(jqXHR, textStatus, errorThrown)');
-                console.log(jqXHR);
-                console.log(textStatus);
-                console.log(errorThrown);
-            },
-            onAlways: function() {
-                console.log('onAlways()');
-            },
-            onAjax: function(action, serialize) {
-                console.log('onAjax(action, serialize)');
-                console.log(action);
-                console.log(serialize);
-            }
-        });
 
     });
+
+</script>
+<script language="JavaScript">
+    function updateStatus($status, $id) {
+        //get the input value
+        $.ajax({
+            //the url to send the data to
+            url: "manage-menu.php",
+            //the data to send to
+            data: {
+                status: $status,
+                id: $id
+            },
+            //type. for eg: GET, POST
+            type: "POST",
+            //on success
+        });
+    }
 
 </script>
