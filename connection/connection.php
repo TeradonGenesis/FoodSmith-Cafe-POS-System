@@ -64,7 +64,6 @@ function insertFoodCategory ($connection = null, $name = null) {
         if (!$stmt->execute())
                 die('Insert Error ' . $connection->error);
 
-        echo "Record added";
         $stmt->close();
 }
 
@@ -82,7 +81,23 @@ function insertMenu ($connection = null, $picture = null, $name = null, $price =
         if (!$stmt->execute())
                 die('Insert Error ' . $connection->error);
 
-        echo "Record added";
+        $stmt->close();
+}
+
+function insertMenuTesting ($connection = null, $name = null, $price = null) {
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "INSERT INTO menu (food_name, food_price) VALUES (?, ?)";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('sd',$name, $price))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
         $stmt->close();
 }
 
@@ -100,7 +115,23 @@ function insertTable ($connection = null, $number = null, $category = null) {
         if (!$stmt->execute())
                 die('Insert Error ' . $connection->error);
 
-        echo "Record added";
+        $stmt->close();
+}
+
+function updateHideStatus ($connection = null, $table = null, $id = null) {
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "UPDATE $table SET status = 2 WHERE food_id = ?";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('i', $id))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
         $stmt->close();
 }
 
