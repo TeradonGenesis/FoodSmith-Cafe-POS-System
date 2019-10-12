@@ -4,8 +4,6 @@ body{
 
 .btnfood1{
     
-    margin-left: 18%;
-    padding:inherit;
 }
 
 .lulw{
@@ -29,7 +27,11 @@ body{
 }
 
 .food1{
-    padding-top: 23px;
+    padding-top: 20px;
+}
+
+.customCard {
+    padding: 8px !important;
 }
 
 .foodNav{
@@ -52,4 +54,9 @@ body{
 
 .innerNav{
     padding: 0;
+}
+
+/*Make the food picture to fit*/
+.img-fluid {    
+       width: 100%;
 }

@@ -47,8 +47,8 @@
                         <?php foreach($foods as $food) { ?>
                         <div class="col-md-3 col-sm-3 customCard mb-2">
                             <div class="card">
-                                <img src="images/bacon.jpg" class="card-img-top" alt="...">
-                                <div class="card-body">
+                                <img src="images/<?php echo $food['food_picture']?>" class="card-img-top img-fluid" height="100%" alt="...">
+                                <div class="card-body text-center">
                                     <a href="#" class="btnfood1 btn-transparent"><?php echo $food['food_name']?></a>
                                 </div>
                             </div>
