@@ -36,6 +36,13 @@
     
                 $success = '';
                 $uploadStatus = '';
+                $alert = '';
+                $alert_price = '';
+                $alert_name = '';
+                $alert_category = '';
+                $invalid_name = '';
+                $invalid_price = '';
+                $invalid_category = '';
     
                 if(isset($_POST['submit']) && $_POST['submit'] == "submit") {
 
@@ -84,35 +91,38 @@
                             $success = "Fail to add food";
                         }
                         
-                        //$addFood = insertMenuTesting($connection, $name, $price);
 
                     } else {
                         $success = "Fail to add food";
                     }
                     
-
-                } else if (isset($_POST['submit']) && $_POST['submit'] == "reset"){
-
-                    if(isset($_POST['name']) && !empty($_POST['name'])) {
-
-                        $name = null;
-
+                    $pattern = '/^(0|[1-9]\d*)(\.\d{2})?$/';
+                    
+                    if (empty($_POST['price'])) {
+                        $alert_price = "Please enter a price";
+                        $invalid_price = 'is-invalid';
+                        
+                    } else if (isset($_POST['price']) && preg_match($pattern, $_POST['price']) == '0') {
+                       $alert_price = "Only numbers and one . is allowed";
+                        $invalid_price = 'is-invalid';
                     }
                     
-                    if(isset($_POST['price']) && !empty($_POST['price'])) {
-
-                        $price = null;
-
+                    if (empty($_POST['name'])) {
+                        $alert_name = "Please enter a name";
+                        $invalid_name = 'is-invalid';
+                        
                     }
                     
-                    if(isset($_POST['price']) && !empty($_POST['price'])) {
-
-                        $file = null;
-
+                    if (empty($_POST['category'])) {
+                        $alert_category = "Please select a category";
+                        $invalid_category = 'is-invalid';
+                        
                     }
-                    
-                    $success = "Reset";
-                }
+    
+
+                } 
+                
+    
            
     
     $showFood = showJoins($connection, "SELECT *  FROM menu INNER JOIN food_category
@@ -130,31 +140,46 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
             <!--<button type="button" class="btn collapsebtn" data-toggle="collapse" data-target="#addFood"><i class="fas fa-plus"></i> Add food</button>
             <p></p>--->
             <p class="mt-2"><i class="fas fa-plus"></i> Add food</p>
-             <p><?php echo $success ?></p>
-            <form action="manage-menu.php" method="POST" enctype="multipart/form-data">
+            <p class ="text-danger"><?php echo $success ?></p>
+            <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="POST" enctype="multipart/form-data">
                 <div id="addFood" class="row mt-3">
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 text-left uploading" id="uploadPhoto">
                         <span class="btn btn-primary btn-file">
                             <i class="fas fa-upload"></i> Browse<input type="file" name="file" class="file-input">
                         </span>
-
                         <span class="file-label">No file</span>
-                        <p><?php echo $uploadStatus; ?></p>
+                        <p>* Required</p>
+                        <p class ="text-danger"><?php echo $uploadStatus; ?></p>
                     </div>
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
-                        <input class="form-control" type="text" name="name" placeholder="Name">
+                        <input class="form-control <?php echo $invalid_name; ?>" type="text" name="name" placeholder="Food name">
+                        <?php if ($alert_name !== '') {
+                            echo "<p class ='text-danger'>".$alert_name."</p>"; 
+                        } else {
+                            echo "<p>* Required</p>"; 
+                        } ?>
                     </div>
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
-                        <input class="form-control" type="text" name="price" placeholder="Price eg. 2.50">
+                        <input class="form-control <?php echo $invalid_price; ?>" type="text" name="price" placeholder="Price eg. 2.50">
+                        <?php if ($alert_price !== '') {
+                            echo "<p class ='text-danger'>".$alert_price."</p>"; 
+                        } else {
+                            echo "<p>* Required</p>"; 
+                        } ?>
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left mb-4">
-                        <select name="category" class="form-control">
+                        <select name="category" class="form-control <?php echo $invalid_category; ?>">
                             <option selected="" hidden="" value="">Category</option>
                             <?php foreach($showCategories as $showCategory) { ?>
                             <option value="<?php echo $showCategory['category_id']; ?>"><?php echo $showCategory['category_name']; ?></option>
                             <?php } ?>
                         </select>
+                        <?php if ($alert_category !== '') {
+                            echo "<p class ='text-danger'>".$alert_category."</p>"; 
+                        } else {
+                            echo "<p>* Required</p>"; 
+                        } ?>
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
@@ -239,7 +264,7 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
                                             <a onclick=" updateStatus(<?php echo $food['status']; ?>, <?php echo $food['food_id']; ?>)" href="manage-menu.php"><i class="fas fa-eye-slash"></i></a>
                                         </div>
                                         <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                            <button type="submit" value="edit" class="btn btn-warning enbtn btn-md" name="submit"><i class="fas fa-edit"></i></button>
+                                            <button type="submit" value="edit" class="btn btn-warning enbtn btn-md" name="editable" data-toggle="modal" data-target="#editableModal"><i class="fas fa-edit"></i></button>
                                         </div>
                                         <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
                                             <button type="submit" value="delete" class="btn btn-danger enbtn btn-md" name="submit"><i class="fas fa-trash-alt"></i></button>
@@ -310,10 +335,68 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
 
 
 
+
+
         </div>
 
     </div>
     <?php include 'footer.php'?>
+
+
+    <!--Edit modal -->
+    <div class="modal fade" id="editableModal" tabindex="-1" role="dialog" aria-labelledby="teachersModalLabel" aria-hidden="true">
+        <div class="modal-dialog text-center" role="document">
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="modal-body row">
+
+                    <div class="col-12 col-md-12">
+                        <h5 class="modal-title" id="editableLabel">Edit menu</h5>
+
+                    </div>
+                    <div class="col-12 col-md-12 text-center">
+                        <form action="manage-menu.php" method="POST" enctype="multipart/form-data">
+                            <div id="addFood" class="row mt-3">
+
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 text-left uploading" id="uploadPhoto">
+                                    <span class="btn btn-primary btn-file">
+                                        <i class="fas fa-upload"></i> Browse<input type="file" name="file" class="file-input">
+                                    </span>
+
+                                    <span class="file-label">No file</span>
+                                    <p><?php echo $uploadStatus; ?></p>
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-2">
+                                    <input class="form-control" type="text" name="name" placeholder="Name">
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-2">
+                                    <input class="form-control" type="text" name="price" placeholder="Price eg. 2.50">
+                                </div>
+                                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
+                                    <select name="category" class="form-control">
+                                        <option selected="" hidden="" value="">Category</option>
+                                        <?php foreach($showCategories as $showCategory) { ?>
+                                        <option value="<?php echo $showCategory['category_id']; ?>"><?php echo $showCategory['category_name']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
+                                    <button type="submit" value="submit" class="btn btn-success enbtn btn-md" name="submit">ADD</button>
+                                    <button type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="submit">RESET</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    
 
 </body>
 

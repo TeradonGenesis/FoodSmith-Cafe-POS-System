@@ -43,6 +43,12 @@
                 scrollTop: 0
             }, "fast");
         }
+    
+    function editable(id)
+    {
+      var modal = document.getElementById(id);
+      modal.style.display = "block";
+    }
 
 </script>
 
