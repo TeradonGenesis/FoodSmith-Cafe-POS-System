@@ -142,6 +142,23 @@ function insertTable ($connection = null, $number = null, $category = null) {
         $stmt->close();
 }
 
+function insertOrderID ($connection = null, $id = null) {
+        if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "INSERT INTO order_id VALUES (?)";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('i',$id))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        $stmt->close();
+}
+
 function updateHideStatus ($connection = null, $table = null, $status = null, $id = null) {
     if ($connection->connect_error)
             die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());

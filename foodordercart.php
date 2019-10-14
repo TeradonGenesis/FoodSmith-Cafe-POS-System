@@ -6,7 +6,6 @@
 
         $foods = show($connection, "menu", "food_id != '' AND status = 1", "food_id");
         $categories = show($connection, "food_category", "category_id !=''", "category_id");
-        $results = showJoins($connection,"SELECT * FROM order_id ORDER BY order_id DESC LIMIT 1");
         $connection->close();
     ?>
 
@@ -77,9 +76,9 @@
                         <div class="col-md-12 text-center">
                             <!--Autoincremented based on Order ID in database-->
                             <?php
-                                foreach($results as $result) {
-                                    echo "<p>".$result['order_id']."</p>";
-                                }
+                                date_default_timezone_set("Asia/Kuala_Lumpur");
+                                $id=date('dmYHis');
+                                echo "<p>Order ID: ".$id."</p>";
                             ?>
                         </div>
                         <div class="col-md-12 ">
@@ -153,6 +152,15 @@
             $('#resetBtn').on('click', function() {
                 $('#table tbody').empty(); //empties the table
                 $('#totalAmt').text("RM 0");
+            });
+            $('#submitBtn').on('click',function(){
+                alert(<?php echo $id?>)
+                <?php
+                    $conn=mysqli_connect("localhost","root","","poscafe");
+                    $sql="INSERT INTO order_id VALUES(".$id.")";
+                    $conn->query($sql);
+                    $conn->close();
+                ?>
             });
 
         </script>
