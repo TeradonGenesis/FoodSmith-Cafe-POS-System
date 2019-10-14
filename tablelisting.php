@@ -15,12 +15,13 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <?php 
+                session_start();
                 require_once('connection/connection.php');
                 $tables = show($connection, "table_listing", "table_id != ''", "table_no");
                 foreach($tables as $table) {
                 ?>
-                <div class="col-md-2 border m-3 tableListing">    
-                    <p class="text-center"><?php echo $table["table_no"]; ?></p>
+                <div class="col-md-2 border m-3 tableListing <?php echo "status".$table["status"]; ?>">    
+                    <p class="text-center text-holder"><?php echo $table["table_no"]; ?></p>
                 </div>
                 <?php } ?>
             </div>

@@ -1,3 +1,4 @@
+/*table listing interface*/
 .tableListing{
     height:100px;
     width:100px;
@@ -5,6 +6,21 @@
     flex-wrap:wrap;
     align-items: center;
     justify-content: center;
+}
+
+.text-holder {
+    background-color:white;
+    width:30%;
+    opacity:0.8;
+    font-size:20px;
+    font-weight:bold;
+}
+.status2 {
+    background-color: rgba(255, 0, 0,0.8); 
+}
+
+.status3 {
+    background-color:rgba(2,153,4,0.8);
 }
 
 /*payment interface*/

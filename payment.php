@@ -14,7 +14,6 @@
     <body>
         <?php 
         session_start();
-            $_SESSION["price"] = 110.10;
             $round_one = ceil($_SESSION["price"]); //rounds up the price to nearest 1 
             $round_ten = ceil($_SESSION["price"]/10) * 10; //rounds up the price to nearest 10
         ?>
