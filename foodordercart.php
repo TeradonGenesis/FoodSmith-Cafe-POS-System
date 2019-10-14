@@ -154,13 +154,13 @@
                 $('#totalAmt').text("RM 0");
             });
             $('#submitBtn').on('click',function(){
-                alert(<?php echo $id?>)
                 <?php
                     $conn=mysqli_connect("localhost","root","","poscafe");
                     $sql="INSERT INTO order_id VALUES(".$id.")";
                     $conn->query($sql);
                     $conn->close();
                 ?>
+                window.location.reload();
             });
 
         </script>
