@@ -91,7 +91,7 @@
                                 </thead>
                                 <tbody>
                                     <!--Stand in data, hardcoded-->
-                                    <tr class="deleteRow">
+                                   <!--<tr class="deleteRow">
                                         <th scope="row">
                                             <button type="button" class="btn btn-danger btn-sm">
                                                 <i class="fas fa-trash"></i>
@@ -115,7 +115,7 @@
                                             <input class="form-control" type="number" value="1" />
                                         </td>
                                         <td>RM 50.00</td>
-                                    </tr>
+                                    </tr>-->
                                 </tbody>
                             </table>
                         </div>
@@ -142,8 +142,11 @@
 
 
         <!--Bootstrap JS-->
-        <script src="js/jquery-3.4.1.slim.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>
+        <!--<script src="js/jquery-3.4.1.slim.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>-->
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
         <script>
             $('.table tbody').on('click', '.btn', function() {
                 $(this).closest('tr').remove(); //removes the closest table row, in this case, the table row where the delete button is pressed
@@ -166,6 +169,10 @@
                 var _name=$('.btnfood1').text();
                 var _tr='<tr class="deleteRow"><th scope="row"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></th><td>'+_name+'</td><td><input class="form-control" type="number" value="1"/></td><td>RM 50.00</td></tr>'
                 $('tbody').append(_tr);
+            });
+            
+            $('.table tbody').on('input',function(){
+                alert("this doesn't work help!");
             });
 
         </script>
