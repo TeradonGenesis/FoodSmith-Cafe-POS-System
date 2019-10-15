@@ -162,6 +162,11 @@
                 ?>
                 window.location.reload();
             });
+            $('.btnfood1').on('click',function(){
+                var _name=$('.btnfood1').text();
+                var _tr='<tr class="deleteRow"><th scope="row"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></th><td>'+_name+'</td><td><input class="form-control" type="number" value="1"/></td><td>RM 50.00</td></tr>'
+                $('tbody').append(_tr);
+            });
 
         </script>
     </body>
