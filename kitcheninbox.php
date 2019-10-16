@@ -18,7 +18,7 @@
         <link rel="stylesheet" href="css/bootstrap.min.css" />
         <link rel="stylesheet" href="fontawesome/css/all.min.css" />
         <link rel="stylesheet" href="css/kitcheninbox.css">
-        
+
 
 
 
@@ -28,11 +28,20 @@
         <div class="container-fluid inboxlayout">
             <!--NavBar area-->
             <div class="row">
-               <div class="col-md-12 col-sm-12">
-                   <h1>Kitchen Inbox</h1>
-               </div>
-                
-
+                <div class="col-md-12 col-sm-12">
+                    <h1>Kitchen Inbox</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 col-sm-3">
+                    <div class="card" style="width: 18rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Curry Lamb</h5>
+                            <a href="#" class="card-link">Order Done</a>
+                            <a href="#" class="card-link">Remove Order</a>
+                        </div>
+                    </div>
+                </div>
             </div>
 
         </div>
