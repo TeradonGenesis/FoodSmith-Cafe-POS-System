@@ -18,6 +18,20 @@
             <?php include 'nav.php'?>
             <?php 
     
+                if(isset($_POST['updateFood'])) {
+        
+                        $updateID = $_POST['updateID'];
+                        $updateName = $_POST['updateName'];
+                        $updatePrice = $_POST['updatePrice'];
+                        $updateCategory = $_POST['updateCategory'];
+
+
+                        $updateStuff = updateFoodItem($connection, "menu", $updateID, $updateName, $updatePrice, $updateCategory);
+
+
+
+                }
+    
                 
                 if(isset($_POST['status']) && isset($_POST['id'])) {
                     $status = $_POST['status'];
@@ -37,18 +51,6 @@
                     $sql="DELETE FROM menu WHERE food_id = $deleteid;";
                     $connection->query($sql);
                     $connection->close();
-                }
-    
-                $showModals = null;
-                $modalName = '';
-    
-                if(isset($_POST['modalid'])) {
-                    $modalid = $_POST['modalid'];
-                    
-                    $showModals = show($connection, "menu", "food_id = $modalid", "food_id DSEC LIMIT 1");
-                    $modalName = $showModals['food_name'];
-                    $modalPrice = $showModals['food_price'];
-                    
                 }
     
     
@@ -363,25 +365,27 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
                                 </div>
                                 <div class="col-12 col-md-12 text-center">
                                     <form action="manage-menu.php" method="POST" enctype="multipart/form-data">
-                                        <div id="addFood" class="row mt-3">
+                                        <div id="updateFood" class="row mt-3">
+
+                                            <input id="getID" class="form-control " type="text" name="updateID" placeholder="id" value="">
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-4 text-left uploading">
                                                 <span class="btn btn-primary btn-file">
-                                                    <i class="fas fa-upload"></i> Browse<input id="editPhoto" type="file" name="file" class="file-input">
+                                                    <i class="fas fa-upload"></i> Browse<input id="editPhoto" type="file" name="updateFile" class="file-input">
                                                 </span>
                                                 <span id="edit-file-label">No file</span>
                                             </div>
                                             <br />
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                                <input id="editName" class="form-control" type="text" name="name" placeholder="Name" value="<?php echo $modalName ?>">
+                                                <input id="editName" class="form-control" type="text" name="updateName" placeholder="Name" value="">
                                             </div>
                                             <br />
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                                <input id="editPrice" class="form-control" type="text" name="price" placeholder="Price eg. 2.50" value="<?php echo $modalPrice?>">
+                                                <input id="editPrice" class="form-control" type="text" name="updatePrice" placeholder="Price eg. 2.50" value="">
                                             </div>
                                             <br />
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                                <select id="editCategory" name="category" class="form-control">
+                                                <select id="editCategory" name="updateCategory" class="form-control">
                                                     <option selected="" hidden="" value="">Category</option>
                                                     <?php foreach($showCategories as $showCategory) { ?>
                                                     <option value="<?php echo $showCategory['category_id']; ?>"><?php echo $showCategory['category_name']; ?></option>
@@ -391,8 +395,7 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
                                             <br />
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
-                                                <button type="submit" value="submit" class="btn btn-success enbtn btn-md" name="submit">ADD</button>
-                                                <button type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="submit">RESET</button>
+                                                <button type="submit" value="updateFood" class="btn btn-success enbtn btn-md" name="updateFood">UPDATE</button>
                                             </div>
                                         </div>
                                     </form>
@@ -426,62 +429,6 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
 
     <!--Edit modal -->
 
-    <div id="activateModal">
-        <div class="modal fade" id="editableModal" tabindex="-1" role="dialog" aria-labelledby="teachersModalLabel" aria-hidden="true">
-            <div class="modal-dialog text-center" role="document">
-                <div class="modal-content">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                    <div class="modal-body row">
-
-                        <div class="col-12 col-md-12">
-                            <h5 class="modal-title" id="editableLabel">Edit Item #<span id="editID" value=""></span></h5>
-
-                        </div>
-                        <div class="col-12 col-md-12 text-center">
-                            <form action="manage-menu.php" method="POST" enctype="multipart/form-data">
-                                <div id="addFood" class="row mt-3">
-
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-4 text-left uploading">
-                                        <span class="btn btn-primary btn-file">
-                                            <i class="fas fa-upload"></i> Browse<input id="editPhoto" type="file" name="file" class="file-input">
-                                        </span>
-                                        <span id="edit-file-label">No file</span>
-                                    </div>
-                                    <br />
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                        <input id="editName" class="form-control" type="text" name="name" placeholder="Name" value="<?php echo $modalName ?>">
-                                    </div>
-                                    <br />
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                        <input id="editPrice" class="form-control" type="text" name="price" placeholder="Price eg. 2.50" value="<?php echo $modalPrice?>">
-                                    </div>
-                                    <br />
-                                    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                        <select id="editCategory" name="category" class="form-control">
-                                            <option selected="" hidden="" value="">Category</option>
-                                            <?php foreach($showCategories as $showCategory) { ?>
-                                            <option value="<?php echo $showCategory['category_id']; ?>"><?php echo $showCategory['category_name']; ?></option>
-                                            <?php } ?>
-                                        </select>
-                                    </div>
-                                    <br />
-
-                                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
-                                        <button type="submit" value="submit" class="btn btn-success enbtn btn-md" name="submit">ADD</button>
-                                        <button type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="submit">RESET</button>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-
-
-                </div>
-            </div>
-        </div>
-    </div>
 
     <?php include 'footer.php'?>
     <script language="JavaScript">
@@ -510,8 +457,11 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
                             var url = $(this).closest('tr').find('img').attr('src').replace('../images/', '');
                             var category = $(this).closest('tr').find('#editCategory').attr('value');
 
+                            var numID = data[0];
+
                             $("#edit-file-label").html(url);
-                            $("#editID").html(data[0]);
+                            $("#editID").html(numID);
+                            $("#getID").val(numID);
                             $("#editName").val(data[2]);
                             $("#editPrice").val(data[3]);
 

@@ -23,8 +23,11 @@
             var url = $(this).closest('tr').find('img').attr('src').replace('../images/', '');
             var category = $(this).closest('tr').find('#editCategory').attr('value');
 
+            var numID = data[0];
+
             $("#edit-file-label").html(url);
-            $("#editID").html(data[0]);
+            $("#editID").html(numID);
+            $("#getID").val(numID);
             $("#editName").val(data[2]);
             $("#editPrice").val(data[3]);
 
@@ -65,9 +68,12 @@
                         }).get();
                         var url = $(this).closest('tr').find('img').attr('src').replace('../images/', '');
                         var category = $(this).closest('tr').find('#editCategory').attr('value');
+                        
+                        var numID = data[0];
 
                         $("#edit-file-label").html(url);
-                        $("#editID").html(data[0]);
+                        $("#editID").html(numID);
+                        $("#getID").val(numID);
                         $("#editName").val(data[2]);
                         $("#editPrice").val(data[3]);
 

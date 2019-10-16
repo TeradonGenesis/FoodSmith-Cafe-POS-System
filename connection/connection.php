@@ -176,4 +176,23 @@ function updateHideStatus ($connection = null, $table = null, $status = null, $i
         $stmt->close();
 }
 
+function updateFoodItem ($connection = null, $table = null, $id = null, $name = null, $price = null, $category = null) {
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "UPDATE $table SET food_name = ?, food_price = ?, category = ? WHERE food_id = ?";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('sdii', $name, $price, $category, $id))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        $stmt->close();
+}
+
+
+
 ?>
