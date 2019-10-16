@@ -19,6 +19,14 @@
                 session_start();
             }
             
+            $url = "orderdetails.php";
+            $query = parse_url($url, PHP_URL_QUERY);
+            if ($query) {
+                $url .= '&category=1';
+                } else {
+                    $url .= '?category=1';
+                }
+
         ?>
         <div class="container">
            <?php foreach ($orders as $order) {
