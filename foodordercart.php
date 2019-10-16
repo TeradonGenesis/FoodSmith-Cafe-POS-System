@@ -162,17 +162,34 @@
                 $('#totalAmt').text("RM 0");
             });
             $('#submitBtn').on('click',function(){
-                <?php
+                //commented out the order_id SQL statement to prevent unecessary inserts
+                /*<?/*php
                     $conn=mysqli_connect("localhost","root","","poscafe");
                     $sql="INSERT INTO order_id VALUES(".$id.")";
                     $conn->query($sql);
                     $conn->close();
                 ?>
-                window.location.reload();
+                window.location.reload();*/
+                //this iterates through the table row, extracts the required data then inserts into SQL(yet to be implemented)
+                $('.table tbody tr').each(function(rowIndex){
+                    var _foodname;
+                    var _qty;
+                    var _price;
+                    $(this).find('.food-item-name').each(function(){
+                        _foodname=$(this).html();
+                    });
+                    $(this).find('input').each(function(){
+                       _qty=$(this).val(); 
+                    });
+                    $(this).find('td.price').each(function(){
+                       _price=$(this).html(); 
+                    });
+                    alert(_foodname+"**"+_qty+"**"+_price);
+                });
             });
             $('.btnfood1').on('click',function(){
                 var _name=$('.btnfood1').text();
-                var _tr='<tr class="deleteRow"><th scope="row"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></th><td>'+_name+'</td><td><input class="form-control" type="number" value="1"/></td><td class="price">50.00</td></tr>'
+                var _tr='<tr class="deleteRow"><th scope="row"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></th><td class="food-item-name">'+_name+'</td><td><input class="form-control" type="number" value="1"/></td><td class="price">50.00</td></tr>'
                 $('tbody').append(_tr);
             });
             
