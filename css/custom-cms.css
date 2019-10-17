@@ -295,3 +295,29 @@ ul.CTAs a {
     display: block;
 }
 
+.gradeContainer {
+
+    font-size: 24px;
+    -webkit-box-shadow: 10px 10px 23px -9px rgba(219, 219, 219, 1);
+    -moz-box-shadow: 10px 10px 23px -9px rgba(219, 219, 219, 1);
+    box-shadow: 10px 10px 23px -9px rgba(219, 219, 219, 1);
+    background-color: #ffffff;
+
+}
+
+.forgotten-password {
+    font-size: 18px;
+}
+
+.hyperlink {
+    color: #0000EE;
+    text-decoration: underline;
+}
+
+.hyperlink:hover {
+    color: #800080;
+    text-decoration: underline;
+}
+
+
+
