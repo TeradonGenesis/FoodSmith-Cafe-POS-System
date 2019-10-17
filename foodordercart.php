@@ -176,7 +176,21 @@
                 $('#table tbody').empty(); //empties the table
                 $('#totalAmt').text("RM 0");
             });
-
+            
+            function insertOrder(_id,_food,_table,_qty,_price){
+                $.ajax({
+                       type:"POST",
+                        url:"connection/insertOrder.php",
+                        data:{
+                            id:_id,
+                            food:_food,
+                            table:_table,
+                            qty:_qty,
+                            price:_price,
+                        }
+                        
+                    });
+            }
         
             $('#submitBtn').on('click', function() {
 
@@ -186,9 +200,9 @@
                 var _qty;
                 var _price;
 
-                _tableNo = parseInt($('#sel1 :selected').text());
+                _tableNo = $('#sel1 :selected').text();
                 _price = _totalPrice;
-                _orderid = parseInt($('#orderID').html());
+                _orderid = $('#orderID').html();
 
                 $.ajax({
                     type: "POST",
@@ -209,18 +223,7 @@
                     $(this).find('td.price').each(function(){
                        _price=$(this).html(); 
                     });
-                    
-                    $.ajax({
-                       type:"POST",
-                        url:"connection/insertOrder.php",
-                        data:{
-                            id:_orderid,
-                            food:"Test",
-                            table:1
-                        }
-                        
-                    });
-                    
+                    insertOrder(_orderid,_foodname,_tableNo,_qty,_totalPrice);
                 });
                 //window.location.reload();
                 //this iterates through the table row, extracts the required data then inserts into SQL(yet to be implemented)
