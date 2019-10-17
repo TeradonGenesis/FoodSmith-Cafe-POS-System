@@ -215,9 +215,9 @@
                         url:"connection/insertOrder.php",
                         data:{
                             id:_orderid,
-                            food:_foodname,
-                            table:_tableNo
-                        },
+                            food:"Test",
+                            table:1
+                        }
                         
                     });
                     

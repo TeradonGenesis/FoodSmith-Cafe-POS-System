@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2019 at 07:16 PM
+-- Generation Time: Oct 17, 2019 at 10:27 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -33,6 +33,13 @@ CREATE TABLE `food_category` (
   `category_name` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `food_category`
+--
+
+INSERT INTO `food_category` (`category_id`, `category_name`) VALUES
+(1, 'Test');
+
 -- --------------------------------------------------------
 
 --
@@ -51,6 +58,31 @@ CREATE TABLE `menu` (
   `created_on` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `menu`
+--
+
+INSERT INTO `menu` (`food_id`, `food_text`, `food_code`, `food_picture`, `food_name`, `food_price`, `category`, `status`, `created_on`) VALUES
+(102, NULL, NULL, '5da7d57cba6d31.58167466.jpg', 'Test', '5.00', 1, 1, '2019-10-17 02:44:12');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_id`
+--
+
+CREATE TABLE `order_id` (
+  `order_id` bigint(14) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `order_id`
+--
+
+INSERT INTO `order_id` (`order_id`) VALUES
+(17102019160552),
+(17102019160746);
+
 -- --------------------------------------------------------
 
 --
@@ -58,8 +90,8 @@ CREATE TABLE `menu` (
 --
 
 CREATE TABLE `order_list` (
-  `order_id` int(11) NOT NULL,
-  `ordered_food` int(11) NOT NULL,
+  `order_id` bigint(14) NOT NULL,
+  `ordered_food` varchar(11) NOT NULL,
   `ordered_table` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
   `order_price` decimal(6,2) DEFAULT NULL,
@@ -80,6 +112,14 @@ CREATE TABLE `table_listing` (
   `status` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
+-- Dumping data for table `table_listing`
+--
+
+INSERT INTO `table_listing` (`table_id`, `table_no`, `table_category`, `status`) VALUES
+(1, 1, 4, 1),
+(2, 2, 6, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -88,7 +128,7 @@ CREATE TABLE `table_listing` (
 
 CREATE TABLE `transaction_listing` (
   `trans_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
+  `order_id` bigint(14) NOT NULL,
   `total_price` decimal(6,2) DEFAULT NULL,
   `created_on` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -111,12 +151,18 @@ ALTER TABLE `menu`
   ADD KEY `category` (`category`);
 
 --
+-- Indexes for table `order_id`
+--
+ALTER TABLE `order_id`
+  ADD PRIMARY KEY (`order_id`);
+
+--
 -- Indexes for table `order_list`
 --
 ALTER TABLE `order_list`
-  ADD PRIMARY KEY (`order_id`),
-  ADD KEY `ordered_food` (`ordered_food`),
-  ADD KEY `ordered_table` (`ordered_table`);
+  ADD PRIMARY KEY (`order_id`,`ordered_table`),
+  ADD KEY `order_list_ibfk_2` (`ordered_table`),
+  ADD KEY `order_id` (`order_id`);
 
 --
 -- Indexes for table `table_listing`
@@ -139,25 +185,19 @@ ALTER TABLE `transaction_listing`
 -- AUTO_INCREMENT for table `food_category`
 --
 ALTER TABLE `food_category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `food_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=101;
-
---
--- AUTO_INCREMENT for table `order_list`
---
-ALTER TABLE `order_list`
-  MODIFY `order_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `food_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
 
 --
 -- AUTO_INCREMENT for table `table_listing`
 --
 ALTER TABLE `table_listing`
-  MODIFY `table_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `table_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `transaction_listing`
@@ -179,7 +219,6 @@ ALTER TABLE `menu`
 -- Constraints for table `order_list`
 --
 ALTER TABLE `order_list`
-  ADD CONSTRAINT `order_list_ibfk_1` FOREIGN KEY (`ordered_food`) REFERENCES `menu` (`food_id`),
   ADD CONSTRAINT `order_list_ibfk_2` FOREIGN KEY (`ordered_table`) REFERENCES `table_listing` (`table_id`);
 
 --
