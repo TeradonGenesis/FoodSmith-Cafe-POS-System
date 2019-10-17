@@ -147,10 +147,10 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
         <!-- Bootstrap JS -->
 
-        <script src="../js/jquery.tabledit.js"></script>
-        <script src="../js/jquery.js"></script>
-        <script src="../js/jquery-3.4.1.min.js"></script>
-        <script src="../js/bootstrap.min.js"></script>
+        <script src="js/jquery.tabledit.js"></script>
+        <script src="js/jquery.js"></script>
+        <script src="js/jquery-3.4.1.min.js"></script>
+        <script src="js/bootstrap.min.js"></script>
         <script>
             var _totalPrice = 0.00;
             $('#totalAmt').html(_totalPrice.toFixed(2));
@@ -228,7 +228,7 @@
             });
             $('.btnfood1').on('click', function() {
                 var _name = $('.btnfood1').text();
-                var _tr = '<tr class="deleteRow"><th scope="row"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></th><td class="food-item-name">' + _name + '</td><td><input class="form-control" type="number" value="1"/></td><td class="price">50.00</td></tr>'
+                var _tr = '<tr class="deleteRow"><th scope="row"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></th><td class="food-item-name">' + _name + '</td><td><input class="form-control" min="1" type="number" value="1"/></td><td class="price">50.00</td></tr>'
                 $('tbody').append(_tr);
                 updatePrice();
             });
