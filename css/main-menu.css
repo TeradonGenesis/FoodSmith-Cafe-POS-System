@@ -1,9 +1,16 @@
-.english {
-    border-top-color: #E4FF1A !important;
+@import "https://fonts.googleapis.com/css?family=Lato:700&display=sw";
+
+body {
+    font-family: 'Lato', sans-serif;
+    background: #eeeeee;
 }
 
-.big-button-english {
-    background-color: #E4FF1A;
+.menu {
+    border-top-color: #AC3B61 !important;
+}
+
+.big-button-menu {
+    background-color: #AC3B61;
 }
 
 .card {
@@ -33,7 +40,7 @@
 }
 
 .img-card img {
-    width: 50%;
+    width: 70%;
     object-fit: cover;
     transition: all .25s ease;
 }
