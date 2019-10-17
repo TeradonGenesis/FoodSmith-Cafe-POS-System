@@ -35,7 +35,7 @@
                             <?php foreach($categories as $category) { ?>
                             <a class="nav-link drinksNav" id="v-pills-profile-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-cocktail"></i> <?php echo $category['category_name'] ?></a>
                             <?php } ?>
-                          
+
                         </div>
                     </div>
                 </div>
@@ -65,20 +65,21 @@
                             <div class="form-group">
                                 <label for="sel1">Select table:</label>
                                 <select class="form-control" id="sel1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
+                                    <option value="" selected="" type="hidden">Table No</option>
+                                    <option value="1">1</option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
                                 </select>
                             </div>
                         </div>
-                        
+
                         <div class="col-md-12 text-center">
                             <!--Autoincremented based on Order ID in database-->
                             <?php
                                 date_default_timezone_set("Asia/Kuala_Lumpur");
                                 $id=date('dmYHis');
-                                echo "<p>Order ID: ".$id."</p>";
+                                echo '<p>Order ID: <span id="orderID">'.$id.'</span></p>';
                             ?>
                         </div>
                         <div class="col-md-12 ">
@@ -91,7 +92,7 @@
                                 </thead>
                                 <tbody>
                                     <!--Stand in data, hardcoded-->
-                                   <!--<tr class="deleteRow">
+                                    <!--<tr class="deleteRow">
                                         <th scope="row">
                                             <button type="button" class="btn btn-danger btn-sm">
                                                 <i class="fas fa-trash"></i>
@@ -123,7 +124,7 @@
                             <p class="text-center" id="totalprice">TOTAL PRICE:</p>
                         </div>
                         <div class="col-md-6 col-sm-6">
-                            <p id="totalAmt" class="text-center">RM 9000</p>
+                            <p id="totalAmt" class="text-center">0.00</p>
                         </div>
                         <div class="col-md-12">
                             <p class="text-center">
@@ -141,40 +142,64 @@
 
 
 
-        <!--Bootstrap JS-->
-        <!--<script src="js/jquery-3.4.1.slim.min.js"></script>
-        <script src="js/bootstrap.min.js"></script>-->
-        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+        <!-- jQuery CDN - Slim version (=without AJAX) -->
+        <!-- Popper.JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        <!-- Bootstrap JS -->
+
+        <script src="../js/jquery.tabledit.js"></script>
+        <script src="../js/jquery.js"></script>
+        <script src="../js/jquery-3.4.1.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
         <script>
-            //this values are stand in to check if it has been increased.
-            //ideally, it should pull the original price from database
-            var _isIncrease=false;
-            var _originalPrice=0;
-            
+            var _totalPrice = 0.00;
+            $('#totalAmt').html(_totalPrice.toFixed(2));
+
+            function updatePrice() {
+                _totalPrice = 0.00;
+                $('.table tbody tr').each(function(rowIndex) {
+
+                    $(this).find('td.price').each(function() {
+                        _totalPrice += parseFloat($(this).html());
+                    });
+                });
+
+                $('#totalAmt').html(_totalPrice.toFixed(2));
+            }
+
             $('.table tbody').on('click', '.btn', function() {
                 $(this).closest('tr').remove(); //removes the closest table row, in this case, the table row where the delete button is pressed
+                updatePrice();
             });
 
             $('#resetBtn').on('click', function() {
                 $('#table tbody').empty(); //empties the table
                 $('#totalAmt').text("RM 0");
             });
-            $('#submitBtn').on('click',function(){
-                //commented out the order_id SQL statement to prevent unecessary inserts
-                /*<?/*php
-                    $conn=mysqli_connect("localhost","root","","poscafe");
-                    $sql="INSERT INTO order_id VALUES(".$id.")";
-                    $conn->query($sql);
-                    $conn->close();
-                ?>
-                window.location.reload();*/
-                //this iterates through the table row, extracts the required data then inserts into SQL(yet to be implemented)
+
+        
+            $('#submitBtn').on('click', function() {
+
+                var _tableNo;
+                var _orderid;
+                var _foodname;
+                var _qty;
+                var _price;
+
+                _tableNo = parseInt($('#sel1 :selected').text());
+                _price = _totalPrice;
+                _orderid = parseInt($('#orderID').html());
+
+                $.ajax({
+                    type: "POST",
+                    url: "connection/insertID.php",
+                    data: {
+                        id: _orderid,
+                    }
+                    
+                });
+                
                 $('.table tbody tr').each(function(rowIndex){
-                    var _foodname;
-                    var _qty;
-                    var _price;
                     $(this).find('.food-item-name').each(function(){
                         _foodname=$(this).html();
                     });
@@ -184,44 +209,50 @@
                     $(this).find('td.price').each(function(){
                        _price=$(this).html(); 
                     });
-                    alert(_foodname+"**"+_qty+"**"+_price);
+                    
+                    $.ajax({
+                       type:"POST",
+                        url:"connection/insertOrder.php",
+                        data:{
+                            id:_orderid,
+                            food:_foodname,
+                            table:_tableNo
+                        },
+                        
+                    });
+                    
                 });
+                //window.location.reload();
+                //this iterates through the table row, extracts the required data then inserts into SQL(yet to be implemented)
+
             });
-            $('.btnfood1').on('click',function(){
-                var _name=$('.btnfood1').text();
-                var _tr='<tr class="deleteRow"><th scope="row"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></th><td class="food-item-name">'+_name+'</td><td><input class="form-control" type="number" value="1"/></td><td class="price">50.00</td></tr>'
+            $('.btnfood1').on('click', function() {
+                var _name = $('.btnfood1').text();
+                var _tr = '<tr class="deleteRow"><th scope="row"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></th><td class="food-item-name">' + _name + '</td><td><input class="form-control" type="number" value="1"/></td><td class="price">50.00</td></tr>'
                 $('tbody').append(_tr);
+                updatePrice();
             });
-            
-            
-            $('.table tbody').on('change','tr',function(){
+
+
+            $('.table tbody').on('change', 'tr', function() {
                 var _qty;
-                var _price; //_price should store the the food price from food database
+                var _price;
                 var _increase;
-                
-                $(this).find('input').each(function(){
-                   _qty=$(this).val();
+
+                $(this).find('input').each(function() {
+                    _qty = $(this).val();
                 });
-                $(this).find('td.price').each(function(){
-                    _price=$(this).html();
+                $(this).find('td.price').each(function() {
+                    _price = $(this).html();
                 });
-                /*if(_isIncrease==false){
-                    _originalPrice=_price;
-                    _increase=_qty*_price;
-                    $(this).find('td.price').each(function(){
-                       $(this).html(_increase.toFixed(2)); 
-                    });
-                    _isIncrease=true;
-                }else{
-                    _increase=_qty*_originalPrice;
-                    $(this).find('td.price').each(function(){
-                       $(this).html(_increase.toFixed(2)); 
-                    });
-                }*/
-                _increase=_qty*_price; 
-                    $(this).find('td.price').each(function(){
-                       $(this).html(_increase.toFixed(2)); 
+
+                _increase = _qty * _price;
+
+                updatePrice();
+                $(this).find('td.price').each(function() {
+                    $(this).html(_increase.toFixed(2));
                 });
+                updatePrice();
             });
 
         </script>
