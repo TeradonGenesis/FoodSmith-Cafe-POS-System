@@ -48,6 +48,7 @@
                             <div class="card">
                                 <img src="images/<?php echo $food['food_picture']?>" class="card-img-top img-fluid" height="100%" alt="...">
                                 <div class="card-body text-center">
+                                    <p><?php echo $food['food_price']?></p>
                                     <a href="#" class="btnfood1 btn-transparent"><?php echo $food['food_name']?></a>
                                 </div>
                             </div>
@@ -174,24 +175,24 @@
 
             $('#resetBtn').on('click', function() {
                 $('#table tbody').empty(); //empties the table
-                $('#totalAmt').text("RM 0");
+                $('#totalAmt').text("0");
             });
-            
-            function insertOrder(_id,_food,_table,_qty,_price){
+
+            function insertOrder(_id, _food, _table, _qty, _price) {
                 $.ajax({
-                       type:"POST",
-                        url:"connection/insertOrder.php",
-                        data:{
-                            id:_id,
-                            food:_food,
-                            table:_table,
-                            qty:_qty,
-                            price:_price,
-                        }
-                        
-                    });
+                    type: "POST",
+                    url: "connection/insertOrder.php",
+                    data: {
+                        id: _id,
+                        food: _food,
+                        table: _table,
+                        qty: _qty,
+                        price: _price,
+                    }
+
+                });
             }
-        
+
             $('#submitBtn').on('click', function() {
 
                 var _tableNo;
@@ -201,39 +202,65 @@
                 var _price;
 
                 _tableNo = $('#sel1 :selected').text();
-                _price = _totalPrice;
-                _orderid = $('#orderID').html();
+                if (_tableNo == "Table No") {
+                    alert("Choose a table number please!");
+                } else {
+                    //alert("You have chosen a table number!");
+                    _price = _totalPrice;
+                    _orderid = $('#orderID').html();
 
-                $.ajax({
-                    type: "POST",
-                    url: "connection/insertID.php",
-                    data: {
-                        id: _orderid,
-                    }
-                    
-                });
-                
-                $('.table tbody tr').each(function(rowIndex){
-                    $(this).find('.food-item-name').each(function(){
-                        _foodname=$(this).html();
-                    });
-                    $(this).find('input').each(function(){
-                       _qty=$(this).val(); 
-                    });
-                    $(this).find('td.price').each(function(){
-                       _price=$(this).html(); 
-                    });
-                    insertOrder(_orderid,_foodname,_tableNo,_qty,_totalPrice);
-                });
-                //window.location.reload();
-                //this iterates through the table row, extracts the required data then inserts into SQL(yet to be implemented)
+                    /*$.ajax({
+                        type: "POST",
+                        url: "connection/insertID.php",
+                        data: {
+                            id: _orderid,
+                        }
+                    });*/
 
+                    $('.table tbody tr').each(function(rowIndex) {
+                        _foodname = $(this).find('.food-item-name').html();
+                        _qty = $(this).find('input[type=number]').val();
+                        _price = _totalPrice;
+                        alert(_orderid + " " + _tableNo + " " + _foodname + " " + _qty + " " + _price);
+                        //insertOrder(_orderid, _foodname, _tableNo, _qty, _totalPrice);
+                    });
+                    //window.location.reload();
+                }
             });
+
             $('.btnfood1').on('click', function() {
-                var _name = $('.btnfood1').text();
-                var _tr = '<tr class="deleteRow"><th scope="row"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></th><td class="food-item-name">' + _name + '</td><td><input class="form-control" min="1" type="number" value="1"/></td><td class="price">50.00</td></tr>'
+                
+                $getName = $(this).closest('.card-body');
+                var getName = $getName.children("a").map(function() {
+                    return $(this).text();
+                }).get();
+                
+                $getPrice = $(this).closest('.card-body');
+                var getPrice = $getPrice.children("p").map(function() {
+                    return $(this).text();
+                }).get();
+                
+                var _name = getName[0];
+                var foodprice = getPrice[0];
+                
+                console.log(getName);
+                console.log(getPrice);
+                
+                $('.table tbody tr').each(function(rowIndex) {
+                        var _match = $(this).find('.food-item-name').html();
+                        if (_match == _name) {
+                            alert("It has already been added to food cart.");
+                            return false;
+                        }
+                    });
+                
+
+               
+                
+                var _tr = '<tr class="deleteRow"><th scope="row"><button type="button" class="btn btn-danger btn-sm"><i class="fas fa-trash"></i></button></th><td class="food-item-name">' + _name + '</td><td><input class="form-control" min="1" type="number" value="1"/></td><td class="price">'+ foodprice +'</td></tr>'
                 $('tbody').append(_tr);
                 updatePrice();
+               
             });
 
 
