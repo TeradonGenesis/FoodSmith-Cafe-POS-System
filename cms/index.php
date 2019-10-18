@@ -32,7 +32,7 @@
                                 </div>
                                 <div class="row">
                                     <div class="col-12 col-sm-10 col-md-10 col-lg-10 offset-sm-1 offset-md-1 offset-lg-1">
-                                        <form action="authenticate-cms.php" method="POST">
+                                        <form action="authentication.php" method="POST">
                                             <div class="row text-center">
                                                 <div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-4">
                                                     <input id="signin-username" class="form-control" type="text" name="getUsername" placeholder="Name" value="">
