@@ -14,17 +14,18 @@
     <body>
         <?php 
              require_once('connection/connection.php');
-             $orders = show($connection, "order_list", "order_id = 8888", "ordered_food");
             if (session_id() == "") {
                 session_start();
-            }
-            
-            $url = "orderdetails.php";
-            $query = parse_url($url, PHP_URL_QUERY);
-            if ($query) {
-                $url .= '&category=1';
-                } else {
-                    $url .= '?category=1';
+            } else {
+                $orderid = $_SESSION["orderid"];
+                $orders = show($connection, "order_list", "order_id = $orderid", "ordered_food");
+                $url = "orderdetails.php";
+                $query = parse_url($url, PHP_URL_QUERY);
+                if ($query) {
+                    $url .= '&category=1';
+                    } else {
+                        $url .= '?category=1';
+                    }
                 }
 
         ?>

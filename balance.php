@@ -13,8 +13,13 @@
     </head>
     <body>
         <?php
+        require_once('connection/connection.php');
         session_start();
         $balance = $_POST["amount"] - $_SESSION["price"];
+        $orderid=$_SESSION["orderid"];
+        echo $orderid;
+        updateTableStatus($connection, "table_listing","0","$orderid");
+        updateTableOrder($connection, "table_listing","0","$orderid");
         ?>
         <div class="container">
             <div class="show_balance">

@@ -20,11 +20,12 @@
                 $tables = show($connection, "table_listing", "table_id != ''", "table_no");
                 foreach($tables as $table) {
                 $orderid = $table["order_id"];
+                $_SESSION["orderid"] = $orderid;
                 $tableno = $table["table_no"];
                 ?>
                 <div class="col-md-2 border m-3 tableListing <?php echo "status".$table["status"]; ?>">
                    <?php if ($orderid !=0) {
-                            echo "<form name='paymentform' method='POST' action='orderdetails.php'>";
+                            echo "<form name='paymentform' method='GET' action='payment.php'>";
                             echo "<button type='submit' value='$orderid'>$tableno</button>";
                             echo "</form>";
                     } else {  
