@@ -176,6 +176,23 @@ function updateHideStatus ($connection = null, $table = null, $status = null, $i
         $stmt->close();
 }
 
+function updateKitchenInboxStatus ($connection = null, $table = null, $order_id = null, $ordered_food = null) {
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "UPDATE $table SET status = 2 WHERE order_id = ? AND ordered_food = ?";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('ii', $order_id, $ordered_food))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        $stmt->close();
+}
+
 function updateTableStatus ($connection = null, $table = null, $status = null, $order = null) {
     if ($connection->connect_error)
             die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
