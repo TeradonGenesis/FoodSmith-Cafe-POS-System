@@ -222,7 +222,12 @@
                         
                         insertOrder(_orderid, _foodcode, _tableNo, _qty, _totalPrice);
                     });
-                    //window.location.reload();
+                    if(alert("Order submitted!")){
+                        
+                    }
+                    else{
+                        window.location.reload(true);
+                    }
                 }
             });
 
