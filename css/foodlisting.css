@@ -7,8 +7,8 @@ body{
 }
 
 .lulw{
-    border: 1px solid black;
-    border-bottom: none;
+    /*border: 1px solid black;
+    border-bottom: none;*/
     padding: 0;
     background-color: #eeeeee;
     
@@ -16,13 +16,15 @@ body{
 
 
 .lulw2{
-    border: 1px solid black;
-    border-bottom: none;
+    /*border: 1px solid black;
+    border-bottom: none;*/
+    background-color: #FEDECF;
 }
 
 .lulw3{
-    border: 1px solid black;
-    border-bottom: none;
+    /*border: 1px solid black;
+    border-bottom: none;*/
+    background-color: purple;
 }
 
 .food2{

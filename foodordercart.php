@@ -24,9 +24,9 @@
     </head>
 
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid h-100">
             <!--NavBar area-->
-            <div class="row">
+            <div class="row h-100">
                 <div class="col-md-2 col-sm-2 lulw">
                     <div class="col-md-12 innerNav">
                         <p class="text-center mb-0 mt-5">Navigation Bar</p>
@@ -61,7 +61,7 @@
 
                 </div>
                 <!--Food Order Cart-->
-                <div class="col-md-3 lulw3">
+                <div class="col-md-3 lulw3 text-white rounded">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -84,8 +84,8 @@
                                 echo '<p>Order ID: <span id="orderID">'.$id.'</span></p>';
                             ?>
                         </div>
-                        <div class="col-md-12 ">
-                            <table id="table" class="table">
+                        <div class="col-md-12">
+                            <table id="table" class="table text-white">
                                 <thead>
                                     <th scope="col">Delete</th>
                                     <th scope="col">Item</th>
