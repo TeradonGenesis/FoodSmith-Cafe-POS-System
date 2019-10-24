@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 17, 2019 at 10:27 AM
+-- Generation Time: Oct 24, 2019 at 05:43 AM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -63,7 +63,8 @@ CREATE TABLE `menu` (
 --
 
 INSERT INTO `menu` (`food_id`, `food_text`, `food_code`, `food_picture`, `food_name`, `food_price`, `category`, `status`, `created_on`) VALUES
-(102, NULL, NULL, '5da7d57cba6d31.58167466.jpg', 'Test', '5.00', 1, 1, '2019-10-17 02:44:12');
+(102, NULL, NULL, '5da7d57cba6d31.58167466.jpg', 'Test', '5.00', 1, 1, '2019-10-17 02:44:12'),
+(105, NULL, NULL, '5da913b38a8285.93885798.jpg', 'Water', '4.50', 1, 1, '2019-10-18 01:21:55');
 
 -- --------------------------------------------------------
 
@@ -80,8 +81,27 @@ CREATE TABLE `order_id` (
 --
 
 INSERT INTO `order_id` (`order_id`) VALUES
-(17102019160552),
-(17102019160746);
+(21102019095509),
+(21102019095537),
+(21102019095706),
+(21102019095734),
+(21102019095801),
+(21102019100057),
+(21102019100308),
+(21102019100335),
+(21102019100451),
+(21102019100559),
+(21102019100743),
+(21102019100801),
+(21102019100814),
+(21102019100824),
+(21102019100834),
+(21102019100842),
+(22102019122101),
+(22102019122759),
+(24102019114025),
+(24102019114054),
+(24102019114111);
 
 -- --------------------------------------------------------
 
@@ -91,13 +111,23 @@ INSERT INTO `order_id` (`order_id`) VALUES
 
 CREATE TABLE `order_list` (
   `order_id` bigint(14) NOT NULL,
-  `ordered_food` varchar(11) NOT NULL,
+  `ordered_food` int(11) NOT NULL,
   `ordered_table` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
   `order_price` decimal(6,2) DEFAULT NULL,
   `order_status` int(11) DEFAULT 1,
   `ordered_on` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `order_list`
+--
+
+INSERT INTO `order_list` (`order_id`, `ordered_food`, `ordered_table`, `quantity`, `order_price`, `order_status`, `ordered_on`) VALUES
+(24102019114054, 102, 2, 1, '9.50', 1, '2019-10-24 03:40:59'),
+(24102019114054, 105, 2, 1, '9.50', 1, '2019-10-24 03:40:59'),
+(24102019114111, 102, 2, 4, '38.00', 1, '2019-10-24 03:41:19'),
+(24102019114111, 105, 2, 4, '38.00', 1, '2019-10-24 03:41:19');
 
 -- --------------------------------------------------------
 
@@ -109,16 +139,17 @@ CREATE TABLE `table_listing` (
   `table_id` int(11) NOT NULL,
   `table_no` int(11) NOT NULL,
   `table_category` int(11) DEFAULT NULL,
-  `status` int(11) DEFAULT NULL
+  `status` int(11) DEFAULT NULL,
+  `order_id` int(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `table_listing`
 --
 
-INSERT INTO `table_listing` (`table_id`, `table_no`, `table_category`, `status`) VALUES
-(1, 1, 4, 1),
-(2, 2, 6, 1);
+INSERT INTO `table_listing` (`table_id`, `table_no`, `table_category`, `status`, `order_id`) VALUES
+(1, 1, 4, 1, 0),
+(2, 2, 6, 1, 0);
 
 -- --------------------------------------------------------
 
@@ -160,9 +191,10 @@ ALTER TABLE `order_id`
 -- Indexes for table `order_list`
 --
 ALTER TABLE `order_list`
-  ADD PRIMARY KEY (`order_id`,`ordered_table`),
+  ADD PRIMARY KEY (`order_id`,`ordered_food`) USING BTREE,
   ADD KEY `order_list_ibfk_2` (`ordered_table`),
-  ADD KEY `order_id` (`order_id`);
+  ADD KEY `order_id` (`order_id`),
+  ADD KEY `ordered_food` (`ordered_food`);
 
 --
 -- Indexes for table `table_listing`
@@ -191,7 +223,7 @@ ALTER TABLE `food_category`
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `food_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=103;
+  MODIFY `food_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
 
 --
 -- AUTO_INCREMENT for table `table_listing`
