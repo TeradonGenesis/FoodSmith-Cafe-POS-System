@@ -24,16 +24,16 @@
     </head>
 
     <body>
-        <div class="container-fluid">
+        <div class="container-fluid h-100">
             <!--NavBar area-->
-            <div class="row">
+            <div class="row h-100">
                 <div class="col-md-2 col-sm-2 lulw">
                     <div class="col-md-12 innerNav">
                         <p class="text-center mb-0 mt-5">Navigation Bar</p>
                         <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active foodNav" id="v-pills-home-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-home" aria-selected="true"><i class="fas fa-bacon"></i> All Food</a>
+                            <a class="nav-link active foodNav" id="v-pills-home-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-home" aria-selected="true"> All Food</a>
                             <?php foreach($categories as $category) { ?>
-                            <a class="nav-link drinksNav" id="v-pills-profile-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-profile" aria-selected="false"><i class="fas fa-cocktail"></i> <?php echo $category['category_name'] ?></a>
+                            <a class="nav-link drinksNav" id="v-pills-profile-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-profile" aria-selected="false"> <?php echo $category['category_name'] ?></a>
                             <?php } ?>
 
                         </div>
@@ -61,7 +61,7 @@
 
                 </div>
                 <!--Food Order Cart-->
-                <div class="col-md-3 lulw3">
+                <div class="col-md-3 lulw3 text-white rounded">
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
@@ -84,8 +84,8 @@
                                 echo '<p>Order ID: <span id="orderID">'.$id.'</span></p>';
                             ?>
                         </div>
-                        <div class="col-md-12 ">
-                            <table id="table" class="table">
+                        <div class="col-md-12">
+                            <table id="table" class="table text-white">
                                 <thead>
                                     <th scope="col">Delete</th>
                                     <th scope="col">Item</th>
@@ -222,7 +222,12 @@
                         
                         insertOrder(_orderid, _foodcode, _tableNo, _qty, _totalPrice);
                     });
-                    //window.location.reload();
+                    if(alert("Order submitted!")){
+                        
+                    }
+                    else{
+                        window.location.reload(true);
+                    }
                 }
             });
 

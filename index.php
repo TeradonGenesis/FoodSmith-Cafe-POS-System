@@ -78,7 +78,7 @@
                                 </div>
                             </div>
                             <div class="card-read-more big-button-menu">
-                                <a href="kitcheninbox.php" class="btn btn-block stretched-link text-white font-weight-bold">
+                                <a href="kitcheninbox2.php" class="btn btn-block stretched-link text-white font-weight-bold">
                                     For kitchen staff
                                 </a>
                             </div>

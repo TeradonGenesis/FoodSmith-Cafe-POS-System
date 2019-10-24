@@ -7,7 +7,7 @@
 
             <ul class="list-unstyled components">
                 <li class="active">
-                    <a href="home.php">
+                    <a href="index.php">
                         <i class="fas fa-home"></i>
                         Home
                     </a>
