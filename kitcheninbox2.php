@@ -95,7 +95,8 @@ ON ordered_food = food_id WHERE order_status = 1 ORDER BY order_id");
                                 <tr>
                                     <th class="col-2">OrderID#</th>
                                     <th class="col-2">FoodID#</th>
-                                    <th class="col-4">Name</th>
+                                    <th class="col-3">Name</th>
+                                    <th class="col-1">Table</th>
                                     <th class="col-1 text-center">Quantity</th>
                                     <th class="col-3 text-center">Action</th>
                                 </tr>
@@ -106,12 +107,13 @@ ON ordered_food = food_id WHERE order_status = 1 ORDER BY order_id");
                                 <tr>
                                     <td class="col-2 pt-4"><?php echo $food['order_id']?></td>
                                     <td class="col-2 pt-4"><?php echo $food['food_id']?></td>
-                                    <td class="col-4 pt-4"><?php echo $food['food_name']?></td>
+                                    <td class="col-3 pt-4"><?php echo $food['food_name']?></td>
+                                    <td class="col-1 pt-4"><?php echo $food['ordered_table']?></td>
                                     <td class="col-1 pt-4 text-center"><?php echo $food['quantity']?></td>
                                     <td class="col-3 pt-4 text-center">
                                         <div class="row text-center">
                                             <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                                <button onclick=" updateStatus(<?php echo $food['order_id'] ?>, <?php echo $food['ordered_food']; ?>)" value="hide" class="btn btn-primary enbtn btn-md" name="hide"><i class="fas fa-eye-slash"></i></button>
+                                                <button onclick=" updateStatus(<?php echo $food['order_id'] ?>, <?php echo $food['ordered_food']; ?>)" value="hide" class="btn btn-success enbtn btn-md" name="hide"><i class="fas fa-check"></i></button>
                                             </div>
                                             <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
                                                 <button value="edit" class="btn btn-warning enbtn btn-md modalButton" name="editable"><i class="fas fa-edit"></i></button>
