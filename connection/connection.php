@@ -245,5 +245,23 @@ function updateFoodItem ($connection = null, $table = null, $id = null, $name = 
 }
 
 
+function updateCatItem ($connection = null, $table = null, $id = null, $name = null) {
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "UPDATE $table SET category_name = ? WHERE category_id = ?";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('si', $name, $id))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        $stmt->close();
+}
+
+
 
 ?>

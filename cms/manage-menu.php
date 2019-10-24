@@ -367,7 +367,7 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
                                     <form action="manage-menu.php" method="POST" enctype="multipart/form-data">
                                         <div id="updateFood" class="row mt-3">
 
-                                            <input id="getID" class="form-control " type="text" name="updateID" placeholder="id" value="">
+                                            <input id="getID" class="form-control " type="hidden" name="updateID" placeholder="id" value="">
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-4 text-left uploading">
                                                 <span class="btn btn-primary btn-file">
@@ -431,56 +431,7 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
 
 
     <?php include 'footer.php'?>
-    <script language="JavaScript">
-        function deleteFood($id) {
-            //get the input value
-            $.ajax({
-                //type. for eg: GET, POST
-                type: "POST",
-                //on success     
-                //the url to send the data to
-                url: "manage-menu.php",
-                //the data to send to
-                data: {
-                    deleteid: $id
-                },
-                success: function() {
-                    $(".table-container").load("manage-menu.php .table-container ", function() {
-
-                        $('.modalButton').click(function(e) {
-                            e.preventDefault();
-                            $('#editableModal').modal('show');
-                            $tr = $(this).closest('tr');
-                            var data = $tr.children("td").map(function() {
-                                return $(this).text();
-                            }).get();
-                            var url = $(this).closest('tr').find('img').attr('src').replace('../images/', '');
-                            var category = $(this).closest('tr').find('#editCategory').attr('value');
-
-                            var numID = data[0];
-
-                            $("#edit-file-label").html(url);
-                            $("#editID").html(numID);
-                            $("#getID").val(numID);
-                            $("#editName").val(data[2]);
-                            $("#editPrice").val(data[3]);
-
-                            $cat = data[4];
-
-                            $("#editCategory option").filter(function() {
-                                return $(this).text() == $cat;
-                            }).prop("selected", true);
-                        });
-                    });
-                }
-
-            });
-
-
-
-        }
-
-    </script>
+    <script src="../js/manage-menu.js"></script>
 
 
 </body>
