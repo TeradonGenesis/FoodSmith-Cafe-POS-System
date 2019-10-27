@@ -16,7 +16,7 @@
         session_start();
             $round_one = ceil($_SESSION["price"]); //rounds up the price to nearest 1 
             $round_ten = ceil($_SESSION["price"]/10) * 10; //rounds up the price to nearest 10
-            $_SESSION["price"] = 15;
+            $_SESSION["price"] = 17.9;
         ?>
         <div class="container">
             <section class="payment-section">

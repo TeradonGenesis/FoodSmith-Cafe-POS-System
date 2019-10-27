@@ -160,7 +160,7 @@ ON ordered_food = food_id WHERE order_status = 1 ORDER BY order_id");
 
                                             <br />
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                                <input id="editQuantityid" class="form-control editQuantity" type="text" name="editQuantity" placeholder="Name" value="">
+                                                <input id="editQuantityid" class="form-control editQuantity" type="number" name="editQuantity" placeholder="Name" value="">
                                             </div>
                                         
 
