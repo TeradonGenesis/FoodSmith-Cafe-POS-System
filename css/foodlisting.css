@@ -65,3 +65,8 @@ body{
 .img-fluid {    
        width: 100%;
 }
+
+.overflow {
+    overflow: hidden;
+    height: 130;
+}

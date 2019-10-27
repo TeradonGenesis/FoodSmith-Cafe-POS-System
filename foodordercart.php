@@ -6,6 +6,7 @@
 
         $foods = show($connection, "menu", "food_id != '' AND status = 1", "food_id");
         $categories = show($connection, "food_category", "category_id !=''", "category_id");
+        $tables = show($connection, "table_listing", "table_id != ''", "table_no");
         $connection->close();
     ?>
 
@@ -46,7 +47,9 @@
                         <?php foreach($foods as $food) { ?>
                         <div class="col-md-3 col-sm-3 customCard mb-2">
                             <div class="card">
+                               <div class="overflow">
                                 <img src="images/<?php echo $food['food_picture']?>" class="card-img-top img-fluid" height="100%" alt="...">
+                                </div>
                                 <div class="card-body text-center">
                                     <input class="form-control foodid" type="hidden" name="foodid" value="<?php echo $food['food_id']?>">
                                     <p><?php echo $food['food_price']?></p>
@@ -68,10 +71,9 @@
                                 <label for="sel1">Select table:</label>
                                 <select class="form-control" id="sel1">
                                     <option value="" selected="" type="hidden">Table No</option>
-                                    <option value="1">1</option>
-                                    <option value="2">2</option>
-                                    <option value="3">3</option>
-                                    <option value="4">4</option>
+                                    <?php foreach($tables as $table) { ?>
+                                    <option value="<?php echo $table['table_no']?>"><?php echo $table['table_no']?></option>
+                                    <?php }?>
                                 </select>
                             </div>
                         </div>
