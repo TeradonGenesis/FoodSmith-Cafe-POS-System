@@ -26,6 +26,7 @@
         $tableno = $_SESSION["tableno"];
         echo $tableno;
         updateTableOrder($connection, "order_list","0","$tableno");
+        updateTableStatus($connection, "table_listing","0","$tableno");
         ?>
         <div class="container">
             <div class="show_balance">
