@@ -159,7 +159,6 @@ INSERT INTO `table_listing` (`table_id`, `table_no`, `table_category`, `status`,
 
 CREATE TABLE `transaction_listing` (
   `trans_id` int(11) NOT NULL,
-  `order_id` bigint(14) NOT NULL,
   `total_price` decimal(6,2) DEFAULT NULL,
   `created_on` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -206,8 +205,7 @@ ALTER TABLE `table_listing`
 -- Indexes for table `transaction_listing`
 --
 ALTER TABLE `transaction_listing`
-  ADD PRIMARY KEY (`trans_id`),
-  ADD KEY `order_id` (`order_id`);
+  ADD PRIMARY KEY (`trans_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables

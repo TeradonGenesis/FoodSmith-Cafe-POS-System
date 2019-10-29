@@ -23,10 +23,11 @@
             $_SESSION["amount"] = $_POST["price"];
         }
         $balance = $_SESSION["amount"] - $_SESSION["price"];
+        $price = $_SESSION["price"];
         $tableno = $_SESSION["tableno"];
-        echo $tableno;
         updateTableOrder($connection, "order_list","0","$tableno");
         updateTableStatus($connection, "table_listing","0","$tableno");
+        insertTransaction($connection, $price);
         ?>
         <div class="container">
             <div class="show_balance">
