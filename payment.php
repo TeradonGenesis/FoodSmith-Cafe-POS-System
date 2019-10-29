@@ -19,6 +19,7 @@
         <?php 
         session_start();
             include("orderdetails2.php");
+            $_SESSION["price"] = $sum_total;            
             if ($_SESSION["price"] !=0) {
             $round_one = ceil($_SESSION["price"]); //rounds up the price to nearest 1 
             $round_ten = ceil($_SESSION["price"]/10) * 10; //rounds up the price to nearest 10

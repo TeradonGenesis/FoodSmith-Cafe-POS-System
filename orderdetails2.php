@@ -136,7 +136,6 @@
                                     </td>
                                 </tr>
                                 <?php } 
-                                $_SESSION["price"] = $sum_total;
                                 ?>
 
                             </tbody>

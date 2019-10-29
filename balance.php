@@ -23,7 +23,6 @@
             $_SESSION["amount"] = $_POST["price"];
         }
         $balance = $_SESSION["amount"] - $_SESSION["price"];
-        $orderid=$_SESSION["orderid"];
         $tableno = $_SESSION["tableno"];
         echo $tableno;
         updateTableOrder($connection, "order_list","0","$tableno");
