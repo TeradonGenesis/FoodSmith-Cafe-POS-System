@@ -96,7 +96,7 @@
                                 </div>
                             </div>
                             <div class="card-read-more big-button-menu">
-                                <a href="orderdetails2.php?table=<?php echo base64_encode($table['table_no']); ?>" class="btn btn-block stretched-link text-white font-weight-bold <?php if($table['status'] == 0) {
+                                <a href="payment.php?table=<?php echo base64_encode($table['table_no']); ?>" class="btn btn-block stretched-link text-white font-weight-bold <?php if($table['status'] == 0) {
                                             echo "bg-success";
     
                                             } else {

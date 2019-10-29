@@ -15,11 +15,18 @@
         <?php
         require_once('connection/connection.php');
         session_start();
-        $balance = $_POST["amount"] - $_SESSION["price"];
+        if((isset($_POST["custom_amount"]) && ($_POST["custom_amount"] >= $_SESSION["price"]))) {
+            $_SESSION["amount"] = $_POST["custom_amount"];
+        } else if (isset($_POST["amount"])) {
+            $_SESSION["amount"] = $_POST["amount"];
+        } else {
+            $_SESSION["amount"] = $_POST["price"];
+        }
+        $balance = $_SESSION["amount"] - $_SESSION["price"];
         $orderid=$_SESSION["orderid"];
-        echo $orderid;
-        updateTableStatus($connection, "table_listing","0","$orderid");
-        updateTableOrder($connection, "table_listing","0","$orderid");
+        $tableno = $_SESSION["tableno"];
+        echo $tableno;
+        updateTableOrder($connection, "order_list","0","$tableno");
         ?>
         <div class="container">
             <div class="show_balance">
@@ -30,6 +37,7 @@
                 <p><a href="foodordercart.php"><button type="button" class="btn btn-success">Main Menu</button></a></p>
             </div>
         </div>
+        <?php session_destroy(); ?>
         
           
         

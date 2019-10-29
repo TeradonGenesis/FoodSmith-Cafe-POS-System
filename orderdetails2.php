@@ -26,13 +26,9 @@
 <body>
 
     <div class="wrapper">
-        <?php include 'includes/sidepanel.inc.php'?>
         <div id="content">
-
-
-            <?php include 'includes/nav.inc.php'?>
-            <?php 
-    
+           
+            <?php
                 if(isset($_POST['qtyBtn'])) {
         
                         $orderID = $_POST['quantityOrderID'];
@@ -72,8 +68,8 @@
         
         
         if(isset($_GET['table'])) {
-            
             $table_no = base64_decode($_GET['table']);
+            $_SESSION["tableno"] = $table_no;
                 
             $showFood = showJoins($connection, "SELECT *  FROM order_list INNER JOIN menu
             ON ordered_food = food_id WHERE ordered_table = '$table_no' AND order_status != 0 ORDER BY order_id");
@@ -135,10 +131,13 @@
                                         <?php $total = $food['food_price'] * $food['quantity'];
                                                echo number_format((float)$total, 2, '.', '');
                                                 $sum_total += $total;
+                                                
                                         ?>
                                     </td>
                                 </tr>
-                                <?php } ?>
+                                <?php } 
+                                $_SESSION["price"] = $sum_total;
+                                ?>
 
                             </tbody>
                         </table>

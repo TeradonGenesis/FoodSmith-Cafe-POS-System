@@ -12,19 +12,25 @@
         
     </head>
     <body>
+       <div class="wrapper">
+           <?php include("includes/sidepanel.inc.php"); ?>
+           <div class="content">
+           <?php include("includes/nav.inc.php"); ?>
         <?php 
         session_start();
+            include("orderdetails2.php");
+            if ($_SESSION["price"] !=0) {
             $round_one = ceil($_SESSION["price"]); //rounds up the price to nearest 1 
             $round_ten = ceil($_SESSION["price"]/10) * 10; //rounds up the price to nearest 10
-            $_SESSION["price"] = 17.9;
+            
+                                        
         ?>
-        <div class="container">
             <section class="payment-section">
                 <h2>Payment</h2>
                 <form name="paymentform" method="POST" action="balance.php">
             <div class="row">
                 <div class="col-md-6 payment-top">    
-                        <input type="number" placeholder="Custom" name="amount" />
+                        <input type="number" placeholder="Custom" name="custom_amount" />
                 </div>
                 <div class="col-md-6 payment-top">
                     <p><button type="submit" class="btn btn-success payment-button" name="amount" value="<?php echo $_SESSION["price"]; ?>">Exact</button></p>
@@ -38,12 +44,12 @@
                 <div class="col-md-3 payment-top">
                     <p><button type="submit" class="btn btn-success payment-button" name="amount" value="<?php echo $round_ten; ?>"><?php echo $round_ten; ?></button></p>
                 </div>
-                <?php if($_SESSION["price"] <= 50) { ?>
+                <?php if(($_SESSION["price"] <= 50) && ($round_one != 50) && ($round_ten != 50)) { ?>
                 <div class="col-md-3 payment-top">
                     <p><button type="submit" class="btn btn-success payment-button" name="amount" value="50">50</button></p>
                 </div>
                 <?php } ?>
-                <?php if($_SESSION["price"] <= 100) { ?>
+                <?php if(($_SESSION["price"] <= 100) && ($round_one != 100) && ($round_ten != 100)) { ?>
                 <div class="col-md-3 payment-top">
                     <p><button type="submit" class="btn btn-success payment-button" name="amount" value="100">100</button></p>
                 </div>
@@ -51,8 +57,9 @@
                  </div>
                 </form>
             </section>
-            <?php require_once('orderdetails.php'); ?>
-        </div>
+            <?php } ?>
+            </div>
+            </div>
         
           
         

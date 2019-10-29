@@ -193,32 +193,15 @@ function updateKitchenInboxStatus ($connection = null, $table = null, $order_id 
         $stmt->close();
 }
 
-function updateTableStatus ($connection = null, $table = null, $status = null, $order = null) {
+function updateTableOrder ($connection = null, $table = null, $status = null, $order = null) { //update order in order details
     if ($connection->connect_error)
             die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
 
-        $sql = "UPDATE $table SET status = ? WHERE order_id = ?";
+        $sql = "UPDATE $table SET order_status = ? WHERE ordered_table = ?";
         if (!$stmt = $connection->prepare($sql))
             die('Query failed: (' . $connection->errno . ') ' . $connection->error);
 
         if (!$stmt->bind_param('ii', $status, $order))
-            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
-
-        if (!$stmt->execute())
-                die('Insert Error ' . $connection->error);
-
-        $stmt->close();
-}
-
-function updateTableOrder ($connection = null, $table = null, $status = null, $order = null) {
-    if ($connection->connect_error)
-            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
-
-        $sql = "UPDATE $table SET order_id = ? WHERE order_id = ?";
-        if (!$stmt = $connection->prepare($sql))
-            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
-
-        if (!$stmt->bind_param('ii', $status,$order))
             die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
 
         if (!$stmt->execute())
