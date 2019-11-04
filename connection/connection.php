@@ -74,6 +74,23 @@ function showJoins ($connection = null, $sql) {
     
 }
 
+function insertTable ($connection = null, $table_no = null) {
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "INSERT INTO table_listing (table_no) VALUES (?)";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('s',$table_no))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        $stmt->close();
+}
+
 function insertFoodCategory ($connection = null, $name = null) {
     if ($connection->connect_error)
             die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
@@ -125,22 +142,6 @@ function insertMenuTesting ($connection = null, $name = null, $price = null) {
         $stmt->close();
 }
 
-function insertTable ($connection = null, $number = null, $category = null) {
-    if ($connection->connect_error)
-            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
-
-        $sql = "INSERT INTO menu (table_no, table_category) VALUES (?, ?)";
-        if (!$stmt = $connection->prepare($sql))
-            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
-
-        if (!$stmt->bind_param('ii',$number, $category))
-            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
-
-        if (!$stmt->execute())
-                die('Insert Error ' . $connection->error);
-
-        $stmt->close();
-}
 
 function insertOrderID ($connection = null, $id = null) {
         if ($connection->connect_error)
