@@ -30,6 +30,12 @@
                         Manage Table
                     </a>
                 </li>
+                 <li>
+                    <a href="manage-transactions.php">
+                        <i class="fas fa-utensils"></i>
+                        Manage Transactions
+                    </a>
+                </li>
                 <li>
                     <a href="#">
                         <i class="fas fa-utensils"></i>
