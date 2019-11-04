@@ -29,7 +29,10 @@
         updateTableStatus($connection, "table_listing","0","$tableno");
         insertTransaction($connection, $price);
         ?>
-        <div class="container">
+        <div class="wrapper">
+           <?php include("includes/sidepanel.inc.php"); ?>
+           <div class="content">
+           <?php include("includes/nav.inc.php"); ?>
             <div class="show_balance">
                 <h1>RM <?php echo $balance; ?></h1>
             </div>
@@ -37,6 +40,7 @@
                 <p><a href="mailto:231555215@outlook.com"><button type="button" class="btn btn-success">Mail Transaction</button></a></p>
                 <p><a href="foodordercart.php"><button type="button" class="btn btn-success">Main Menu</button></a></p>
             </div>
+        </div>
         </div>
         <?php session_destroy(); ?>
         
