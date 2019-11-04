@@ -63,10 +63,10 @@
             <p><i class="fas fa-plus"></i> Add table</p>
             <p class="text-success"><?php echo $table_status ?></p>
 
-            <form action="manage-food-category.php" method="post">
+            <form action="manage-table.php" method="post">
                 <div id="addCategory" class="row mt-3">
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
-                        <input class="form-control" type="text" name="name" placeholder="Category name">
+                        <input class="form-control" type="text" name="name" placeholder="Table number or name">
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
@@ -99,7 +99,7 @@
                                                 <button value="edit" class="btn btn-warning enbtn btn-md modalButton" name="editable"><i class="fas fa-edit"></i></button>
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 formbtn deleteButton">
-                                                <button onclick="deleteFood(<?php echo $showCategory['category_id']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt"></i></button>
+                                                <button onclick="deleteFood(<?php echo $showTable['table_id']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </div>
                                     </td>
@@ -122,7 +122,7 @@
                         <div class="modal-body row">
 
                             <div class="col-12 col-md-12">
-                                <h5 class="modal-title" id="editableLabel">Edit Item #<span id="editID" value=""></span></h5>
+                                <h5 class="modal-title" id="editableLabel">Edit Table Details</h5>
 
                             </div>
                             <div class="col-12 col-md-12 text-center">
