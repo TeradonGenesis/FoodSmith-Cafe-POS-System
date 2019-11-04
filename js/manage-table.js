@@ -9,8 +9,10 @@ $(document).ready(function () {
 
         var numID = data[0];
 
+        $("#editID").html(numID);
         $("#getID").val(numID);
-        $("#editName").val(numID);
+        $("#editName").val(data[1]);
+        $("#editCategory").val(data[2]);
 
     });
 

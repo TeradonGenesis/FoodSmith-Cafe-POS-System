@@ -82,7 +82,24 @@ function insertTable ($connection = null, $table_no = null) {
         if (!$stmt = $connection->prepare($sql))
             die('Query failed: (' . $connection->errno . ') ' . $connection->error);
 
-        if (!$stmt->bind_param('s',$table_no))
+        if (!$stmt->bind_param('i',$table_no))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        $stmt->close();
+}
+
+function updateTable ($connection = null, $table, $table_id = null, $table_no = null, $table_cat = null) {
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "UPDATE $table SET table_no = ?, table_category = ? WHERE table_id = ?";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('iii', $table_no, $table_cat, $table_id))
             die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
 
         if (!$stmt->execute())

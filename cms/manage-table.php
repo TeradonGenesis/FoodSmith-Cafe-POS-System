@@ -8,16 +8,17 @@
     
         $table_status = null;
     
-        if(isset($_POST['updateCat'])) {
+        if(isset($_POST['updateTable'])) {
         
-                $updateID = $_POST['updateCatID'];
-                $updateName = $_POST['updateCatName'];
+                $updateID = $_POST['updateID'];
+                $updateName = $_POST['updateName'];
+                $updateCategory = $_POST['updateCatName'];
 
 
-                $updateStuff = updateCatItem($connection, "food_category", $updateID, $updateName);
+                $updateStuff = updateTable ($connection, "table_listing", $updateID, $updateName, $updateCategory);
             
                 
-                $table_status = "Category Updated";
+                $table_status = "Table Updated";
 
 
 
@@ -82,6 +83,7 @@
                         <table class="table table-borded table-striped" id="categoryTable">
                             <thead class="thead-dark">
                                 <tr>
+                                   <th class="w-25 text-center">ID</th>
                                     <th class="w-25 text-center">Table No.</th>
                                     <th class="w-25 text-center">Number of Seats</th>
                                     <th class="w-50 text-center">Action</th>
@@ -91,6 +93,7 @@
 
                                 <?php foreach($showTables as $showTable) { ?>
                                 <tr>
+                                    <td class="w-25 text-center"><?php echo $showTable['table_id']?></td>
                                     <td class="w-25 text-center"><?php echo $showTable['table_no']?></td>
                                     <td class="w-25 text-center"><?php echo $showTable['table_category']?></td>
                                     <td class="w-50 text-center">
@@ -126,19 +129,23 @@
 
                             </div>
                             <div class="col-12 col-md-12 text-center">
-                                <form id="editCategoryForm" action="manage-food-category.php" method="POST" enctype="multipart/form-data">
+                                <form id="editCategoryForm" action="manage-table.php" method="POST" enctype="multipart/form-data">
                                     <div id="updateFood" class="row mt-3">
 
-                                        <input id="getID" class="form-control " type="hidden" name="updateCatID" placeholder="id" value="">
+                                        <input id="getID" class="form-control" type="hidden" name="updateID" placeholder="id" value="">
 
                                         <br />
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                            <input id="editName" class="form-control" type="text" name="updateCatName" placeholder="Name" value="">
+                                            <input id="editName" class="form-control" type="text" name="updateName" placeholder="Name" value="">
+                                        </div>
+                                        <br />
+                                        <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
+                                            <input id="editCategory" class="form-control" type="text" name="updateCatName" placeholder="Category" value="">
                                         </div>
                                         <br />
 
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
-                                            <button type="submit" value="updateFood" class="btn btn-success enbtn btn-md" name="updateCat">UPDATE</button>
+                                            <button type="submit" value="updateTable" class="btn btn-success enbtn btn-md" name="updateTable">UPDATE</button>
                                         </div>
                                     </div>
                                 </form>
