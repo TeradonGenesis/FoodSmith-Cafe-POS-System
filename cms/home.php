@@ -1,6 +1,9 @@
 <!DOCTYPE html>
 <html>
-<?php require_once('../connection/connection.php'); ?>
+<?php 
+    require_once('../connection/connection.php'); 
+?>
+
 
 <head>
     <?php include 'head.php'?>

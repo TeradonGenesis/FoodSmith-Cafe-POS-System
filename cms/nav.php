@@ -13,7 +13,7 @@
 
                     <ul class="nav navbar-nav ml-auto">
                         <li class="nav-item active">
-                            <a class="nav-link" href="#"><i class="fas fa-sign-out-alt"></i> Log out</a>
+                            <a class="nav-link" href="home.php?logout='1'"><i class="fas fa-sign-out-alt"></i> Log out</a>
                         </li>
                     </ul>
 

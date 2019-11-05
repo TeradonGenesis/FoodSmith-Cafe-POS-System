@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2019 at 05:43 AM
+-- Generation Time: Nov 05, 2019 at 01:49 PM
 -- Server version: 10.4.6-MariaDB
 -- PHP Version: 7.3.9
 
@@ -38,7 +38,9 @@ CREATE TABLE `food_category` (
 --
 
 INSERT INTO `food_category` (`category_id`, `category_name`) VALUES
-(1, 'Test');
+(1, 'Test Noodle'),
+(2, 'VIP Table'),
+(3, '5');
 
 -- --------------------------------------------------------
 
@@ -81,6 +83,7 @@ CREATE TABLE `order_id` (
 --
 
 INSERT INTO `order_id` (`order_id`) VALUES
+(4112019203649),
 (21102019095509),
 (21102019095537),
 (21102019095706),
@@ -124,10 +127,12 @@ CREATE TABLE `order_list` (
 --
 
 INSERT INTO `order_list` (`order_id`, `ordered_food`, `ordered_table`, `quantity`, `order_price`, `order_status`, `ordered_on`) VALUES
+(4112019203649, 102, 1, 3, '28.50', 0, '2019-11-04 12:37:00'),
+(4112019203649, 105, 1, 3, '28.50', 0, '2019-11-04 12:37:00'),
 (24102019114054, 102, 2, 1, '9.50', 1, '2019-10-24 03:40:59'),
 (24102019114054, 105, 2, 1, '9.50', 1, '2019-10-24 03:40:59'),
-(24102019114111, 102, 2, 4, '38.00', 1, '2019-10-24 03:41:19'),
-(24102019114111, 105, 2, 4, '38.00', 1, '2019-10-24 03:41:19');
+(24102019114111, 102, 2, 4, '38.00', 2, '2019-10-24 03:41:19'),
+(24102019114111, 105, 2, 4, '38.00', 2, '2019-10-24 03:41:19');
 
 -- --------------------------------------------------------
 
@@ -148,8 +153,10 @@ CREATE TABLE `table_listing` (
 --
 
 INSERT INTO `table_listing` (`table_id`, `table_no`, `table_category`, `status`, `order_id`) VALUES
-(1, 1, 4, 1, 0),
-(2, 2, 6, 1, 0);
+(1, 1, 6, 0, 0),
+(2, 2, 6, 1, 0),
+(3, 23, NULL, NULL, 0),
+(4, 4, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
@@ -162,6 +169,33 @@ CREATE TABLE `transaction_listing` (
   `total_price` decimal(6,2) DEFAULT NULL,
   `created_on` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `transaction_listing`
+--
+
+INSERT INTO `transaction_listing` (`trans_id`, `total_price`, `created_on`) VALUES
+(1, '28.00', '2019-11-04 12:37:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(11) NOT NULL,
+  `username` varchar(100) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `password` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `username`, `email`, `password`) VALUES
+(1, 'teradon', 'eddie@gmail.com', '827ccb0eea8a706c4c34a16891f84e7b');
 
 --
 -- Indexes for dumped tables
@@ -208,6 +242,12 @@ ALTER TABLE `transaction_listing`
   ADD PRIMARY KEY (`trans_id`);
 
 --
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -215,7 +255,7 @@ ALTER TABLE `transaction_listing`
 -- AUTO_INCREMENT for table `food_category`
 --
 ALTER TABLE `food_category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `menu`
@@ -227,13 +267,19 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `table_listing`
 --
 ALTER TABLE `table_listing`
-  MODIFY `table_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `table_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `transaction_listing`
 --
 ALTER TABLE `transaction_listing`
-  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Constraints for dumped tables
@@ -250,12 +296,6 @@ ALTER TABLE `menu`
 --
 ALTER TABLE `order_list`
   ADD CONSTRAINT `order_list_ibfk_2` FOREIGN KEY (`ordered_table`) REFERENCES `table_listing` (`table_id`);
-
---
--- Constraints for table `transaction_listing`
---
-ALTER TABLE `transaction_listing`
-  ADD CONSTRAINT `transaction_listing_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `order_list` (`order_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
