@@ -12,13 +12,7 @@
         
     </head>
     <body>
-       <div class="wrapper">
-           <?php include("includes/sidepanel.inc.php"); ?>
-           <div class="content">
-           <?php include("includes/nav.inc.php"); ?>
         <?php 
-        session_start();
-            include("orderdetails2.php");
             $_SESSION["price"] = $sum_total;            
             if ($_SESSION["price"] !=0) {
             $round_one = ceil($_SESSION["price"]); //rounds up the price to nearest 1 
@@ -59,8 +53,6 @@
                 </form>
             </section>
             <?php } ?>
-            </div>
-            </div>
         
           
         

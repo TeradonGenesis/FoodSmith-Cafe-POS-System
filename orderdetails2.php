@@ -20,15 +20,13 @@
     <link rel="stylesheet" href="fontawesome/css/all.css">
     <link rel="stylesheet" href="fontawesome/css/solid.css">
     <link rel="stylesheet" href="fontawesome/css/solid.min.css">
+    <link rel="stylesheet" href="css/custom.css" />
 
 </head>
 
 <body>
-
-    <div class="wrapper">
-        <div id="content">
-           
-            <?php
+    <?php
+            session_start();
                 if(isset($_POST['qtyBtn'])) {
         
                         $orderID = $_POST['quantityOrderID'];
@@ -82,8 +80,11 @@
     
     ?>
 
-            
 
+    <div class="wrapper">
+        <?php include 'includes/sidepanel.inc.php'?>
+        <div id="content">
+            <?php include 'includes/nav.inc.php'?>
             <div class="table-container">
 
 
@@ -97,7 +98,7 @@
                         <table class="table table-borded table-striped">
                             <thead class="thead-dark">
                                 <tr>
-                                   <th class="col-1 text-center">Status</th>
+                                    <th class="col-1 text-center">Status</th>
                                     <th class="col-2">OrderID#</th>
                                     <th class="col-1">FoodID#</th>
                                     <th class="col-3">Name</th>
@@ -110,8 +111,8 @@
 
                                 <?php foreach($showFood as $food) {?>
                                 <tr>
-                                   <td class="col-1 pt-4 text-center">
-                                    <?php 
+                                    <td class="col-1 pt-4 text-center">
+                                        <?php 
                                         if($food['order_status'] == 1) {
                                            echo '<i class="fas fa-clock fa-2x text-danger"></i>';
                                         } else if ($food['order_status'] == 2) {
@@ -119,8 +120,8 @@
                                         }
                                         
                                     ?>
-                                    
-                                    
+
+
                                     </td>
                                     <td class="col-2 pt-4"><?php echo $food['order_id']?></td>
                                     <td class="col-1 pt-4"><?php echo $food['food_id']?></td>
@@ -143,16 +144,17 @@
 
                     </div>
                     <div class="col-10 col-sm-10 col-md-10 col-lg-10">
-                      
+
                     </div>
                     <div class="col-2 col-sm-2 col-md-2 col-lg-2 text-center">
-                      <hr/>
-                       <p class="font-weight-bold text-dark">Sum Total (RM):</p>
+                        <hr />
+                        <p class="font-weight-bold text-dark">Sum Total (RM):</p>
                         <p class="font-weight-bold text-dark"><?php echo number_format((float)$sum_total, 2, '.', ''); ?></p>
                     </div>
 
-                    
+
                 </div>
+                <?php include("payment.php"); ?>
 
                 <!--Edit modal -->
 
@@ -173,19 +175,19 @@
                                         <div id="updateFood" class="row mt-3">
 
                                             <input id="getOrderID" class="form-control quantityOrderID" type="hidden" name="quantityOrderID" placeholder="id" value="">
-                                            
+
                                             <input id="getOrderFood" class="form-control quantityOrderedFood" type="hidden" name="quantityOrderFood" placeholder="id" value="">
-                                            
-                                            
+
+
 
                                             <br />
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
                                                 <input id="editQuantityid" class="form-control editQuantity" type="number" name="editQuantity" placeholder="Name" value="">
                                             </div>
-                                        
+
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
-                                                <button id= "updateQuantitybtn" type="submit" value="qtyFood" class="btn btn-success enbtn btn-md" name="qtyBtn">UPDATE</button>
+                                                <button id="updateQuantitybtn" type="submit" value="qtyFood" class="btn btn-success enbtn btn-md" name="qtyBtn">UPDATE</button>
                                             </div>
                                         </div>
                                     </form>
@@ -222,14 +224,14 @@
 
     <?php include 'includes/footer.inc.php'?>
     <script language="JavaScript">
-        
-         $(document).ready(function() {
-        $('#sidebarCollapse').on('click', function() {
-            $('#sidebar').toggleClass('active');
-        });
+        $(document).ready(function() {
+            $('#sidebarCollapse').on('click', function() {
+                $('#sidebar').toggleClass('active');
+            });
 
 
         });
+
         function deleteFood($order_id, $ordered_food) {
             //get the input value
             $.ajax({
@@ -250,70 +252,70 @@
             });
 
         }
-        
-        
-        function updateStatus($order_id, $ordered_food) {
-        //get the input value
-        $.ajax({
-            //type. for eg: GET, POST
-            type: "POST",
-            //the url to send the data to
-            url: "kitcheninbox2.php",
-            //the data to send to
-            data: {
-                update_order_id: $order_id,
-                update_ordered_food: $ordered_food
-            },
-            //on success
-            success: function() {
-                alert("Data sent"),
-                 $(".table-container").load("kitcheninbox2.php .table-container");
 
-            }
-        });
-    }
-    
+
+        function updateStatus($order_id, $ordered_food) {
+            //get the input value
+            $.ajax({
+                //type. for eg: GET, POST
+                type: "POST",
+                //the url to send the data to
+                url: "kitcheninbox2.php",
+                //the data to send to
+                data: {
+                    update_order_id: $order_id,
+                    update_ordered_food: $ordered_food
+                },
+                //on success
+                success: function() {
+                    alert("Data sent"),
+                        $(".table-container").load("kitcheninbox2.php .table-container");
+
+                }
+            });
+        }
+
         $('.modalButton').on('click', function() {
             $('#editableModal').modal('show');
             $tr = $(this).closest('tr');
             var data = $tr.children("td").map(function() {
                 return $(this).text();
             }).get();
-                
+
             console.log(data);
-            
+
             var numID = data[0];
 
             $("#editID").html(numID);
             $(".quantityOrderID").val(data[0]);
             $(".quantityOrderedFood").val(data[1]);
             $(".editQuantity").val(data[3]);
-            
+
 
         });
-        
+
         $('#qtyUpdateForm').submit(function(e) {
-            
+
             e.preventDefault;
-            
+
             var form = $(this);
             var url = form.attr('action');
-            
-            $.ajax({
-            //type. for eg: GET, POST
-            type: "POST",
-            //the url to send the data to
-            url: url,
-            //the data to send to
-            data: form.serialize(),
-            //on success
-            success: function() {
-                alert("Data sent"),
-                 $(".table-container").load("kitcheninbox2.php .table-container");
 
-            }
-        });
-            
+            $.ajax({
+                //type. for eg: GET, POST
+                type: "POST",
+                //the url to send the data to
+                url: url,
+                //the data to send to
+                data: form.serialize(),
+                //on success
+                success: function() {
+                    alert("Data sent"),
+                        $(".table-container").load("kitcheninbox2.php .table-container");
+
+                }
+            });
+
 
         });
 
