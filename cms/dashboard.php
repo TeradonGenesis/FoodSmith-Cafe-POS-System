@@ -14,7 +14,9 @@
     </div>
     <div>
         <!--Support multiple charts-->
-        <pigeon-chart query="SELECT relyear, tmdb_score FROM movie ORDER BY relyear LIMIT 20" title="Top 10 Movies with Highest TMDB Score" subtitle="Year 1953 to Year 2016" type="spline" axisy-title="TMDB Score" show-legend="bottom" show-data-label="true" zoom-type="xy">Placeholder for generic chart</pigeon-chart>
+        <pigeon-chart query="SELECT created_on, total_price FROM transaction_listing ORDER BY trans_id LIMIT 20" title="Transaction done and total price" subtitle="Cafe Smith Summary" type="spline" axisy-title="TMDB Score" show-legend="bottom" show-data-label="true" zoom-type="xy">Placeholder for generic chart</pigeon-chart>
+        
+        <pigeon-chart query="SELECT COUNT(created_on), trans_id FROM transaction_listing ORDER BY trans_id LIMIT 20" title="Transaction done for the day" subtitle="Cafe Smith Summary" type="column" axisy-title="TMDB Score" show-legend="bottom" show-data-label="true" zoom-type="xy">Placeholder for generic chart</pigeon-chart>
 
         <pigeon-chart query="SELECT relyear, RATINGCODE, min(runtime), avg(runtime), max(runtime)
 							 FROM movie

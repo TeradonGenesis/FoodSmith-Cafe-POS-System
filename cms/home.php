@@ -17,6 +17,7 @@
         <div id="content">
 
             <?php include 'nav.php'?>
+            <?php include 'dashboard.php'?>
 
 
         </div>
