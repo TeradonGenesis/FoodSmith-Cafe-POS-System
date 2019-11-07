@@ -14,9 +14,9 @@
     </div>
     <div>
         <!--Support multiple charts-->
-        <pigeon-chart query="SELECT created_on, total_price FROM transaction_listing ORDER BY trans_id LIMIT 20" title="Transaction done and total price" subtitle="Cafe Smith Summary" type="spline" axisy-title="TMDB Score" show-legend="bottom" show-data-label="true" zoom-type="xy">Placeholder for generic chart</pigeon-chart>
+        <pigeon-chart query="SELECT DATE(created_on), COUNT(trans_id) FROM transaction_listing GROUP BY DATE(created_on) " title="Transaction done for different dates" subtitle="Cafe Smith Summary" type="spline" axisy-title="Transaction done" show-legend="bottom" show-data-label="false" zoom-type="xy">Placeholder for generic chart</pigeon-chart>
         
-        <pigeon-chart query="SELECT COUNT(created_on), trans_id FROM transaction_listing ORDER BY trans_id LIMIT 20" title="Transaction done for the day" subtitle="Cafe Smith Summary" type="column" axisy-title="TMDB Score" show-legend="bottom" show-data-label="true" zoom-type="xy">Placeholder for generic chart</pigeon-chart>
+        <pigeon-chart query="SELECT DATE(created_on), SUM(total_price) FROM transaction_listing GROUP BY DATE(created_on)" title="Transaction done for the day" subtitle="Cafe Smith Summary" type="column" axisy-title="TMDB Score" show-legend="bottom" show-data-label="true" zoom-type="xy">Placeholder for generic chart</pigeon-chart>
 
         <pigeon-chart query="SELECT relyear, RATINGCODE, min(runtime), avg(runtime), max(runtime)
 							 FROM movie
