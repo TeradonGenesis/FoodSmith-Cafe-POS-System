@@ -25,7 +25,7 @@
 
             <div class="table-container">
                 <div class="row mt-5">
-                    <div class="col-md-6 mb-2">
+                    <div class="col-md-12 mb-2">
                         <h5>Search by Day or Month</h5>
                         <div class="input-group">
                             <input type="text" name="day" id="day" placeholder="Day" class="form-control">
@@ -33,6 +33,7 @@
                             <span class="input-group-btn">
                                 <button id="search" class="btn btn-success ml-2">SEARCH</button>
                                 <button id="reset" class="btn btn-danger ml-2">RESET</button>
+                                <button id="newest" class="btn btn-info ml-2">SORT BY NEWEST</button>
                             </span>
                         </div>
                     </div>
@@ -104,6 +105,17 @@
                     $('#transactionTable tbody').append(result);
                 }
             })
+        })
+        $('#newest').on('click',function(){
+            $('#transactionTable tbody').empty();
+            $.ajax({
+                url:'../connection/newest.php',
+                dataType:'html',
+                success: function(data){
+                    var result =  data
+                    $('#transactionTable tbody').append(result);
+                }
+            });
         })
     </script>
 </body>
