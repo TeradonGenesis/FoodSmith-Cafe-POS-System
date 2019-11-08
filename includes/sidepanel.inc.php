@@ -19,7 +19,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="tablelisting2.php">
+                    <a href="tablelisting.php">
                         <i class="fas fa-cash-register"></i>
                         Payment
                     </a>

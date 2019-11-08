@@ -1,20 +1,35 @@
 <!DCOCTYPE html>
 <html lang="en">
-    <head>
-        <title>Food Order Cart</title>
-        <!--Required meta tags-->
-        <meta charset="utf-8"/>
-        <meta name="viewport" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-        <!--Bootstrap CSS-->
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous"/>
-        <link rel="stylesheet" href="css/custom.css"/>
-        
-        
-    </head>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>CMS</title>
+
+    <!-- Bootstrap CSS CDN -->
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <!-- Our Custom CSS -->
+    <link rel="stylesheet" href="css/custom-frontend.css">
+    <link rel="stylesheet" href="css/custom.css">
+
+
+    <!-- Font Awesome JS -->
+    <link rel="stylesheet" href="fontawesome/css/all.min.css">
+    <link rel="stylesheet" href="fontawesome/css/all.css">
+    <link rel="stylesheet" href="fontawesome/css/solid.css">
+    <link rel="stylesheet" href="fontawesome/css/solid.min.css">
+    <link rel="stylesheet" href="css/main-menu.css">
+
+</head>
+
     <body>
         <?php
         require_once('connection/connection.php');
         session_start();
+        if (!isset($_SESSION["price"])) {
+            header("Location:tablelisting.php");
+        }
         if((isset($_POST["custom_amount"]) && ($_POST["custom_amount"] >= $_SESSION["price"]))) {
             $_SESSION["amount"] = $_POST["custom_amount"];
         } else if (isset($_POST["amount"])) {
@@ -30,19 +45,38 @@
         insertTransaction($connection, $price);
         ?>
         <div class="wrapper">
-           <?php include("includes/sidepanel.inc.php"); ?>
-           <div class="content">
-           <?php include("includes/nav.inc.php"); ?>
-            <div class="show_balance">
-                <h1>RM <?php echo $balance; ?></h1>
+           <?php include 'includes/sidepanel.inc.php'?>
+           <div id="content">
+           <?php include 'includes/nav.inc.php' ?>
+           <div class="jumbotron show_balance">
+           <div class="row">
+            <div class="col-md-12"><h1>RM <?php echo $balance; ?></h1></div>
             </div>
+            <div class="row">
             <div class="bottom-buttons">
-                <p><a href="mailto:231555215@outlook.com"><button type="button" class="btn btn-success">Mail Transaction</button></a></p>
-                <p><a href="foodordercart.php"><button type="button" class="btn btn-success">Main Menu</button></a></p>
+               <div class="col-md-12 col-sm-12 col-lg-12">
+               <p><a href="mailto:231555215@outlook.com"><button type="button" class="btn btn-success">Mail Transaction</button></a></p></div>
+               <div class="col-md-12 col-sm-12 col-lg-12">
+               <p><a href="foodordercart.php"><button type="button" class="btn btn-success">Main Menu</button></a></p></div>
+            </div>
+            </div>
+            
+        </div>
+        <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" style="padding-top:15px; padding-bottom:15px;">
+                    <div id="anchorUp" class="text-center" style="width:70px; height:70px; border-radius:50%; background-color:#CCC; margin:0 auto; 
+          color:white; font-size:30px; padding-top:15px; box-shadow:0 0 8px rgba(0,0,0,.4);" onclick="up();">
+                        <i class="fas fa-chevron-up "></i>
+                    </div>
+                </div>
+
             </div>
         </div>
         </div>
-        <?php session_destroy(); ?>
+        <?php 
+        unset($_SESSION["price"]);
+        unset($_SESSION["tableno"]);
+        session_destroy(); ?>
         
           
         

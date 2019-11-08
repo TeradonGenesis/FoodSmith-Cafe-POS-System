@@ -34,8 +34,8 @@
 
 /*balance page*/
 .show_balance {
-    width:100%;
     text-align:center;
+    width:100%;
 }
 
 .bottom-buttons {
@@ -45,7 +45,8 @@
 }
 
 .bottom-buttons .btn {
-    width:30%;
+    background-color:#813772;
+    border-color:#813772;
 }
 
 /*order details*/
