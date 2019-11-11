@@ -28,7 +28,6 @@
     <div class="wrapper">
         <?php include 'includes/sidepanel.inc.php'?>
         <div id="content">
-            <?php include 'includes/nav.inc.php'?>
             <?php
             session_start();
             

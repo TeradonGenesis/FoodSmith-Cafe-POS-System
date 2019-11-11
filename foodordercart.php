@@ -17,86 +17,106 @@
         <meta name="viewport" href="css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
         <!--Bootstrap CSS-->
         <link rel="stylesheet" href="css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/custom-frontend.css">
         <link rel="stylesheet" href="fontawesome/css/all.min.css" />
         <link rel="stylesheet" href="css/foodlisting.css" />
+
+        <!-- Font Awesome JS -->
+        <link rel="stylesheet" href="fontawesome/css/all.min.css">
+        <link rel="stylesheet" href="fontawesome/css/all.css">
+        <link rel="stylesheet" href="fontawesome/css/solid.css">
+        <link rel="stylesheet" href="fontawesome/css/solid.min.css">
 
 
 
     </head>
 
     <body>
-        <div class="container-fluid h-100">
-            <!--NavBar area-->
-            <div class="row h-100">
-                <div class="col-md-2 col-sm-2 lulw">
-                    <div class="col-md-12 innerNav">
-                        <p class="text-center mb-0 mt-5">Navigation Bar</p>
-                        <div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-                            <a class="nav-link active foodNav" id="v-pills-home-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-home" aria-selected="true"> All Food</a>
-                            <?php foreach($categories as $category) { ?>
-                            <a class="nav-link drinksNav" id="v-pills-profile-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-profile" aria-selected="false"> <?php echo $category['category_name'] ?></a>
-                            <?php } ?>
+        <div class="wrapper h-100">
 
-                        </div>
-                    </div>
-                </div>
-                <!--Menu Area-->
-                <div class="col-md-7 col-sm-7 lulw2">
-                    <!--First row for the food items-->
-                    <div class="row food1">
-                        <?php foreach($foods as $food) { ?>
-                        <div class="col-md-3 col-sm-3 customCard mb-2">
-                            <div class="card">
-                               <div class="overflow">
-                                <img src="images/<?php echo $food['food_picture']?>" class="card-img-top img-fluid" height="100%" alt="...">
-                                </div>
-                                <div class="card-body text-center">
-                                    <input class="form-control foodid" type="hidden" name="foodid" value="<?php echo $food['food_id']?>">
-                                    <p><?php echo $food['food_price']?></p>
-                                    <a href="#" class="btnfood1 btn-transparent"><?php echo $food['food_name']?></a>
-                                </div>
+            <?php include 'includes/sidepanel.inc.php'?>
+            <div class="content">
+                <div class="container-fluid h-100">
+                    <!--NavBar area-->
+                    <div class="row h-100">
+                        <div class="col-md-2 col-sm-2 lulw">
+                            <div class="col-md-12 innerNav">                     
+                                <nav id="categorybar" class="nav-pills" role="tablist" aria-orientation="vertical" id="v-pills-tab">
+                                    <div class="categorybar-header">
+                                        <h3>Category</h3>
+                                    </div>
+                                    <ul class="list-unstyled components">
+                                    <li class="active2">
+                                        <a href="foodordercart.php" id="v-pills-home-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-home" aria-selected="true" aria-orientation="vertical" class="nav-link">
+                                            All food
+                                        </a>
+                                    </li>
+                                    <?php foreach($categories as $category) { ?>
+                                    <li class="active2">
+                                        <a href="foodordercart.php" id="v-pills-profile-tab" data-toggle="pill" href="foodordercart.php" aria-controls="v-pills-profile" aria-selected="false" role="tab" class="nav-link">
+                                            <?php echo $category['category_name'] ?></a><?php } ?>
+                                    </li>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
-                        <?php } ?>
-                    </div>
-                    <!--Second row for the food items-->
-
-
-                </div>
-                <!--Food Order Cart-->
-                <div class="col-md-3 lulw3 text-white rounded">
-                    <div class="row">
-                        <div class="col-md-12">
-                            <div class="form-group">
-                                <label for="sel1">Select table:</label>
-                                <select class="form-control" id="sel1">
-                                    <option value="" selected="" type="hidden">Table No</option>
-                                    <?php foreach($tables as $table) { ?>
-                                    <option value="<?php echo $table['table_no']?>"><?php echo $table['table_no']?></option>
-                                    <?php }?>
-                                </select>
+                        <!--Menu Area-->
+                        <div class="col-md-7 col-sm-7 lulw2">
+                            <!--First row for the food items-->
+                            <div class="row food1">
+                                <?php foreach($foods as $food) { ?>
+                                <div class="col-md-3 col-sm-3 customCard mb-2">
+                                    <div class="card">
+                                        <div class="overflow">
+                                            <img src="images/<?php echo $food['food_picture']?>" class="card-img-top img-fluid" height="100%" alt="...">
+                                        </div>
+                                        <div class="card-body text-center">
+                                            <input class="form-control foodid" type="hidden" name="foodid" value="<?php echo $food['food_id']?>">
+                                            <p><?php echo $food['food_price']?></p>
+                                            <a href="#" class="btnfood1 btn-transparent"><?php echo $food['food_name']?></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <?php } ?>
                             </div>
-                        </div>
+                            <!--Second row for the food items-->
 
-                        <div class="col-md-12 text-center">
-                            <!--Autoincremented based on Order ID in database-->
-                            <?php
+
+                        </div>
+                        <!--Food Order Cart-->
+                        <div class="col-md-3 lulw3 text-white rounded">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label for="sel1">Select table:</label>
+                                        <select class="form-control" id="sel1">
+                                            <option value="" selected="" type="hidden">Table No</option>
+                                            <?php foreach($tables as $table) { ?>
+                                            <option value="<?php echo $table['table_no']?>"><?php echo $table['table_no']?></option>
+                                            <?php }?>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-12 text-center">
+                                    <!--Autoincremented based on Order ID in database-->
+                                    <?php
                                 date_default_timezone_set("Asia/Kuala_Lumpur");
                                 $id=date('dmYHis');
                                 echo '<p>Order ID: <span id="orderID">'.$id.'</span></p>';
                             ?>
-                        </div>
-                        <div class="col-md-12">
-                            <table id="table" class="table text-white">
-                                <thead>
-                                    <th scope="col">Delete</th>
-                                    <th scope="col">Item</th>
-                                    <th scope="col">Quantity</th>
-                                    <th scope="col">Unit Price</th>
-                                </thead>
-                                <tbody>
-                                    <!--Stand in data, hardcoded-->
-                                    <!--<tr class="deleteRow">
+                                </div>
+                                <div class="col-md-12">
+                                    <table id="table" class="table text-white">
+                                        <thead>
+                                            <th scope="col">Delete</th>
+                                            <th scope="col">Item</th>
+                                            <th scope="col">Quantity</th>
+                                            <th scope="col">Unit Price</th>
+                                        </thead>
+                                        <tbody>
+                                            <!--Stand in data, hardcoded-->
+                                            <!--<tr class="deleteRow">
                                         <th scope="row">
                                             <button type="button" class="btn btn-danger btn-sm">
                                                 <i class="fas fa-trash"></i>
@@ -121,26 +141,28 @@
                                         </td>
                                         <td class="price">10.00</td>
                                     </tr>-->
-                                </tbody>
-                            </table>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <p class="text-center" id="totalprice">TOTAL PRICE:</p>
+                                </div>
+                                <div class="col-md-6 col-sm-6">
+                                    <p id="totalAmt" class="text-center">0.00</p>
+                                </div>
+                                <div class="col-md-12">
+                                    <p class="text-center">
+                                        <button type="button" id="submitBtn" class="btn btn-primary">Submit</button>
+                                        <button type="button" id="resetBtn" class="btn btn-danger">Reset</button>
+                                    </p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6 ">
-                            <p class="text-center" id="totalprice">TOTAL PRICE:</p>
-                        </div>
-                        <div class="col-md-6 col-sm-6">
-                            <p id="totalAmt" class="text-center">0.00</p>
-                        </div>
-                        <div class="col-md-12">
-                            <p class="text-center">
-                                <button type="button" id="submitBtn" class="btn btn-primary">Submit</button>
-                                <button type="button" id="resetBtn" class="btn btn-danger">Reset</button>
-                            </p>
-                        </div>
+
                     </div>
+
                 </div>
-
             </div>
-
         </div>
 
 

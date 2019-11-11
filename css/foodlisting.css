@@ -13,8 +13,7 @@ body{
     background-color: #eeeeee;
     
 }
-
-
+    
 .lulw2{
     /*border: 1px solid black;
     border-bottom: none;*/
@@ -41,14 +40,12 @@ body{
 
 .foodNav{
     background-color: black;
-    height: 50px;
     padding: 10px;
 }
 
 .drinksNav{
     background-color: black;
     padding: 10px;
-    height: 50px;
 }
 
 .desertNav{
@@ -69,4 +66,116 @@ body{
 .overflow {
     overflow: hidden;
     height: 130;
+}
+
+/*Category navigation*/
+#categorybar {
+    background-color: black;
+    color: black;
+}
+
+#categorybar.active2 {
+    text-align: center;
+}
+
+#categorybar.active2 .categorybar-header h3,
+#categorybar.active2 .CTAs {
+    display: none;
+}
+
+#categorybar.active2 .categorybar-header strong {
+    display: block;
+}
+
+#categorybar ul li a {
+    text-align: left;
+}
+
+#categorybar.active2 ul li a {
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 0.85em;
+}
+
+#categorybar.active2 ul li a i {
+    margin-right: 0;
+    display: block;
+    font-size: 1.8em;
+    margin-bottom: 5px;
+}
+
+#categorybar.active2 ul ul a {
+    padding: 10px !important;
+}
+
+#categorybar.active2 .dropdown-toggle::after {
+    top: auto;
+    bottom: 10px;
+    right: 50%;
+    -webkit-transform: translateX(50%);
+    -ms-transform: translateX(50%);
+    transform: translateX(50%);
+}
+
+#categorybar .categorybar-header {
+    padding: 20px;
+    background: #eeeeee;
+}
+
+#categorybar .categorybar-header strong {
+    display: none;
+    font-size: 1.8em;
+}
+
+
+
+#categorybar ul li a {
+    padding: 10px;
+    font-size: 1.1em;
+    display: block;
+}
+
+#categorybar ul li a:hover {
+    color: #eeeeee;
+    background: #fff;
+}
+
+#categorybar ul li a i {
+    margin-right: 10px;
+}
+
+#categorybar ul li.active2 > a,
+a[aria-expanded="true"] {
+    color: black;
+    background: #fff;
+}
+
+a[data-toggle="collapse"] {
+    position: relative;
+}
+
+.dropdown-toggle::after {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%);
+}
+
+ul ul a {
+    font-size: 0.9em !important;
+    padding-left: 30px !important;
+    background: #813772;
+}
+
+ul.CTAs {
+    padding: 20px;
+}
+
+ul.CTAs a {
+    text-align: center;
+    font-size: 0.9em !important;
+    display: block;
+    border-radius: 5px;
+    margin-bottom: 5px;
 }

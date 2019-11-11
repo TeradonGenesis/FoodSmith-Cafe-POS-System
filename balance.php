@@ -47,7 +47,6 @@
         <div class="wrapper">
            <?php include 'includes/sidepanel.inc.php'?>
            <div id="content">
-           <?php include 'includes/nav.inc.php' ?>
            <div class="jumbotron show_balance">
            <div class="row">
             <div class="col-md-12"><h1>RM <?php echo $balance; ?></h1></div>

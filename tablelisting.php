@@ -31,7 +31,6 @@
         <div id="content">
 
 
-            <?php include 'includes/nav.inc.php'?>
             <?php 
             if(isset($_SESSION)) {
                 session_unset();
