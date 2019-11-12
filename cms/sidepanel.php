@@ -52,26 +52,14 @@
         </li>
         <li class="<?= ($activePage == 'manage-transactions') ? 'active':''; ?>">
             <a href="manage-transactions.php">
-                <i class="fas fa-utensils"></i>
-                Manage Transactions
-            </a>
-        </li>
-        <li class="<?= ($activePage == 'reservation') ? 'active':''; ?>">
-            <a href="#">
-                <i class="fas fa-utensils"></i>
-                Reserve Table
-            </a>
-        </li>
-        <li>
-            <a href="#">
                 <i class="fas fa-donate"></i>
                 Financial
             </a>
         </li>
-        <li>
-            <a href="#">
-                <i class="fas fa-chart-line"></i>
-                Analytics
+        <li class="<?= ($activePage == 'manage-reservations') ? 'active':''; ?>">
+            <a href="manage-reservations.php">
+                <i class="fas fa-utensils"></i>
+                Reserve Table
             </a>
         </li>
     </ul>
