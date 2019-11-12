@@ -69,6 +69,9 @@
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
                         <input class="form-control" type="text" name="name" placeholder="Table number or name">
                     </div>
+                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
+                        <input class="form-control" type="text" name="category" placeholder="Category name">
+                    </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
                         <button type="submit" value="submit" class="btn btn-success enbtn btn-md" name="submit">ADD</button>
