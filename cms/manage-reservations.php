@@ -6,7 +6,49 @@
     <?php include 'head.php'?>
     <?php 
     
+    if(isset($_POST['submit'])) {
+        if(isset($_POST['reserve_name']) && !empty($_POST['reserve_name']) && isset($_POST['reserve_mobile']) && !empty($_POST['reserve_mobile']) && isset($_POST['reserve_date']) && !empty($_POST['reserve_date']) && isset($_POST['reserve_table']) && !empty($_POST['reserve_table']) && isset($_POST['reserve_customers']) && !empty($_POST['reserve_customers'])) {
+            
+            $name = $_POST['reserve_name'];
+            $mobile = $_POST['reserve_mobile'];
+            $date = $_POST['reserve_date'];
+            $table = $_POST['reserve_table'];
+            $customers = $_POST['reserve_customers'];
+            
+            $insert = insertReservations ($connection, $name, $mobile, $date, $table, $customers);
+                
+        }
+    }
+    
+    if(isset($_POST['updateReservations'])) {
+        if(isset($_POST['updateID']) || isset($_POST['updateName']) && !empty($_POST['updqateName']) || isset($_POST['updateMobile']) && !empty($_POST['updateMobile']) || isset($_POST['updateDate']) && !empty($_POST['updateDate']) || isset($_POST['updateTable']) && !empty($_POST['updateTable']) || isset($_POST['updateCustomers']) && !empty($_POST['updateCustomers'])) {
+            
+            $id = $_POST['updateID'];
+            $name = $_POST['updateName'];
+            $mobile = $_POST['updateMobile'];
+            $date = $_POST['updateDate'];
+            $table = $_POST['updateTable'];
+            $customers = $_POST['updateCustomers'];
+            
+            $update = updateReservations ($connection, $id, $name, $mobile, $date, $table, $customers);
+                
+        }
+    }
+    
+    if(isset($_POST['update_reserve_id'])) {
+                    $update_reserve_id = $_POST['update_reserve_id'];
+                    $sql="UPDATE reservation SET status = 2 WHERE reserve_id = '".$update_reserve_id."'";
+                    $connection->query($sql);
+                   
+                }
+    
+    if(isset($_POST['deleteid'])) {
+        $deleteid = $_POST['deleteid'];
 
+        $sql="DELETE FROM reservation WHERE reserve_id = $deleteid;";
+        $connection->query($sql);
+        $connection->close();
+    }
            
     
     $reservations = show($connection, "reservation", "status = '1'", "reserve_id");
@@ -35,7 +77,7 @@
                         <input id="addMobile" class="form-control" type="text" name="reserve_mobile" value="" placeholder="Phone number">
                     </div>
                     <div class="col-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
-                        <input id="addDate" class="form-control" type="text" name="reserve_date" value="" placeholder="YYYY-MM-DD">
+                        <input id="addDate" class="form-control" type="date" name="reserve_date" value="" placeholder="YYYY-MM-DD">
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
                         <select id="addTable" name="reserve_table" class="form-control">
@@ -73,34 +115,29 @@
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
                         <button type="submit" value="submit" class="btn btn-success enbtn btn-md" name="submit">SEARCH</button>
-                        <button type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="submit">RESET</button>
+                        <button type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="reset">RESET</button>
                     </div>
                 </div>
             </form>
 
             <div class="table-container">
 
-                <nav class="mt-5">
-                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                        <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#display" role="tab" aria-controls="nav-home" aria-selected="true">Display</a>
-                        <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#notdisplay" role="tab" aria-controls="nav-profile" aria-selected="false">Not display</a>
-                    </div>
-                </nav>
 
-
-                <div class="row mt-2 tab-content">
-
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 tab-pane active" id="display">
-                        <table class="table table-borded table-striped">
+                <div class="row mt-5">
+                   
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12" id="display">
+                        <p>Click on the headers to sort by column</p>
+                        <input type='hidden' id='sort' value='asc'>
+                        <table id="reservation_table" class="table table-borded table-striped">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th class="w-5">ID</th>
-                                    <th class="w-20">Name</th>
-                                    <th class="w-15">Mobile</th>
-                                    <th class="w-15">Date</th>
-                                    <th class="w-10">Customers</th>
-                                    <th class="w-5">Table</th>
-                                    <th class="w-20">Action</th>
+                                    <th class="w-5"><span onclick='sortTable("reserve_id");'>ID</span></th>
+                                    <th class="w-15"><span onclick='sortTable("reserve_name");'>Name</span></th>
+                                    <th class="w-15"><span onclick='sortTable("reserve_mobile");'>Mobile</span></th>
+                                    <th class="w-15"><span onclick='sortTable("reserve_date");'>Date</span></th>
+                                    <th class="w-5"><span onclick='sortTable("reserve_customers");'>No.</span></th>
+                                    <th class="w-5"><span onclick='sortTable("reserve_table");'>Table</span></th>
+                                    <th class="w-20 text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -108,21 +145,21 @@
                                 <?php foreach($reservations as $reservation) { ?>
                                 <tr>
                                     <td class="w-5"><?php echo $reservation['reserve_id']?></td>
-                                    <td class="w-20"><?php echo $reservation['reserve_name']?></td>
+                                    <td class="w-15"><?php echo $reservation['reserve_name']?></td>
                                     <td class="w-15"><?php echo $reservation['reserve_mobile']?></td>
-                                    <td class="w-15"><?php echo $reservation['reserve_date']?></td>
-                                    <td class="w-10"><?php echo $reservation['reserve_customers']?></td>
+                                    <td class="w-15"><?php echo ($reservation['reserve_date']);?></td>
+                                    <td class="w-5"><?php echo $reservation['reserve_customers']?></td>
                                     <td class="w-5"><?php echo $reservation['reserve_table']?></td>
                                     <td class="w-20">
                                         <div class="row text-center">
                                             <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                                <button onclick=" updateStatus(<?php echo $hfood['status']; ?>, <?php echo $hfood['food_id']; ?>)" value="hide" class="btn btn-primary enbtn btn-md" name="hide"><i class="fas fa-eye"></i></button>
+                                                <button onclick=" updateStatus(<?php echo $reservation['reserve_id']; ?>)" value="hide" class="btn btn-success enbtn btn-md" name="hide"><i class="fas fa-check"></i></button>
                                             </div>
                                             <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
                                                 <button value="edit" class="btn btn-warning enbtn btn-md modalButton" name="editable"><i class="fas fa-edit"></i></button>
                                             </div>
                                             <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn deleteButton">
-                                                <button onclick="deleteFood(<?php echo $hfood['food_id']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt"></i></button>
+                                                <button onclick="deleteReserve(<?php echo $reservation['reserve_id']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </div>
                                     </td>
@@ -135,50 +172,6 @@
 
                     </div>
 
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 tab-pane" id="notdisplay">
-                        <table class="table table-borded table-striped">
-                            <thead class="thead-dark">
-                                <tr>
-                                    <th class="w-5">ID</th>
-                                    <th class="w-20">Name</th>
-                                    <th class="w-15">Mobile</th>
-                                    <th class="w-15">Date</th>
-                                    <th class="w-10">Customers</th>
-                                    <th class="w-5">Table</th>
-                                    <th class="w-20">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                <?php foreach($reservations as $reservation) { ?>
-                                <tr>
-                                    <td class="w-5"><?php echo $reservation['reserve_id']?></td>
-                                    <td class="w-20"><?php echo $reservation['reserve_name']?></td>
-                                    <td class="w-15"><?php echo $reservation['reserve_mobile']?></td>
-                                    <td class="w-15"><?php echo $reservation['reserve_date']?></td>
-                                    <td class="w-10"><?php echo $reservation['reserve_customers']?></td>
-                                    <td class="w-5"><?php echo $reservation['reserve_table']?></td>
-                                    <td class="w-20">
-                                        <div class="row text-center">
-                                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                                <button onclick=" updateStatus(<?php echo $hfood['status']; ?>, <?php echo $hfood['food_id']; ?>)" value="hide" class="btn btn-primary enbtn btn-md" name="hide"><i class="fas fa-eye"></i></button>
-                                            </div>
-                                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                                <button value="edit" class="btn btn-warning enbtn btn-md modalButton" name="editable"><i class="fas fa-edit"></i></button>
-                                            </div>
-                                            <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn deleteButton">
-                                                <button onclick="deleteFood(<?php echo $hfood['food_id']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt"></i></button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php } ?>
-
-
-                            </tbody>
-                        </table>
-
-                    </div>
                 </div>
 
                 <!--Edit modal -->
@@ -196,38 +189,39 @@
 
                                 </div>
                                 <div class="col-12 col-md-12 text-center">
-                                    <form action="manage-menu.php" method="POST" enctype="multipart/form-data">
+                                    <form id="updateReserve_form" action="manage-reservations.php" method="POST" enctype="multipart/form-data">
                                         <div id="updateFood" class="row mt-3">
 
                                             <input id="getID" class="form-control " type="hidden" name="updateID" placeholder="id" value="">
-
-                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-4 text-left uploading">
-                                                <span class="btn btn-primary btn-file">
-                                                    <i class="fas fa-upload"></i> Browse<input id="editPhoto" type="file" name="updateFile" class="file-input">
-                                                </span>
-                                                <span id="edit-file-label">No file</span>
+                                            <br />
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
+                                                <input id="editReserve_name" class="form-control" type="text" name="updateName" placeholder="Name" value="">
                                             </div>
                                             <br />
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                                <input id="editName" class="form-control" type="text" name="updateName" placeholder="Name" value="">
+                                                <input id="editReserve_mobile" class="form-control" type="text" name="updateMobile" placeholder="Mobile no." value="">
                                             </div>
                                             <br />
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                                <input id="editPrice" class="form-control" type="text" name="updatePrice" placeholder="Price eg. 2.50" value="">
+                                                <input id="editReserve_date" class="form-control" type="date" name="updateDate" placeholder="" value="">
+                                            </div>
+                                            <br />
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
+                                                <input id="editReserve_customers" class="form-control" type="number" name="updateCustomers" placeholder="" value="">
                                             </div>
                                             <br />
                                             <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                                <select id="editCategory" name="updateCategory" class="form-control">
-                                                    <option selected="" hidden="" value="">Category</option>
-                                                    <?php foreach($showCategories as $showCategory) { ?>
-                                                    <option value="<?php echo $showCategory['category_id']; ?>"><?php echo $showCategory['category_name']; ?></option>
-                                                    <?php } ?>
+                                                <select id="editReserve_table" name="updateTable" class="form-control">
+                                                    <option selected="" hidden="" value="">Table</option>
+                                                    <?php foreach($tables as $table) { ?>
+                                                    <option value="<?php echo $table['table_no']?>"><?php echo $table['table_no']?></option>
+                                                    <?php }?>
                                                 </select>
                                             </div>
                                             <br />
 
                                             <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
-                                                <button type="submit" value="updateFood" class="btn btn-success enbtn btn-md" name="updateFood">UPDATE</button>
+                                                <button type="submit" value="updateReservation" class="btn btn-success enbtn btn-md" name="updateReservations">UPDATE</button>
                                             </div>
                                         </div>
                                     </form>
@@ -259,7 +253,7 @@
 
     </div>
     <?php include 'footer.php'?>
-    <script src="../js/manage-table.js"></script>
+    <script src="../js/manage-reservations.js"></script>
 </body>
 
 </html>

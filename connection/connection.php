@@ -194,6 +194,24 @@ function insertTransaction ($connection = null, $price = null) { //insert transa
         $stmt->close();
 }
 
+//insert into reservations table
+function insertReservations ($connection = null, $name = null, $mobile = null, $date = null, $table = null, $customers = null) { 
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "INSERT INTO reservation(reserve_name, reserve_mobile, reserve_date, reserve_table, reserve_customers) VALUES (?, ?, ?, ?, ?)";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('sssii',$name, $mobile, $date, $table, $customers))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        $stmt->close();
+}
+
 function updateHideStatus ($connection = null, $table = null, $status = null, $id = null) {
     if ($connection->connect_error)
             die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
@@ -289,6 +307,24 @@ function updateCatItem ($connection = null, $table = null, $id = null, $name = n
             die('Query failed: (' . $connection->errno . ') ' . $connection->error);
 
         if (!$stmt->bind_param('si', $name, $id))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        $stmt->close();
+}
+
+//update reservations table
+function updateReservations ($connection = null, $id = null, $name = null, $mobile = null, $date = null, $table = null, $customers = null) { 
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "UPDATE reservation SET reserve_name = ?, reserve_mobile = ?, reserve_date = ?, reserve_table = ?, reserve_customers = ? WHERE reserve_id = ?";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('sssiii',$name, $mobile, $date, $table, $customers, $id))
             die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
 
         if (!$stmt->execute())
