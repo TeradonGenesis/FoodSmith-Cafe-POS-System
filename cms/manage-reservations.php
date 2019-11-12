@@ -10,7 +10,7 @@
            
     
     $reservations = show($connection, "reservation", "status = '1'", "reserve_id");
-    
+    $tables = show($connection, "table_listing", "table_id != '1'", "table_no");
     $connection->close();
     
     ?>
@@ -25,27 +25,28 @@
 
             <?php include 'nav.php'?>
 
-            <p class="mt-2"><i class="fas fa-plus"></i> Add food</p>
-            <form id="addFoodForm" action="manage-menu.php" method="POST" enctype="multipart/form-data">
-                <div id="addFood" class="row mt-3">
-
-                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 mb-2 text-left uploading" id="uploadPhoto">
-                        <span class="btn btn-primary btn-file">
-                            <i class="fas fa-upload"></i> Browse<input type="file" name="file" class="file-input" id="addPhoto">
-                        </span>
-                        <span class="file-label">No file</span>
-                        <p>* Required</p>
+            <p class="mt-2"><i class="fas fa-plus"></i> Add reservation</p>
+            <form id="addReservationForm" action="manage-reservations.php" method="POST" enctype="multipart/form-data">
+                <div id="addResrve" class="row mt-3">
+                    <div class="col-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
+                        <input id="addReserveName" class="form-control" type="text" name="reserve_name" value="" placeholder="Name">
                     </div>
-                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
-                        <input id="addName" class="form-control" type="text" name="name" value="" placeholder="Food name">
+                    <div class="col-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
+                        <input id="addMobile" class="form-control" type="text" name="reserve_mobile" value="" placeholder="Phone number">
                     </div>
-                    <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
-                        <input id="addPrice" class="form-control" type="text" name="price" value="" placeholder="Price eg. 2.50">
+                    <div class="col-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
+                        <input id="addDate" class="form-control" type="text" name="reserve_date" value="" placeholder="YYYY-MM-DD">
                     </div>
-                    <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4 text-left mb-4">
-                        <select id="addCategory" name="category" class="form-control">
-                            <option selected="" hidden="" value="">Category</option>
+                    <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
+                        <select id="addTable" name="reserve_table" class="form-control">
+                            <option selected="" hidden="" value="">Table</option>
+                            <?php foreach($tables as $table) { ?>
+                            <option value="<?php echo $table['table_no']?>"><?php echo $table['table_no']?></option>
+                            <?php }?>
                         </select>
+                    </div>
+                    <div class="col-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
+                        <input id="addCustomers" class="form-control" min="1" type="number" name="reserve_customers" value="" placeholder="No. of Customers">
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
@@ -64,29 +65,11 @@
                         <input class="form-control" type="text" name="name" placeholder="Name">
                     </div>
 
-                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 text-left mb-4">
-                        <select name="type" class="form-control">
-                            <option selected="" hidden="" value="">Value</option>
-                            <option value=">">More than</option>
-                            <option value="<">Less than</option>
-                            <option value="=">Equal to</option>
-                        </select>
-                    </div>
 
                     <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-left mb-2">
                         <input class="form-control" type="text" name="price" placeholder="Price e.g. 20.30">
                     </div>
 
-
-                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 text-left mb-4">
-                        <select name="type" class="form-control">
-                            <option selected="" hidden="" value="">Category</option>
-                            <option value="Rice">Rice</option>
-                            <option value="Noodle">Noodle</option>
-                            <option value="Hot Drink">Hot Drink</option>
-                            <option value="Cold Drink">Cold Drink</option>
-                        </select>
-                    </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
                         <button type="submit" value="submit" class="btn btn-success enbtn btn-md" name="submit">SEARCH</button>
@@ -131,7 +114,7 @@
                                     <td class="w-10"><?php echo $reservation['reserve_customers']?></td>
                                     <td class="w-5"><?php echo $reservation['reserve_table']?></td>
                                     <td class="w-20">
-                                         <div class="row text-center">
+                                        <div class="row text-center">
                                             <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
                                                 <button onclick=" updateStatus(<?php echo $hfood['status']; ?>, <?php echo $hfood['food_id']; ?>)" value="hide" class="btn btn-primary enbtn btn-md" name="hide"><i class="fas fa-eye"></i></button>
                                             </div>
@@ -145,7 +128,7 @@
                                     </td>
                                 </tr>
                                 <?php } ?>
-                            
+
 
                             </tbody>
                         </table>
@@ -176,7 +159,7 @@
                                     <td class="w-10"><?php echo $reservation['reserve_customers']?></td>
                                     <td class="w-5"><?php echo $reservation['reserve_table']?></td>
                                     <td class="w-20">
-                                         <div class="row text-center">
+                                        <div class="row text-center">
                                             <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
                                                 <button onclick=" updateStatus(<?php echo $hfood['status']; ?>, <?php echo $hfood['food_id']; ?>)" value="hide" class="btn btn-primary enbtn btn-md" name="hide"><i class="fas fa-eye"></i></button>
                                             </div>
@@ -190,7 +173,7 @@
                                     </td>
                                 </tr>
                                 <?php } ?>
-                            
+
 
                             </tbody>
                         </table>
