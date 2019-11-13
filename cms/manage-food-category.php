@@ -27,7 +27,7 @@
             
             if(isset($_POST['name']) && !empty($_POST['name'])) {
                 
-                $name = $_POST['name'];
+                $name = trim($_POST['name']);
                 $addCategories = insertFoodCategory($connection, $name);
                 
                 $category_status = "Category Added";

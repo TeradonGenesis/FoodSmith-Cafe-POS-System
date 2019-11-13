@@ -7,6 +7,7 @@
         $foods = show($connection, "menu", "food_id != '' AND status = 1", "food_id");
         $categories = show($connection, "food_category", "category_id !=''", "category_id");
         $tables = show($connection, "table_listing", "table_id != ''", "table_no");
+        $foodcat = showJoins($connection, "SELECT f.category_id,f.category_name,m.food_picture,m.food_name, m.food_price FROM food_category f INNER JOIN menu m ON f.category_id=m.category");
         $connection->close();
     ?>
 
@@ -47,15 +48,12 @@
                                     </div>
                                     <ul class="list-unstyled components">
                                     <li class="active2">
-                                        <a href="foodordercart.php" id="v-pills-home-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-home" aria-selected="true" aria-orientation="vertical" class="nav-link">
-                                            All food
-                                        </a>
+                                        <a href="foodordercart.php" id="v-pills-home-tab" data-toggle="pill" href="foodordercart.php" role="tab" aria-controls="v-pills-home" aria-selected="true" aria-orientation="vertical" class="nav-link">All food</a>
                                     </li>
-                                    <?php foreach($categories as $category) { ?>
+                                    <?php
+                                    foreach($categories as $category) { ?>
                                     <li class="active2">
-                                        <a href="foodordercart.php" id="v-pills-profile-tab" data-toggle="pill" href="foodordercart.php" aria-controls="v-pills-profile" aria-selected="false" role="tab" class="nav-link">
-                                            <?php echo $category['category_name'] ?></a><?php } ?>
-                                    </li>
+                                        <a href="foodordercart.php" id="v-pills-profile-tab" data-toggle="pill" href="foodordercart.php" aria-controls="v-pills-profile" aria-selected="false" role="tab" class="nav-link"><?php echo $category['category_name'];?></a><?php } ?></li>
                                     </ul>
                                 </nav>
                             </div>
@@ -64,15 +62,13 @@
                         <div class="col-md-7 col-sm-7 lulw2">
                             <!--First row for the food items-->
                             <div class="row food1">
-                                <?php foreach($foods as $food) { ?>
-                                <div class="col-md-3 col-sm-3 customCard mb-2">
+                                <?php foreach($foodcat as $food) { ?>
+                                <div class="col-md-3 col-sm-3 customCard mb-2 <?php echo $food["category_name"].'-'.$food["category_name"];?>">
                                     <div class="card">
                                         <div class="overflow">
                                             <img src="images/<?php echo $food['food_picture']?>" class="card-img-top img-fluid" height="100%" alt="...">
                                         </div>
-                                        <div class="card-body text-center">
-                                            <input class="form-control foodid" type="hidden" name="foodid" value="<?php echo $food['food_id']?>">
-                                            <p><?php echo $food['food_price']?></p>
+                                        <div class="card-body text-center"><input class="form-control foodid" type="hidden" name="foodid" value="<?php echo $food['food_id']?>"><p><?php echo $food['food_price']?></p>
                                             <a href="#" class="btnfood1 btn-transparent"><?php echo $food['food_name']?></a>
                                         </div>
                                     </div>
@@ -172,7 +168,7 @@
         <!-- Popper.JS -->
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
         <!-- Bootstrap JS -->
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
         <script src="js/jquery.tabledit.js"></script>
         <script src="js/jquery.js"></script>
         <script src="js/jquery-3.4.1.min.js"></script>

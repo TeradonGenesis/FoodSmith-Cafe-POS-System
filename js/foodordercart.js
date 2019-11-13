@@ -140,3 +140,26 @@ $('.table tbody').on('change', 'tr', function() {
 
     updatePrice();
 });
+
+//for category tabbing
+$(function(){
+  $('ul li.active2 a').click(function(e){
+    e.preventDefault();
+    var category = $(this).text().split("&");
+    var number = category[0];
+    if(category[0].toLowerCase()=="all food")
+    {
+      $('.customCard').show();
+    }
+    else
+    {
+       //hide all categories
+       $('.customCard').hide();
+       $.each(category, function(i, v){
+         $('.'+v.trim()+'-'+v.trim()).show();
+         alert('.'+v.trim()+'-'+v.trim());
+       });
+    }
+  });
+
+});
