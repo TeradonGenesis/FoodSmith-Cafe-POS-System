@@ -45,7 +45,7 @@ $(".file-input").on("change", function () {
 });
 
 
-function deleteFood($id) {
+function deleteTable($id) {
     //get the input value
     $.ajax({
         //type. for eg: GET, POST
@@ -58,7 +58,7 @@ function deleteFood($id) {
             deleteid: $id
         },
         success: function () {
-            $(".table-container").load("manage-menu.php .table-container ", function () {
+            $(".table-container").load("manage-table.php .table-container ", function () {
 
                 $('.modalButton').click(function (e) {
                     e.preventDefault();

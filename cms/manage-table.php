@@ -43,6 +43,14 @@
                 
             }
         }
+    
+        if(isset($_POST['deleteid'])) {
+            $deleteid = $_POST['deleteid'];
+
+            $sql="DELETE FROM table_listing WHERE table_id = $deleteid;";
+            $connection->query($sql);
+            $connection->close();
+        }
            
     
     $showTables = show($connection, "table_listing", "table_id != ''", "table_no");
@@ -105,7 +113,7 @@
                                                 <button value="edit" class="btn btn-warning enbtn btn-md modalButton" name="editable"><i class="fas fa-edit"></i></button>
                                             </div>
                                             <div class="col-12 col-sm-6 col-md-6 col-lg-6 formbtn deleteButton">
-                                                <button onclick="deleteFood(<?php echo $showTable['table_id']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt"></i></button>
+                                                <button onclick="deleteTable(<?php echo $showTable['table_id']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </div>
                                     </td>
