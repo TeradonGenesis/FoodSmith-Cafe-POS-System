@@ -7,7 +7,7 @@
         $foods = show($connection, "menu", "food_id != '' AND status = 1", "food_id");
         $categories = show($connection, "food_category", "category_id !=''", "category_id");
         $tables = show($connection, "table_listing", "table_id != ''", "table_no");
-        $foodcat = showJoins($connection, "SELECT f.category_id,f.category_name,m.food_picture,m.food_name, m.food_price FROM food_category f INNER JOIN menu m ON f.category_id=m.category");
+        $foodcat = showJoins($connection, "SELECT f.category_id,f.category_name,m.food_picture,m.food_name, m.food_price,m.food_id FROM food_category f INNER JOIN menu m ON f.category_id=m.category");
         $connection->close();
     ?>
 
