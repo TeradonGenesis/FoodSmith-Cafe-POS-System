@@ -69,7 +69,7 @@
                                             <img src="images/<?php echo $food['food_picture']?>" class="card-img-top img-fluid" height="100%" alt="...">
                                         </div>
                                         <div class="card-body text-center"><input class="form-control foodid" type="hidden" name="foodid" value="<?php echo $food['food_id']?>"><p><?php echo $food['food_price']?></p>
-                                            <a href="#" class="btnfood1 btn-transparent"><?php echo $food['food_name']?></a>
+                                            <a href="#" class="btnfood1 btn-transparent stretched-link"><?php echo $food['food_name']?></a>
                                         </div>
                                     </div>
                                 </div>

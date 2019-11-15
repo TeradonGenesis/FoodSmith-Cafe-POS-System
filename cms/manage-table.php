@@ -7,6 +7,7 @@
     <?php 
     
         $table_status = null;
+        $text_status = null;
     
         if(isset($_POST['updateTable'])) {
         
@@ -29,10 +30,25 @@
             if(isset($_POST['name']) && !empty($_POST['name'])) {
                 
                 $name = $_POST['name'];
-                $addTables = insertTable($connection, $name);
                 
-                $table_status = "Table Added";
+                $number = checkDuplicate($connection, "table_listing", "table_no  = '$name'", "table_id");
                 
+                if($number > 0){
+                    
+                    $table_status = "There is a table with the same number already! Table not added!";
+                    $text_status = "text-danger";
+                    
+                } else {
+                    
+                    $addTables = insertTable($connection, $name);
+                    $table_status = "Table Added";
+                    $text_status = "text-success";
+                    
+                }
+                
+            } else {
+                $table_status = "Table field or category is empty! Table not added!";
+                $text_status = "text-danger";
             }
             
         } else if (isset($_POST['submit']) && $_POST['submit'] == "reset"){
@@ -51,9 +67,31 @@
             $connection->query($sql);
             $connection->close();
         }
+        
+        //Search form
+        $number_cond = null;
+        $seat_cond = null;
+        if(isset($_POST['searchSubmit'])) {
+
+            $number = $_POST['searchTabNum'];
+            $seat = $_POST['searchTabSeat'];
+    
+            if(isset($_POST['searchTabNum']) && !empty($_POST['searchTabNum'])){
+                    $number_cond = " AND (table_no ='$number')";
+            } else {
+                $number_cond = null;
+            } 
+            
+            if(isset($_POST['searchTabSeat']) && !empty($_POST['searchTabSeat'])){
+                    $seat_cond = " AND (table_category ='$seat')";
+            } else {
+                $seat_cond = null;
+            } 
+
+        }
            
     
-    $showTables = show($connection, "table_listing", "table_id != ''", "table_no");
+    $showTables = show($connection, "table_listing", "table_id != '' $number_cond $seat_cond ", "table_no");
     
     $connection->close();
     
@@ -70,20 +108,38 @@
             <?php include 'nav.php'?>
 
             <p><i class="fas fa-plus"></i> Add table</p>
-            <p class="text-success"><?php echo $table_status ?></p>
+            <p class="<?php echo $text_status ?>"><?php echo $table_status ?></p>
 
             <form action="manage-table.php" method="post">
                 <div id="addCategory" class="row mt-3">
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
-                        <input class="form-control" type="text" name="name" placeholder="Table number or name">
+                        <input class="form-control" type="number" min="1" name="name" placeholder="Table number">
                     </div>
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
-                        <input class="form-control" type="text" name="category" placeholder="Category name">
+                        <input class="form-control" type="number" min="1" name="category" placeholder="Number of seating">
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
                         <button type="submit" value="submit" class="btn btn-success enbtn btn-md" name="submit">ADD</button>
                         <button type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="submit">RESET</button>
+                    </div>
+                </div>
+            </form>
+            
+            <p class="mt-3"><i class="fas fa-search"></i> Search Table</p>
+            <form action="manage-table.php" method="post">
+                <div id="searchTable" class="row mt-3">
+
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-left mb-2">
+                        <input id="searchTabNumID" class="form-control" type="number" name="searchTabNum" placeholder="Table number">
+                    </div>
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-left mb-2">
+                        <input id="searchTabSeatID" class="form-control" type="number" name="searchTabSeat" placeholder="Number of seating">
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
+                        <button id="searchSubmitID" type="submit" value="submit" class="btn btn-success enbtn btn-md" name="searchSubmit">SEARCH</button>
+                        <button id="searchResetID" type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="searchReset">RESET</button>
                     </div>
                 </div>
             </form>
@@ -147,11 +203,11 @@
 
                                         <br />
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                            <input id="editName" class="form-control" type="text" name="updateName" placeholder="Name" value="">
+                                            <input id="editName" class="form-control" min="1" type="number" name="updateName" placeholder="Table number" value="">
                                         </div>
                                         <br />
                                         <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left mb-4">
-                                            <input id="editCategory" class="form-control" type="text" name="updateCatName" placeholder="Category" value="">
+                                            <input id="editCategory" class="form-control" min="1" type="number" name="updateCatName" placeholder="Number of seating" value="">
                                         </div>
                                         <br />
 

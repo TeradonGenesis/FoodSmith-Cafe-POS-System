@@ -7,7 +7,9 @@
     <?php 
     
         $category_status = null;
-    
+        $text_status = null;
+        
+        //Updating form
         if(isset($_POST['updateCat'])) {
         
                 $updateID = $_POST['updateCatID'];
@@ -23,15 +25,32 @@
 
         }
     
+    
+        //Inserting form    
         if(isset($_POST['submit']) && $_POST['submit'] == "submit") {
             
             if(isset($_POST['name']) && !empty($_POST['name'])) {
                 
-                $name = str_replace(' ', '', $_POST["name"]);
-                $addCategories = insertFoodCategory($connection, $name);
+                $name = preg_replace('/\s+/', '', $_POST['name']);
                 
-                $category_status = "Category Added";
+                $number = checkDuplicate($connection, "food_category", "category_name  = '$name'", "category_id");
                 
+                if($number > 0){
+                    
+                    $category_status = "There is a category with a same name already! Category not added!";
+                    $text_status = "text-danger";
+                    
+                } else {
+                    
+                    $addCategories = insertFoodCategory($connection, $name);
+                    $category_status = "Category Added";
+                    $text_status = "text-success";
+                    
+                }
+                
+            } else {
+                $category_status = "Category not added";
+                $text_status = "text-danger";
             }
             
         } else if (isset($_POST['submit']) && $_POST['submit'] == "reset"){
@@ -42,9 +61,33 @@
                 
             }
         }
-           
     
-    $showCategories = show($connection, "food_category", "category_id != ''", "category_id");
+    
+        //Delete form
+        if(isset($_POST['deleteid'])) {
+                $deleteid = $_POST['deleteid'];
+
+                $sql="DELETE FROM table_listing WHERE table_id = $deleteid;";
+                $connection->query($sql);
+                $connection->close();
+        }
+    
+        //Search formj
+        $name_cond = null;
+        if(isset($_POST['searchSubmit'])) {
+
+            $name = $_POST['searchCatName'];
+    
+            if(isset($_POST['searchCatName']) && !empty($_POST['searchCatName'])){
+                    $name_cond = " AND (category_name REGEXP '[[:<:]]".$name."[[:>:]]' )";
+            } else {
+                $name_cond = null;
+            } 
+
+        }
+           
+    //echo out the content
+    $showCategories = show($connection, "food_category", "category_id != '' $name_cond", "category_id");
     
     $connection->close();
     
@@ -61,7 +104,7 @@
             <?php include 'nav.php'?>
 
             <p><i class="fas fa-plus"></i> Add category</p>
-            <p class="text-success"><?php echo $category_status ?></p>
+            <p class="<?php echo $text_status ?>"><?php echo $category_status ?></p>
 
             <form action="manage-food-category.php" method="post">
                 <div id="addCategory" class="row mt-3">
@@ -72,6 +115,21 @@
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
                         <button type="submit" value="submit" class="btn btn-success enbtn btn-md" name="submit">ADD</button>
                         <button type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="submit">RESET</button>
+                    </div>
+                </div>
+            </form>
+            
+            <p class="mt-3"><i class="fas fa-search"></i> Search category</p>
+            <form action="manage-food-category.php" method="post">
+                <div id="searchCat" class="row mt-3">
+
+                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-left mb-2">
+                        <input id="searchCatNameID" class="form-control" type="text" name="searchCatName" placeholder="Name">
+                    </div>
+
+                    <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
+                        <button id="searchSubmitID" type="submit" value="submit" class="btn btn-success enbtn btn-md" name="searchSubmit">SEARCH</button>
+                        <button id="searchResetID" type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="searchReset">RESET</button>
                     </div>
                 </div>
             </form>

@@ -19,17 +19,54 @@
             <?php 
     
                 if(isset($_POST['updateFood'])) {
-        
+                    
                         $updateID = $_POST['updateID'];
                         $updateName = $_POST['updateName'];
                         $updatePrice = $_POST['updatePrice'];
                         $updateCategory = $_POST['updateCategory'];
-
-
-                        $updateStuff = updateFoodItem($connection, "menu", $updateID, $updateName, $updatePrice, $updateCategory);
-
-
-
+                    
+                        
+                        $fileName = $_FILES['updateFile']['name'];
+                        $fileTmpName = $_FILES['updateFile']['tmp_name'];
+                        $fileSize = $_FILES['updateFile']['size'];
+                        $fileError = $_FILES['updateFile']['error'];
+                        $fileType = $_FILES['updateFile']['type'];
+                        
+                        $fileExt = explode('.', $fileName);
+                        $fileActualExt = strtolower(end($fileExt));
+                        
+                        $allowed = array('jpg', 'jpeg', 'png');
+                        
+                        if(in_array($fileActualExt, $allowed)) {
+                            if($fileError === 0) {
+                                if($fileSize < 5000000) {
+                                    $fileNameNew = uniqid('', true).".".$fileActualExt;
+                                    
+                                    $fileDestination = '../images/'.$fileNameNew;
+                                    
+                                    move_uploaded_file($fileTmpName, $fileDestination);
+                                    
+                                    $updateStuff = updateFoodItemwithPicture($connection, "menu", $updateID, $fileNameNew, $updateName, $updatePrice, $updateCategory);
+                                    $success = "Food Updated";
+                                    
+                                    
+                                    
+                                } else {
+                                    $uploadStatus = "File size is too big";
+                                    $success = "Fail to add food";
+                                }
+                                
+                            } else {
+                               $uploadStatus = "There was an error uploading the file"; 
+                                $success = "Fail to add food";
+                            }
+                        } else {
+                            $uploadStatus =  "You cannot upload files of this type";
+                            $success = "Fail to add food";
+                        }
+                    
+                    $updateStuff = updateFoodItem($connection, "menu", $updateID, $updateName, $updatePrice, $updateCategory);
+                                    $success = "Food Updated";
                 }
     
                 
@@ -144,12 +181,33 @@
     
 
                 } 
+    
+                //Search form
+                $name_cond = null;
+                $type_cond = null;
+                if(isset($_POST['searchSubmit'])) {
+        
+                    $name = $_POST['searchName'];
+                    $type = $_POST['searchType'];
+
+                    if(isset($_POST['searchName']) && !empty($_POST['searchName'])){
+                            $name_cond = " AND (food_name REGEXP '[[:<:]]".$name."[[:>:]]' )";
+                    } else {
+                        $name_cond = null;
+                    } 
+
+                    if(isset($_POST['searchType']) && !empty($_POST['searchType'])){
+                            $type_cond = " AND (category = '$type')";
+                    } else {
+                        $type_cond = null;
+                    }
+                }
                 
     
            
     
     $showFood = showJoins($connection, "SELECT *  FROM menu INNER JOIN food_category
-ON menu.category = food_category.category_id WHERE menu.status = 1 ORDER BY menu.food_id");
+ON menu.category = food_category.category_id WHERE menu.status = 1 $name_cond $type_cond ORDER BY menu.food_id");
     
    $hideFood = showJoins($connection, "SELECT *  FROM menu INNER JOIN food_category
 ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu.food_id");
@@ -214,40 +272,26 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
             <p class="form-message"></p>
 
             <p class="mt-3"><i class="fas fa-search"></i> Search food</p>
-            <form action="index.php" method="post">
+            <form action="manage-menu.php" method="post">
                 <div id="searchFood" class="row mt-3">
 
                     <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-left mb-2">
-                        <input class="form-control" type="text" name="name" placeholder="Name">
-                    </div>
-
-                    <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 text-left mb-4">
-                        <select name="type" class="form-control">
-                            <option selected="" hidden="" value="">Value</option>
-                            <option value=">">More than</option>
-                            <option value="<">Less than</option>
-                            <option value="=">Equal to</option>
-                        </select>
-                    </div>
-
-                    <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-left mb-2">
-                        <input class="form-control" type="text" name="price" placeholder="Price e.g. 20.30">
+                        <input id="searchNameID" class="form-control" type="text" name="searchName" placeholder="Name">
                     </div>
 
 
                     <div class="col-xs-12 col-sm-12 col-md-3 col-lg-3 text-left mb-4">
-                        <select name="type" class="form-control">
+                        <select id="searchTypeID" name="searchType" class="form-control">
                             <option selected="" hidden="" value="">Category</option>
-                            <option value="Rice">Rice</option>
-                            <option value="Noodle">Noodle</option>
-                            <option value="Hot Drink">Hot Drink</option>
-                            <option value="Cold Drink">Cold Drink</option>
+                            <?php foreach($showCategories as $showCategory) { ?>
+                            <option value="<?php echo $showCategory['category_id']; ?>"><?php echo $showCategory['category_name']; ?></option>
+                            <?php } ?>
                         </select>
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
-                        <button type="submit" value="submit" class="btn btn-success enbtn btn-md" name="submit">SEARCH</button>
-                        <button type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="submit">RESET</button>
+                        <button id="searchSubmitID" type="submit" value="submit" class="btn btn-success enbtn btn-md" name="searchSubmit">SEARCH</button>
+                        <button id="searchResetID" type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="searchReset">RESET</button>
                     </div>
                 </div>
             </form>
@@ -265,7 +309,7 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
                 <div class="row mt-2 tab-content">
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 tab-pane active" id="display">
-                        <table class="table table-borded table-striped">
+                        <table id="foodTableID" class="table table-borded table-striped">
                             <thead class="thead-dark">
                                 <tr>
                                     <th class="col-1">#</th>
@@ -283,7 +327,7 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
                                     <td class="col-1 pt-4"><?php echo $food['food_id']?></td>
                                     <td class="col-2"><img class="foodpics" src="../images/<?php echo $food['food_picture'] ?>" alt="<?php echo $food['food_picture'] ?>" width="70" height="70" /></td>
                                     <td class="col-3 pt-4"><?php echo $food['food_name']?></td>
-                                    <td class="col-1 pt-4 text-right"><?php echo $food['food_price']?></td>
+                                    <td class="col-1 pt-4 text-center"><?php echo $food['food_price']?></td>
                                     <td class="col-2 pt-4"><?php echo $food['category_name']?></td>
                                     <td class="col-3 pt-4 text-center">
                                         <div class="row text-center">

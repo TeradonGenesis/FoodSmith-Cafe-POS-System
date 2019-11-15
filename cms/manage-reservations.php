@@ -6,6 +6,9 @@
     <?php include 'head.php'?>
     <?php 
     
+    $reservation_status = null;
+    $text_status = null;
+    
     if(isset($_POST['submit'])) {
         if(isset($_POST['reserve_name']) && !empty($_POST['reserve_name']) && isset($_POST['reserve_mobile']) && !empty($_POST['reserve_mobile']) && isset($_POST['reserve_date']) && !empty($_POST['reserve_date']) && isset($_POST['reserve_table']) && !empty($_POST['reserve_table']) && isset($_POST['reserve_customers']) && !empty($_POST['reserve_customers'])) {
             
@@ -16,6 +19,11 @@
             $customers = $_POST['reserve_customers'];
             
             $insert = insertReservations ($connection, $name, $mobile, $date, $table, $customers);
+            $reservation_status = "Reservation added";
+            $text_status = "text-success";
+            
+            $reservation_status = "Reservation not added";
+            $text_status = "text-danger";
                 
         }
     }
@@ -31,7 +39,13 @@
             $customers = $_POST['updateCustomers'];
             
             $update = updateReservations ($connection, $id, $name, $mobile, $date, $table, $customers);
+            
+            $reservation_status = "Reservation updated";
+            $text_status = "text-success";
                 
+        } else {
+            $reservation_status = "Reservation not updated";
+            $text_status = "text-danger";
         }
     }
     
@@ -40,7 +54,7 @@
                     $sql="UPDATE reservation SET status = 2 WHERE reserve_id = '".$update_reserve_id."'";
                     $connection->query($sql);
                    
-                }
+    }
     
     if(isset($_POST['deleteid'])) {
         $deleteid = $_POST['deleteid'];
@@ -49,9 +63,33 @@
         $connection->query($sql);
         $connection->close();
     }
+    
+    //Search form
+    $name_cond = null;
+    $date_cond = null;
+    if(isset($_POST['searchSubmit'])) {
+
+        $name = $_POST['searchResName'];
+        $getDate = $_POST['searchResDate'];
+        
+        $date = new DateTime($getDate);
+        $format_date = $date->format('Y-m-d');
+
+        if(isset($_POST['searchResName']) && !empty($_POST['searchResName'])){
+                $name_cond = " AND (reserve_name REGEXP '[[:<:]]".$name."[[:>:]]' )";
+        } else {
+            $name_cond = null;
+        } 
+
+        if(isset($_POST['searchResDate']) && !empty($_POST['searchResDate'])){
+                $date_cond = " AND (reserve_date = '$format_date')";
+        } else {
+            $date_cond = null;
+        }
+    }
            
     
-    $reservations = show($connection, "reservation", "status = '1'", "reserve_id");
+    $reservations = show($connection, "reservation", "status = '1' $name_cond $date_cond", "reserve_id");
     $tables = show($connection, "table_listing", "table_id != '1'", "table_no");
     $connection->close();
     
@@ -68,6 +106,7 @@
             <?php include 'nav.php'?>
 
             <p class="mt-2"><i class="fas fa-plus"></i> Add reservation</p>
+            <p class="<?php echo $text_status; ?>"><?php echo $reservation_status; ?></p>
             <form id="addReservationForm" action="manage-reservations.php" method="POST" enctype="multipart/form-data">
                 <div id="addResrve" class="row mt-3">
                     <div class="col-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
@@ -99,23 +138,20 @@
             </form>
             <p class="form-message"></p>
 
-            <p class="mt-3"><i class="fas fa-search"></i> Search food</p>
-            <form action="index.php" method="post">
-                <div id="searchFood" class="row mt-3">
+            <p class="mt-3"><i class="fas fa-search"></i> Search Reservations</p>
+            <form action="manage-reservations.php" method="post">
+                <div id="searchReservations" class="row mt-3">
 
                     <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-left mb-2">
-                        <input class="form-control" type="text" name="name" placeholder="Name">
+                        <input id="searchResNameID" class="form-control" type="text" name="searchResName" placeholder="Name">
                     </div>
-
-
                     <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-left mb-2">
-                        <input class="form-control" type="text" name="price" placeholder="Price e.g. 20.30">
+                        <input id="searchResDateID" class="form-control" type="date" name="searchResDate" placeholder="">
                     </div>
-
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
-                        <button type="submit" value="submit" class="btn btn-success enbtn btn-md" name="submit">SEARCH</button>
-                        <button type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="reset">RESET</button>
+                        <button id="searchSubmitID" type="submit" value="submit" class="btn btn-success enbtn btn-md" name="searchSubmit">SEARCH</button>
+                        <button id="searchResetID" type="submit" value="reset" class="btn btn-danger enbtn btn-md" name="searchReset">RESET</button>
                     </div>
                 </div>
             </form>

@@ -74,6 +74,32 @@ function showJoins ($connection = null, $sql) {
     
 }
 
+function checkDuplicate($connection = null, $table = null, $condition = null, $order = null){
+    
+    $cond = "";
+    $ord = "";
+    
+    if(isset($condition) && !empty($condition)){
+		$cond = " WHERE ".$condition;
+	}
+	
+	if(isset($order) && !empty($order)){
+		$ord = " ORDER BY ".$order;
+	}
+    
+    $query = "SELECT * FROM ".$table.$cond.$ord;
+    
+    $result=mysqli_query($connection,$query) or die(mysqli_error($connection));
+    
+
+    $count = 0;
+    $results = array();	
+    $number = mysqli_num_rows($result);
+		
+    return $number;
+    
+}
+
 function insertTable ($connection = null, $table_no = null) {
     if ($connection->connect_error)
             die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
@@ -272,6 +298,23 @@ function updateTableStatus ($connection = null, $table = null, $status = null, $
             die('Query failed: (' . $connection->errno . ') ' . $connection->error);
 
         if (!$stmt->bind_param('ii', $status, $order))
+            die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->execute())
+                die('Insert Error ' . $connection->error);
+
+        $stmt->close();
+}
+
+function updateFoodItemwithPicture ($connection = null, $table = null, $id = null, $picture = null, $name = null, $price = null, $category = null) {
+    if ($connection->connect_error)
+            die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
+
+        $sql = "UPDATE $table SET food_picture = ?, food_name = ?, food_price = ?, category = ? WHERE food_id = ?";
+        if (!$stmt = $connection->prepare($sql))
+            die('Query failed: (' . $connection->errno . ') ' . $connection->error);
+
+        if (!$stmt->bind_param('ssdii', $picture, $name, $price, $category, $id))
             die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
 
         if (!$stmt->execute())

@@ -99,7 +99,7 @@ $(".file-input").on("change", function () {
     $(".file-label").html(fileName);
 });
 
-
+//Delete food item
 function deleteFood($id) {
     //get the input value
     $.ajax({
@@ -143,6 +143,56 @@ function deleteFood($id) {
         }
 
     });
+
+    $('#searchSubmitID').on('click', function () {
+        $name = $('#searchNameID').val();
+        $type = $('#searchTypeID').val();
+        alert("Hi")
+        if ($name == '' && $type == '') {
+            alert("Enter a value in either day or month field to conduct search!");
+        } else {
+            $('#foodTableID tbody').empty();
+            $.ajax({
+                type: 'POST',
+                url: '../connection/retrieveFoodMenu.php',
+                data: {
+                    name: $name,
+                    type: $type
+                },
+                dataType: 'html',
+                success: function (data) {
+                    var result = data
+                    $('#foodTableID tbody').append(result);
+
+                    $('.modalButton').click(function (e) {
+                        e.preventDefault();
+                        $('#editableModal').modal('show');
+                        $tr = $(this).closest('tr');
+                        var data = $tr.children("td").map(function () {
+                            return $(this).text();
+                        }).get();
+                        var url = $(this).closest('tr').find('img').attr('src').replace('../images/', '');
+                        var category = $(this).closest('tr').find('#editCategory').attr('value');
+
+                        var numID = data[0];
+
+                        $("#edit-file-label").html(url);
+                        $("#editID").html(numID);
+                        $("#getID").val(numID);
+                        $("#editName").val(data[2]);
+                        $("#editPrice").val(data[3]);
+
+                        $cat = data[4];
+
+                        $("#editCategory option").filter(function () {
+                            return $(this).text() == $cat;
+                        }).prop("selected", true);
+                    });
+
+                }
+            });
+        }
+    })
 
 
 

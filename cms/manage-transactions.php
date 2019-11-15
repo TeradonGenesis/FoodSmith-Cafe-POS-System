@@ -54,7 +54,14 @@
                                 <tr>
                                     <td><?php echo $showTransaction['trans_id']?></td>
                                     <td><?php echo $showTransaction['total_price']?></td>
-                                    <td><?php echo $showTransaction['created_on']?></td>
+                                    <td>
+                                        <?php
+    
+                                            $date = new DateTime($showTransaction['created_on']);
+                                            echo $date->format('d/m/Y');
+                                        ?>
+                                            
+                                    </td>
                                 </tr>
                                 <?php } ?>
 
