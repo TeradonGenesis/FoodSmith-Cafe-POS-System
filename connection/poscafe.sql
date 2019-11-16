@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.0.1
+-- version 4.8.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2019 at 01:49 PM
--- Server version: 10.4.6-MariaDB
--- PHP Version: 7.3.9
+-- Generation Time: Nov 16, 2019 at 03:53 AM
+-- Server version: 10.1.32-MariaDB
+-- PHP Version: 7.2.5
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -33,15 +33,6 @@ CREATE TABLE `food_category` (
   `category_name` varchar(30) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `food_category`
---
-
-INSERT INTO `food_category` (`category_id`, `category_name`) VALUES
-(1, 'Test Noodle'),
-(2, 'VIP Table'),
-(3, '5');
-
 -- --------------------------------------------------------
 
 --
@@ -56,17 +47,9 @@ CREATE TABLE `menu` (
   `food_name` varchar(30) DEFAULT NULL,
   `food_price` decimal(6,2) NOT NULL,
   `category` int(11) DEFAULT NULL,
-  `status` int(1) NOT NULL DEFAULT 1,
-  `created_on` timestamp NOT NULL DEFAULT current_timestamp()
+  `status` int(1) NOT NULL DEFAULT '1',
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `menu`
---
-
-INSERT INTO `menu` (`food_id`, `food_text`, `food_code`, `food_picture`, `food_name`, `food_price`, `category`, `status`, `created_on`) VALUES
-(102, NULL, NULL, '5da7d57cba6d31.58167466.jpg', 'Test', '5.00', 1, 1, '2019-10-17 02:44:12'),
-(105, NULL, NULL, '5da913b38a8285.93885798.jpg', 'Water', '4.50', 1, 1, '2019-10-18 01:21:55');
 
 -- --------------------------------------------------------
 
@@ -77,34 +60,6 @@ INSERT INTO `menu` (`food_id`, `food_text`, `food_code`, `food_picture`, `food_n
 CREATE TABLE `order_id` (
   `order_id` bigint(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `order_id`
---
-
-INSERT INTO `order_id` (`order_id`) VALUES
-(4112019203649),
-(21102019095509),
-(21102019095537),
-(21102019095706),
-(21102019095734),
-(21102019095801),
-(21102019100057),
-(21102019100308),
-(21102019100335),
-(21102019100451),
-(21102019100559),
-(21102019100743),
-(21102019100801),
-(21102019100814),
-(21102019100824),
-(21102019100834),
-(21102019100842),
-(22102019122101),
-(22102019122759),
-(24102019114025),
-(24102019114054),
-(24102019114111);
 
 -- --------------------------------------------------------
 
@@ -118,21 +73,26 @@ CREATE TABLE `order_list` (
   `ordered_table` int(11) NOT NULL,
   `quantity` int(11) DEFAULT NULL,
   `order_price` decimal(6,2) DEFAULT NULL,
-  `order_status` int(11) DEFAULT 1,
-  `ordered_on` timestamp NOT NULL DEFAULT current_timestamp()
+  `order_status` int(11) DEFAULT '1',
+  `ordered_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+-- --------------------------------------------------------
+
 --
--- Dumping data for table `order_list`
+-- Table structure for table `reservation`
 --
 
-INSERT INTO `order_list` (`order_id`, `ordered_food`, `ordered_table`, `quantity`, `order_price`, `order_status`, `ordered_on`) VALUES
-(4112019203649, 102, 1, 3, '28.50', 0, '2019-11-04 12:37:00'),
-(4112019203649, 105, 1, 3, '28.50', 0, '2019-11-04 12:37:00'),
-(24102019114054, 102, 2, 1, '9.50', 1, '2019-10-24 03:40:59'),
-(24102019114054, 105, 2, 1, '9.50', 1, '2019-10-24 03:40:59'),
-(24102019114111, 102, 2, 4, '38.00', 2, '2019-10-24 03:41:19'),
-(24102019114111, 105, 2, 4, '38.00', 2, '2019-10-24 03:41:19');
+CREATE TABLE `reservation` (
+  `reserve_id` int(11) NOT NULL,
+  `reserve_name` varchar(50) NOT NULL,
+  `reserve_mobile` varchar(15) NOT NULL,
+  `reserve_date` date NOT NULL,
+  `reserve_customers` varchar(15) NOT NULL,
+  `reserve_table` int(11) NOT NULL,
+  `reserve_dateReceived` datetime DEFAULT CURRENT_TIMESTAMP,
+  `status` int(1) DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -148,16 +108,6 @@ CREATE TABLE `table_listing` (
   `order_id` int(14) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Dumping data for table `table_listing`
---
-
-INSERT INTO `table_listing` (`table_id`, `table_no`, `table_category`, `status`, `order_id`) VALUES
-(1, 1, 6, 0, 0),
-(2, 2, 6, 1, 0),
-(3, 23, NULL, NULL, 0),
-(4, 4, NULL, NULL, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -167,15 +117,8 @@ INSERT INTO `table_listing` (`table_id`, `table_no`, `table_category`, `status`,
 CREATE TABLE `transaction_listing` (
   `trans_id` int(11) NOT NULL,
   `total_price` decimal(6,2) DEFAULT NULL,
-  `created_on` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_on` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- Dumping data for table `transaction_listing`
---
-
-INSERT INTO `transaction_listing` (`trans_id`, `total_price`, `created_on`) VALUES
-(1, '28.00', '2019-11-04 12:37:37');
 
 -- --------------------------------------------------------
 
@@ -230,6 +173,12 @@ ALTER TABLE `order_list`
   ADD KEY `ordered_food` (`ordered_food`);
 
 --
+-- Indexes for table `reservation`
+--
+ALTER TABLE `reservation`
+  ADD PRIMARY KEY (`reserve_id`);
+
+--
 -- Indexes for table `table_listing`
 --
 ALTER TABLE `table_listing`
@@ -255,25 +204,31 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `food_category`
 --
 ALTER TABLE `food_category`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `food_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=106;
+  MODIFY `food_id` int(16) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+
+--
+-- AUTO_INCREMENT for table `reservation`
+--
+ALTER TABLE `reservation`
+  MODIFY `reserve_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `table_listing`
 --
 ALTER TABLE `table_listing`
-  MODIFY `table_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `table_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `transaction_listing`
 --
 ALTER TABLE `transaction_listing`
-  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `trans_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `users`
@@ -290,12 +245,6 @@ ALTER TABLE `users`
 --
 ALTER TABLE `menu`
   ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`category`) REFERENCES `food_category` (`category_id`);
-
---
--- Constraints for table `order_list`
---
-ALTER TABLE `order_list`
-  ADD CONSTRAINT `order_list_ibfk_2` FOREIGN KEY (`ordered_table`) REFERENCES `table_listing` (`table_id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
