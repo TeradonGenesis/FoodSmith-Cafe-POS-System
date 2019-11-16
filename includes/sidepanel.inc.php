@@ -27,8 +27,8 @@
                 Payment
             </a>
         </li>
-        <li class="<?= ($activePage == 'kitcheninbox2') ? 'active':''; ?>">
-            <a href="kitcheninbox2.php">
+        <li class="<?= ($activePage == 'kitcheninbox') ? 'active':''; ?>">
+            <a href="kitcheninbox.php">
                 <i class="fas fa-hamburger"></i>
                 Kitchen
             </a>
