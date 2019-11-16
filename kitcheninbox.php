@@ -93,7 +93,7 @@ ON ordered_food = food_id WHERE order_status = 1 $number_cond ORDER BY order_id"
             <div class="container">
                     <p class="mt-3"><i class="fas fa-search"></i> Search Orders</p>
 
-                <form action="kitcheninbox2.php" method="post">
+                <form action="kitcheninbox.php" method="post">
                     <div id="searchOrders" class="row mt-3">
 
                         <div class="col-12 col-sm-12 col-md-3 col-lg-3 text-left mb-2">
@@ -117,33 +117,33 @@ ON ordered_food = food_id WHERE order_status = 1 $number_cond ORDER BY order_id"
                     <table class="table table-borded table-striped">
                         <thead class="thead-dark">
                             <tr>
-                                <th class="col-2">OrderID#</th>
-                                <th class="col-2">FoodID#</th>
-                                <th class="col-3">Name</th>
-                                <th class="col-1">Table</th>
-                                <th class="col-1 text-center">Quantity</th>
-                                <th class="col-3 text-center">Action</th>
+                                <th class="w-40">OrderID#</th>
+                                <th class="w-20">FoodID#</th>
+                                <th class="w-10">Name</th>
+                                <th class="w-5">Table</th>
+                                <th class="w-5 text-center">Quantity</th>
+                                <th class="w-20 text-center">Action</th>
                             </tr>
                         </thead>
                         <tbody>
 
                             <?php foreach($showFood as $food) {?>
                             <tr>
-                                <td class="col-2 pt-4"><?php echo $food['order_id']?></td>
-                                <td class="col-2 pt-4"><?php echo $food['food_id']?></td>
-                                <td class="col-3 pt-4"><?php echo $food['food_name']?></td>
-                                <td class="col-1 pt-4"><?php echo $food['ordered_table']?></td>
-                                <td class="col-1 pt-4 text-center"><?php echo $food['quantity']?></td>
-                                <td class="col-3 pt-4 text-center">
+                                <td class="w-40 pt-4"><?php echo $food['order_id']?></td>
+                                <td class="w-20 pt-4"><?php echo $food['food_id']?></td>
+                                <td class="w-10 pt-4"><?php echo $food['food_name']?></td>
+                                <td class="w-5 pt-4"><?php echo $food['ordered_table']?></td>
+                                <td class="w-5 pt-4 text-center"><?php echo $food['quantity']?></td>
+                                <td class="w-10 pt-4 text-center">
                                     <div class="row text-center">
                                         <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                            <button onclick=" updateStatus(<?php echo $food['order_id'] ?>, <?php echo $food['ordered_food']; ?>)" value="hide" class="btn btn-success enbtn btn-md" name="hide"><i class="fas fa-check"></i></button>
+                                            <button onclick=" updateStatus(<?php echo $food['order_id'] ?>, <?php echo $food['ordered_food']; ?>)" value="hide" class="btn btn-success enbtn btn-md" name="hide"><i class="fas fa-check w-20"></i></button>
                                         </div>
                                         <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
-                                            <button value="edit" class="btn btn-warning enbtn btn-md modalButton" name="editable"><i class="fas fa-edit"></i></button>
+                                            <button value="edit" class="btn btn-warning enbtn btn-md modalButton" name="editable"><i class="fas fa-edit w-20"></i></button>
                                         </div>
                                         <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn deleteButton">
-                                            <button onclick="deleteFood(<?php echo $food['order_id'] ?>, <?php echo $food['ordered_food']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt"></i></button>
+                                            <button onclick="deleteFood(<?php echo $food['order_id'] ?>, <?php echo $food['ordered_food']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt w-20"></i></button>
                                         </div>
                                     </div>
                                 </td>
@@ -173,7 +173,7 @@ ON ordered_food = food_id WHERE order_status = 1 $number_cond ORDER BY order_id"
 
                             </div>
                             <div class="col-12 col-md-12 text-center">
-                                <form id="qtyUpdateForm" action="kitcheninbox2.php" method="POST" enctype="multipart/form-data">
+                                <form id="qtyUpdateForm" action="kitcheninbox.php" method="POST" enctype="multipart/form-data">
                                     <div id="updateFood" class="row mt-3">
 
                                         <input id="getOrderID" class="form-control quantityOrderID" type="hidden" name="quantityOrderID" placeholder="id" value="">
@@ -200,8 +200,6 @@ ON ordered_food = food_id WHERE order_status = 1 $number_cond ORDER BY order_id"
                     </div>
                 </div>
             </div>
-
-        </div>
 
         <div class="row">
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 text-center" style="padding-top:15px; padding-bottom:15px;">
@@ -241,14 +239,14 @@ ON ordered_food = food_id WHERE order_status = 1 $number_cond ORDER BY order_id"
                 type: "POST",
                 //on success     
                 //the url to send the data to
-                url: "kitcheninbox2.php",
+                url: "kitcheninbox.php",
                 //the data to send to
                 data: {
                     deleteorderid: $order_id,
                     deleteorderedfood: $ordered_food
                 },
                 success: function() {
-                    $(".table-container").load("kitcheninbox2.php .table-container");
+                    $(".table-container").load("kitcheninbox.php .table-container");
                 }
 
             });
@@ -262,7 +260,7 @@ ON ordered_food = food_id WHERE order_status = 1 $number_cond ORDER BY order_id"
                 //type. for eg: GET, POST
                 type: "POST",
                 //the url to send the data to
-                url: "kitcheninbox2.php",
+                url: "kitcheninbox.php",
                 //the data to send to
                 data: {
                     update_order_id: $order_id,
@@ -271,7 +269,7 @@ ON ordered_food = food_id WHERE order_status = 1 $number_cond ORDER BY order_id"
                 //on success
                 success: function() {
                     alert("Data sent"),
-                        $(".table-container").load("kitcheninbox2.php .table-container");
+                        $(".table-container").load("kitcheninbox.php .table-container");
 
                 }
             });
@@ -313,7 +311,7 @@ ON ordered_food = food_id WHERE order_status = 1 $number_cond ORDER BY order_id"
                 //on success
                 success: function() {
                     alert("Data sent"),
-                        $(".table-container").load("kitcheninbox2.php .table-container");
+                        $(".table-container").load("kitcheninbox.php .table-container");
 
                 }
             });
