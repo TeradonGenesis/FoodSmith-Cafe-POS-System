@@ -37,7 +37,7 @@
                 <form name="paymentform" method="POST" action="balance.php">
             <div class="row">
                 <div class="col-md-6 payment-top">    
-                        <input type="number" placeholder="Custom" name="custom_amount" />
+                        <input type="number" placeholder="Custom" min="0" step="any" name="custom_amount" />
                 </div>
                 <div class="col-md-6 payment-top">
                     <p><button type="submit" class="btn btn-success payment-button" name="amount" value="<?php echo $_SESSION["price"]; ?>">Exact</button></p>

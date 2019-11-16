@@ -157,7 +157,6 @@ $(function(){
        $('.customCard').hide();
        $.each(category, function(i, v){
          $('.'+v.trim()+'-'+v.trim()).show();
-         alert('.'+v.trim()+'-'+v.trim());
        });
     }
   });
