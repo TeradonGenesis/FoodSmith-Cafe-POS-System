@@ -110,6 +110,7 @@
                 <div id="addCategory" class="row mt-3">
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
                         <input class="form-control" type="text" name="name" placeholder="Category name">
+                        <p>* Required</p>
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
@@ -137,27 +138,26 @@
             <div class="table-container">
                 <div class="row mt-5">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-8 tab-pane active" id="display">
+                       <p>Click on the headers to sort by column</p>
+                        <input type='hidden' id='sort' value='asc'>
                         <table class="table table-borded table-striped" id="categoryTable">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th class="col-1">ID</th>
-                                    <th class="col-4">Category Name</th>
-                                    <th class="col-3 text-center">Action</th>
+                                    <th class="w-25"><span onclick='sortTable("category_id");'>ID</span></th>
+                                    <th class="w-25"><span onclick='sortTable("category_name");'>Category Name</span></th>
+                                    <th class="w-40 text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 <?php foreach($showCategories as $showCategory) { ?>
                                 <tr>
-                                    <td class="col-4"><?php echo $showCategory['category_id']?></td>
-                                    <td class="col-4"><?php echo $showCategory['category_name']?></td>
-                                    <td class="col-3 text-center">
+                                    <td class="w-25"><?php echo $showCategory['category_id']?></td>
+                                    <td class="w-25"><?php echo $showCategory['category_name']?></td>
+                                    <td class="w-40 text-center">
                                         <div class="row text-center">
-                                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 formbtn">
+                                            <div class="col-12 col-sm-12 col-md-12 col-lg-12 formbtn">
                                                 <button value="edit" class="btn btn-warning enbtn btn-md modalButton" name="editable"><i class="fas fa-edit"></i></button>
-                                            </div>
-                                            <div class="col-12 col-sm-6 col-md-6 col-lg-6 formbtn deleteButton">
-                                                <button onclick="deleteFood(<?php echo $showCategory['category_id']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt"></i></button>
                                             </div>
                                         </div>
                                     </td>

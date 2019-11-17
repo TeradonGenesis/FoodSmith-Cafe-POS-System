@@ -143,57 +143,110 @@ function deleteFood($id) {
         }
 
     });
+    }
+    
+    
+function sortTable(columnName) {
 
-    $('#searchSubmitID').on('click', function () {
-        $name = $('#searchNameID').val();
-        $type = $('#searchTypeID').val();
-        alert("Hi")
-        if ($name == '' && $type == '') {
-            alert("Enter a value in either day or month field to conduct search!");
-        } else {
-            $('#foodTableID tbody').empty();
-            $.ajax({
-                type: 'POST',
-                url: '../connection/retrieveFoodMenu.php',
-                data: {
-                    name: $name,
-                    type: $type
-                },
-                dataType: 'html',
-                success: function (data) {
-                    var result = data
-                    $('#foodTableID tbody').append(result);
+    var sort = $("#sort").val();
+    $.ajax({
+        url: '../connection/sortMenu.php',
+        type: 'post',
+        data: {
+            columnName: columnName,
+            sort: sort
+        },
+        success: function (response) {
 
-                    $('.modalButton').click(function (e) {
-                        e.preventDefault();
-                        $('#editableModal').modal('show');
-                        $tr = $(this).closest('tr');
-                        var data = $tr.children("td").map(function () {
-                            return $(this).text();
-                        }).get();
-                        var url = $(this).closest('tr').find('img').attr('src').replace('../images/', '');
-                        var category = $(this).closest('tr').find('#editCategory').attr('value');
+            $("#foodTableID tr:not(:first)").remove();
 
-                        var numID = data[0];
+            $("#foodTableID").append(response);
+            if (sort == "asc") {
+                $("#sort").val("desc");
+            } else {
+                $("#sort").val("asc");
+            }
 
-                        $("#edit-file-label").html(url);
-                        $("#editID").html(numID);
-                        $("#getID").val(numID);
-                        $("#editName").val(data[2]);
-                        $("#editPrice").val(data[3]);
+            $('.modalButton').click(function (e) {
+                    e.preventDefault();
+                    $('#editableModal').modal('show');
+                    $tr = $(this).closest('tr');
+                    var data = $tr.children("td").map(function () {
+                        return $(this).text();
+                    }).get();
+                    var url = $(this).closest('tr').find('img').attr('src').replace('../images/', '');
+                    var category = $(this).closest('tr').find('#editCategory').attr('value');
 
-                        $cat = data[4];
+                    var numID = data[0];
 
-                        $("#editCategory option").filter(function () {
-                            return $(this).text() == $cat;
-                        }).prop("selected", true);
-                    });
+                    $("#edit-file-label").html(url);
+                    $("#editID").html(numID);
+                    $("#getID").val(numID);
+                    $("#editName").val(data[2]);
+                    $("#editPrice").val(data[3]);
 
-                }
-            });
+                    $cat = data[4];
+
+                    $("#editCategory option").filter(function () {
+                        return $(this).text() == $cat;
+                    }).prop("selected", true);
+                });
+
+
         }
-    })
-
-
-
+    });
 }
+
+function sortTable2(columnName) {
+
+    var sort = $("#sort").val();
+    $.ajax({
+        url: '../connection/sortMenu2.php',
+        type: 'post',
+        data: {
+            columnName: columnName,
+            sort: sort
+        },
+        success: function (response) {
+
+            $("#foodTableID2 tr:not(:first)").remove();
+
+            $("#foodTableID2").append(response);
+            if (sort == "asc") {
+                $("#sort").val("desc");
+            } else {
+                $("#sort").val("asc");
+            }
+
+            $('.modalButton').click(function (e) {
+                    e.preventDefault();
+                    $('#editableModal').modal('show');
+                    $tr = $(this).closest('tr');
+                    var data = $tr.children("td").map(function () {
+                        return $(this).text();
+                    }).get();
+                    var url = $(this).closest('tr').find('img').attr('src').replace('../images/', '');
+                    var category = $(this).closest('tr').find('#editCategory').attr('value');
+
+                    var numID = data[0];
+
+                    $("#edit-file-label").html(url);
+                    $("#editID").html(numID);
+                    $("#getID").val(numID);
+                    $("#editName").val(data[2]);
+                    $("#editPrice").val(data[3]);
+
+                    $cat = data[4];
+
+                    $("#editCategory option").filter(function () {
+                        return $(this).text() == $cat;
+                    }).prop("selected", true);
+                });
+
+
+        }
+    });
+}
+
+
+

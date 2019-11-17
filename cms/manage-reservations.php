@@ -111,12 +111,15 @@
                 <div id="addResrve" class="row mt-3">
                     <div class="col-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
                         <input id="addReserveName" class="form-control" type="text" name="reserve_name" value="" placeholder="Name">
+                        <p>* Required</p>
                     </div>
                     <div class="col-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
                         <input id="addMobile" class="form-control" type="text" name="reserve_mobile" value="" placeholder="Phone number">
+                        <p>* Required</p>
                     </div>
                     <div class="col-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
                         <input id="addDate" class="form-control" type="date" name="reserve_date" value="" placeholder="YYYY-MM-DD">
+                        <p>* Required</p>
                     </div>
                     <div class="col-xs-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
                         <select id="addTable" name="reserve_table" class="form-control">
@@ -125,9 +128,11 @@
                             <option value="<?php echo $table['table_no']?>"><?php echo $table['table_no']?></option>
                             <?php }?>
                         </select>
+                        <p>* Required</p>
                     </div>
                     <div class="col-12 col-sm-4 col-md-2 col-lg-2 text-left mb-4">
                         <input id="addCustomers" class="form-control" min="1" type="number" name="reserve_customers" value="" placeholder="No. of Customers">
+                        <p>* Required</p>
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">

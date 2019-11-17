@@ -114,3 +114,46 @@ $('#editCategoryForm').submit(function(e) {
             }
         });
 });
+
+
+function sortTable(columnName) {
+
+    var sort = $("#sort").val();
+    $.ajax({
+        url: '../connection/sortCategory.php',
+        type: 'post',
+        data: {
+            columnName: columnName,
+            sort: sort
+        },
+        success: function (response) {
+            
+            $("#categoryTable tr:not(:first)").remove();
+
+            $("#categoryTable").append(response);
+            if (sort == "asc") {
+                $("#sort").val("desc");
+            } else {
+                $("#sort").val("asc");
+            }
+
+            $('.modalButton').on('click', function () {
+                $('#editableModal').modal('show');
+                $tr = $(this).closest('tr');
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                var numID = data[0];
+
+                $("#editID").html(numID);
+                $("#getID").val(numID);
+                $("#editName").val(data[1]);
+
+            });
+
+
+        }
+    });
+}
+

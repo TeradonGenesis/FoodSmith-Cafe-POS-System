@@ -60,30 +60,22 @@ function deleteTable($id) {
         success: function () {
             $(".table-container").load("manage-table.php .table-container ", function () {
 
-                $('.modalButton').click(function (e) {
-                    e.preventDefault();
+                $('.modalButton').on('click', function () {
                     $('#editableModal').modal('show');
                     $tr = $(this).closest('tr');
                     var data = $tr.children("td").map(function () {
                         return $(this).text();
                     }).get();
-                    var url = $(this).closest('tr').find('img').attr('src').replace('../images/', '');
-                    var category = $(this).closest('tr').find('#editCategory').attr('value');
 
                     var numID = data[0];
 
-                    $("#edit-file-label").html(url);
                     $("#editID").html(numID);
                     $("#getID").val(numID);
-                    $("#editName").val(data[2]);
-                    $("#editPrice").val(data[3]);
+                    $("#editName").val(data[1]);
+                    $("#editCategory").val(data[2]);
 
-                    $cat = data[4];
-
-                    $("#editCategory option").filter(function () {
-                        return $(this).text() == $cat;
-                    }).prop("selected", true);
                 });
+
             });
         }
 
@@ -93,25 +85,47 @@ function deleteTable($id) {
 
 }
 
-$('#editCategoryForm').submit(function(e) {
-            
-            e.preventDefault;
-            
-            var form = $(this);
-            var url = form.attr('action');
-            
-            $.ajax({
-            //type. for eg: GET, POST
-            type: "POST",
-            //the url to send the data to
-            url: url,
-            //the data to send to
-            data: form.serialize(),
-            //on success
-            success: function() {
-                alert("Data sent"),
-                 $(".table-container").load("manage-food-category.php .table-container");
 
+
+function sortTable(columnName) {
+
+    var sort = $("#sort").val();
+    $.ajax({
+        url: '../connection/sortTables.php',
+        type: 'post',
+        data: {
+            columnName: columnName,
+            sort: sort
+        },
+        success: function (response) {
+
+            $("#categoryTable tr:not(:first)").remove();
+
+            $("#categoryTable").append(response);
+            if (sort == "asc") {
+                $("#sort").val("desc");
+            } else {
+                $("#sort").val("asc");
             }
-        });
-});
+
+            $('.modalButton').on('click', function () {
+                $('#editableModal').modal('show');
+                $tr = $(this).closest('tr');
+                var data = $tr.children("td").map(function () {
+                    return $(this).text();
+                }).get();
+
+                var numID = data[0];
+
+                $("#editID").html(numID);
+                $("#getID").val(numID);
+                $("#editName").val(data[1]);
+                $("#editCategory").val(data[2]);
+
+            });
+
+
+
+        }
+    });
+}

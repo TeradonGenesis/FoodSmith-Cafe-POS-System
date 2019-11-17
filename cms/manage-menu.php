@@ -309,27 +309,29 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
                 <div class="row mt-2 tab-content">
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 tab-pane active" id="display">
+                       <p>Click on the headers to sort by column</p>
+                        <input type='hidden' id='sort' value='asc'>
                         <table id="foodTableID" class="table table-borded table-striped">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th class="col-1">#</th>
-                                    <th class="col-2">Image</th>
-                                    <th class="col-3">Name</th>
-                                    <th class="col-1 text-center">Price</th>
-                                    <th class="col-2">Category</th>
-                                    <th class="col-3 text-center">Action</th>
+                                    <th class="w-5"><span onclick='sortTable("food_id");'>ID</span></th>
+                                    <th class="w-15">Image</th>
+                                    <th class="w-20"><span onclick='sortTable("food_name");'>Name</span></th>
+                                    <th class="w-15 text-center"><span onclick='sortTable("food_price");'>Price</span></th>
+                                    <th class="w-15"><span onclick='sortTable("category_name");'>Category</span></th>
+                                    <th class="w-30 text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 <?php foreach($showFood as $food) {?>
                                 <tr>
-                                    <td class="col-1 pt-4"><?php echo $food['food_id']?></td>
-                                    <td class="col-2"><img class="foodpics" src="../images/<?php echo $food['food_picture'] ?>" alt="<?php echo $food['food_picture'] ?>" width="70" height="70" /></td>
-                                    <td class="col-3 pt-4"><?php echo $food['food_name']?></td>
-                                    <td class="col-1 pt-4 text-center"><?php echo $food['food_price']?></td>
-                                    <td class="col-2 pt-4"><?php echo $food['category_name']?></td>
-                                    <td class="col-3 pt-4 text-center">
+                                    <td class="w-5 pt-4"><?php echo $food['food_id']?></td>
+                                    <td class="w-15"><img class="foodpics" src="../images/<?php echo $food['food_picture'] ?>" alt="<?php echo $food['food_picture'] ?>" width="70" height="70" /></td>
+                                    <td class="w-20 pt-4"><?php echo $food['food_name']?></td>
+                                    <td class="w-15 pt-4 text-center"><?php echo $food['food_price']?></td>
+                                    <td class="w-15 pt-4"><?php echo $food['category_name']?></td>
+                                    <td class="w-30 pt-4 text-center">
                                         <div class="row text-center">
                                             <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
                                                 <button onclick=" updateStatus(<?php echo $food['status']; ?>, <?php echo $food['food_id']; ?>)" value="hide" class="btn btn-primary enbtn btn-md" name="hide"><i class="fas fa-eye-slash"></i></button>
@@ -351,27 +353,29 @@ ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 tab-pane" id="notdisplay">
-                        <table class="table table-borded table-striped">
+                       <p>Click on the headers to sort by column</p>
+                        <input type='hidden' id='sort' value='asc'>
+                        <table id="foodTableID2" class="table table-borded table-striped">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th class="col-1">#</th>
-                                    <th class="col-2">Image</th>
-                                    <th class="col-3">Name</th>
-                                    <th class="col-1 text-center">Price</th>
-                                    <th class="col-2">Category</th>
-                                    <th class="col-3 text-center">Action</th>
+                                    <th class="w-5"><span onclick='sortTable2("food_id");'>ID</th>
+                                    <th class="w-15">Image</th>
+                                    <th class="w-20"><span onclick='sortTable2("food_name");'>Name</th>
+                                    <th class="w-15 text-center"><span onclick='sortTable2("food_price");'>Price</th>
+                                    <th class="w-15"><span onclick='sortTable2("category_name");'>Category</th>
+                                    <th class="w-30 text-center">Action</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 <?php foreach($hideFood as $hfood) {?>
                                 <tr>
-                                    <td class="col-1 pt-4"><?php echo $hfood['food_id']?></td>
-                                    <td class="col-2"><img class="foodpics" src="../images/<?php echo $hfood['food_picture'] ?>" alt="<?php echo $hfood['food_picture'] ?>" width="70" height="70" /></td>
-                                    <td class="col-3 pt-4"><?php echo $hfood['food_name']?></td>
-                                    <td class="col-1 pt-4 text-right"><?php echo $hfood['food_price']?></td>
-                                    <td class="col-2 pt-4"><?php echo $hfood['category_name']?></td>
-                                    <td class="col-3 pt-4 text-center">
+                                    <td class="w-5 pt-4"><?php echo $hfood['food_id']?></td>
+                                    <td class="w-15"><img class="foodpics" src="../images/<?php echo $hfood['food_picture'] ?>" alt="<?php echo $hfood['food_picture'] ?>" width="70" height="70" /></td>
+                                    <td class="w-20 pt-4"><?php echo $hfood['food_name']?></td>
+                                    <td class="w-15 pt-4 text-center"><?php echo $hfood['food_price']?></td>
+                                    <td class="w-15 pt-4"><?php echo $hfood['category_name']?></td>
+                                    <td class="w-30 pt-4 text-center">
                                         <div class="row text-center">
                                             <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
                                                 <button onclick=" updateStatus(<?php echo $hfood['status']; ?>, <?php echo $hfood['food_id']; ?>)" value="hide" class="btn btn-primary enbtn btn-md" name="hide"><i class="fas fa-eye"></i></button>

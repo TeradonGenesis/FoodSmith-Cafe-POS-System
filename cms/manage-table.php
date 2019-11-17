@@ -114,9 +114,11 @@
                 <div id="addCategory" class="row mt-3">
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
                         <input class="form-control" type="number" min="1" name="name" placeholder="Table number">
+                        <p>* Required</p>
                     </div>
                     <div class="col-12 col-sm-4 col-md-4 col-lg-4 text-left mb-2">
                         <input class="form-control" type="number" min="1" name="category" placeholder="Number of seating">
+                        <p>* Required</p>
                     </div>
 
                     <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-left formbtn">
@@ -147,12 +149,14 @@
             <div class="table-container">
                 <div class="row mt-5">
                     <div class="col-12 col-sm-12 col-md-12 col-lg-8 tab-pane active" id="display">
+                       <p>Click on the headers to sort by column</p>
+                        <input type='hidden' id='sort' value='asc'>
                         <table class="table table-borded table-striped" id="categoryTable">
                             <thead class="thead-dark">
                                 <tr>
-                                   <th class="w-25 text-center">ID</th>
-                                    <th class="w-25 text-center">Table No.</th>
-                                    <th class="w-25 text-center">Number of Seats</th>
+                                    <th class="w-25 text-center"><span onclick='sortTable("table_id");'>ID</span></th>
+                                    <th class="w-25 text-center"><span onclick='sortTable("table_no");'>Table No.</span></th>
+                                    <th class="w-25 text-center"><span onclick='sortTable("table_category");'>Number of Seats</span></th>
                                     <th class="w-50 text-center">Action</th>
                                 </tr>
                             </thead>
