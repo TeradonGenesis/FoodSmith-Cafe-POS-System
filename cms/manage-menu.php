@@ -210,7 +210,7 @@
 ON menu.category = food_category.category_id WHERE menu.status = 1 $name_cond $type_cond ORDER BY menu.food_id");
     
    $hideFood = showJoins($connection, "SELECT *  FROM menu INNER JOIN food_category
-ON menu.category = food_category.category_id WHERE menu.status = 2 ORDER BY menu.food_id");
+ON menu.category = food_category.category_id WHERE menu.status = 2 $name_cond $type_cond ORDER BY menu.food_id");
     
     $showCategories = show($connection, "food_category", "category_id != ''", "category_name");
     
