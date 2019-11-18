@@ -8,6 +8,7 @@
     
     $reservation_status = null;
     $text_status = null;
+    $reservation_valid = false;
     
     if(isset($_POST['submit'])) {
         if(isset($_POST['reserve_name']) && !empty($_POST['reserve_name']) && isset($_POST['reserve_mobile']) && !empty($_POST['reserve_mobile']) && isset($_POST['reserve_date']) && !empty($_POST['reserve_date']) && isset($_POST['reserve_table']) && !empty($_POST['reserve_table']) && isset($_POST['reserve_customers']) && !empty($_POST['reserve_customers'])) {
@@ -17,13 +18,29 @@
             $date = $_POST['reserve_date'];
             $table = $_POST['reserve_table'];
             $customers = $_POST['reserve_customers'];
+            $datetoday  = date('Y-m-d');
             
-            $insert = insertReservations ($connection, $name, $mobile, $date, $table, $customers);
-            $reservation_status = "Reservation added";
-            $text_status = "text-success";
+            $numOfSeats = show($connection,'table_listing',"table_no=$table");
+            foreach($numOfSeats as $seat) {
+                $seat_category = $seat['table_category'];
+            }
             
-            $reservation_status = "Reservation not added";
-            $text_status = "text-danger";
+            if($seat_category >= $customers) {
+                if ($datetoday<=$date) {
+                    $insert = insertReservations ($connection, $name, $mobile, $date, $table, $customers);
+                    $reservation_valid=true;
+                }
+            }
+            
+            if ($reservation_valid == true) {
+                $reservation_status = "Reservation added";
+                $text_status = "text-success";
+                echo $date;
+                echo $datetoday;
+            } else {
+                $reservation_status = "Reservation not added";
+                $text_status = "text-danger";
+            }
                 
         }
     }

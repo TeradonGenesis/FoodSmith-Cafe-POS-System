@@ -30,6 +30,7 @@
             if(isset($_POST['name']) && !empty($_POST['name'])) {
                 
                 $name = $_POST['name'];
+                $category = $_POST['category'];
                 
                 $number = checkDuplicate($connection, "table_listing", "table_no  = '$name'", "table_id");
                 
@@ -40,7 +41,7 @@
                     
                 } else {
                     
-                    $addTables = insertTable($connection, $name);
+                    $addTables = insertTable($connection, $name,$category);
                     $table_status = "Table Added";
                     $text_status = "text-success";
                     

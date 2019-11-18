@@ -100,15 +100,15 @@ function checkDuplicate($connection = null, $table = null, $condition = null, $o
     
 }
 
-function insertTable ($connection = null, $table_no = null) {
+function insertTable ($connection = null, $table_no = null, $table_cat = null) {
     if ($connection->connect_error)
             die('Connect Error (' . mysqli_connect_errno() . ') '. mysqli_connect_error());
 
-        $sql = "INSERT INTO table_listing (table_no) VALUES (?)";
+        $sql = "INSERT INTO table_listing (table_no,table_category) VALUES (?,?)";
         if (!$stmt = $connection->prepare($sql))
             die('Query failed: (' . $connection->errno . ') ' . $connection->error);
 
-        if (!$stmt->bind_param('i',$table_no))
+        if (!$stmt->bind_param('ii',$table_no,$table_cat))
             die('Bind Param failed: (' . $connection->errno . ') ' . $connection->error);
 
         if (!$stmt->execute())
