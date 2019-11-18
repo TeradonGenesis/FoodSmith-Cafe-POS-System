@@ -134,18 +134,15 @@ ON ordered_food = food_id WHERE order_status = 1 $number_cond ORDER BY order_id"
                                 <td class="w-40 pt-4"><?php echo $food['order_id']?></td>
                                 <td class="w-20 pt-4"><?php echo $food['food_id']?></td>
                                 <td class="w-10 pt-4"><?php echo $food['food_name']?></td>
-                                <td class="w-5 pt-4"><?php echo $food['ordered_table']?></td>
-                                <td class="w-5 pt-4 text-center"><?php echo $food['quantity']?></td>
-                                <td class="w-20 pt-4 text-center">
+                                <td class="w-10 pt-4"><?php echo $food['ordered_table']?></td>
+                                <td class="w-10 pt-4 text-center"><?php echo $food['quantity']?></td>
+                                <td class="w-10 pt-4 text-center">
                                     <div class="row text-center">
                                         <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
                                             <button onclick=" updateStatus(<?php echo $food['order_id'] ?>, <?php echo $food['ordered_food']; ?>)" value="hide" class="btn btn-success enbtn btn-md" name="hide"><i class="fas fa-check"></i></button>
                                         </div>
                                         <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn">
                                             <button value="edit" class="btn btn-warning enbtn btn-md modalButton" name="editable"><i class="fas fa-edit"></i></button>
-                                        </div>
-                                        <div class="col-12 col-sm-4 col-md-4 col-lg-4 formbtn deleteButton">
-                                            <button onclick="deleteFood(<?php echo $food['order_id'] ?>, <?php echo $food['ordered_food']; ?>)" value="delete" class="btn btn-danger enbtn btn-md" name="delete"><i class="fas fa-trash-alt"></i></button>
                                         </div>
                                     </div>
                                 </td>
