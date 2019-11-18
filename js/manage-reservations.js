@@ -173,7 +173,6 @@ $('#editCategoryForm').submit(function (e) {
         data: form.serialize(),
         //on success
         success: function () {
-            alert("Data sent"),
                 $(".table-container").load("manage-food-category.php .table-container");
 
         }

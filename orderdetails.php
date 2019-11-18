@@ -100,20 +100,20 @@
                         <table class="table table-borded table-striped">
                             <thead class="thead-dark">
                                 <tr>
-                                    <th class="col-1 text-center">Status</th>
-                                    <th class="col-2">OrderID#</th>
-                                    <th class="col-1">FoodID#</th>
-                                    <th class="col-3">Name</th>
-                                    <th class="col-1 text-center">Quantity</th>
-                                    <th class="col-2 text-center">Unit Price</th>
-                                    <th class="col-2 text-center">Total Price</th>
+                                    <th class="w-30 text-center">Status</th>
+                                    <th class="w-20">OrderID#</th>
+                                    <th class="w-10">FoodID#</th>
+                                    <th class="w-10">Name</th>
+                                    <th class="w-10 text-center">Quantity</th>
+                                    <th class="w-10 text-center">Unit Price</th>
+                                    <th class="w-10 text-center">Total Price</th>
                                 </tr>
                             </thead>
                             <tbody>
 
                                 <?php foreach($showFood as $food) {?>
                                 <tr>
-                                    <td class="col-1 pt-4 text-center">
+                                    <td class="w-30 pt-4 text-center">
                                         <?php 
                                         if($food['order_status'] == 1) {
                                            echo '<i class="fas fa-clock fa-2x text-danger"></i>';
@@ -125,12 +125,12 @@
 
 
                                     </td>
-                                    <td class="col-2 pt-4"><?php echo $food['order_id']?></td>
-                                    <td class="col-1 pt-4"><?php echo $food['food_id']?></td>
-                                    <td class="col-3 pt-4"><?php echo $food['food_name']?></td>
-                                    <td class="col-1 pt-4 text-center"><?php echo $food['quantity']?></td>
-                                    <td class="col-2 pt-4 text-center"><?php echo $food['food_price']?></td>
-                                    <td class="col-2 pt-4 text-center">
+                                    <td class="w-20 pt-4"><?php echo $food['order_id']?></td>
+                                    <td class="w-10 pt-4"><?php echo $food['food_id']?></td>
+                                    <td class="w-10 pt-4"><?php echo $food['food_name']?></td>
+                                    <td class="w-10 pt-4 text-center"><?php echo $food['quantity']?></td>
+                                    <td class="w-10 pt-4 text-center"><?php echo $food['food_price']?></td>
+                                    <td class="w-10 pt-4 text-center">
                                         <?php $total = $food['food_price'] * $food['quantity'];
                                                echo number_format((float)$total, 2, '.', '');
                                                 $sum_total += $total;

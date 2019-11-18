@@ -35,8 +35,6 @@
             if ($reservation_valid == true) {
                 $reservation_status = "Reservation added";
                 $text_status = "text-success";
-                echo $date;
-                echo $datetoday;
             } else {
                 $reservation_status = "Reservation not added";
                 $text_status = "text-danger";
@@ -54,11 +52,27 @@
             $date = $_POST['updateDate'];
             $table = $_POST['updateTable'];
             $customers = $_POST['updateCustomers'];
+            $datetoday  = date('Y-m-d');
             
-            $update = updateReservations ($connection, $id, $name, $mobile, $date, $table, $customers);
+            $numOfSeats = show($connection,'table_listing',"table_no=$table");
+            foreach($numOfSeats as $seat) {
+                $seat_category = $seat['table_category'];
+            }
             
-            $reservation_status = "Reservation updated";
-            $text_status = "text-success";
+            if($seat_category >= $customers) {
+                if ($datetoday<=$date) {
+                    $update = updateReservations ($connection, $id, $name, $mobile, $date, $table, $customers);
+                    $reservation_valid=true;
+                }
+            }
+            
+            if ($reservation_valid == true) {
+                $reservation_status = "Reservation updated";
+                $text_status = "text-success";
+            } else {
+                $reservation_status = "Reservation not updated";
+                $text_status = "text-danger";
+            }
                 
         } else {
             $reservation_status = "Reservation not updated";
