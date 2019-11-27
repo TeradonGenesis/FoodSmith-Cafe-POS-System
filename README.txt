@@ -5,3 +5,6 @@
 5. To log in, navigate to http://localhost/FoodSmith-Cafe-POS-System/cms/ (Username: teradon Password: 12345)
 6. After logging in, you will be redirected to the CMS homepage. To navigate to the menu or waiter front end, go to http://localhost/FoodSmith-Cafe-POS-System/.
 7. To enter back into the CMS, navigate to http://localhost/FoodSmith-Cafe-POS-System/cms/
+
+*Pls make sure the root folder is http://localhost/FoodSmith-Cafe-POS-System/ not http://localhost/FoodSmith-Cafe-POS-System/FoodSmith-Cafe-POS-System/
+as when extracted it will create another folder with the actual folder inside it.
