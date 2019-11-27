@@ -1,4 +1,4 @@
-# FoodSmith-Cafe-POS-System
+# Guide to install FoodSmith-Cafe-POS-System
 
 1. Firstly, navigate to your XAMPP and put the foodsmith folder into htdocs.
 
