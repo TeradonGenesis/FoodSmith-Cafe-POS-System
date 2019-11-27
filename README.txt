@@ -10,3 +10,5 @@
 as when extracted it will create another folder with the actual folder inside it.
 
 Navigate to https://github.com/TeradonGenesis/FoodSmith-Cafe-POS-System to download the file directly or to view the video guides(Will be ready once fully uploaded)
+
+*Pls be online in order for the the dependencies to load
